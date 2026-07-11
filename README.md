@@ -15,50 +15,30 @@ Obsidian's File Explorer is powerful, but isolated. Copying files out of Obsidia
 
 ## ✨ Key Features
 
-### 📋 Native System Copy (Free & Pro)
+### 📋 Native System Copy
 Select files in Obsidian and press `Cmd + C` (macOS) or `Ctrl + C` (Win). You can then paste them directly onto your desktop or into any other application with `Cmd + V`.
-*   **Free:** Copy individual files.
-*   **Pro:** Copy entire folders and their contents.
+Files and entire folders are both supported.
 
-### 🖱️ Direct Drag & Drop (Free & Pro)
+### 🖱️ Direct Drag & Drop
 Hold the `Alt` key and drag files or folders from Obsidian directly into other apps (e.g., Mail, Slack, or a folder).
-*   **Free:** Drag individual files.
-*   **Pro:** Drag entire folders.
 
-### 🚀 Professional Pandoc Export (Pro)
+### 🚀 Professional Pandoc Export
 Convert your Markdown notes into polished documents with a single click.
 *   **Word (.docx):** Use your own custom `.docx` templates for professional branding.
 *   **PowerPoint (.pptx):** Turn notes into presentations instantly.
 *   **PDF & Beamer:** High-quality academic and slide exports.
 *   **HTML & Markdown:** Clean, standalone exports.
 
-### 📁 Target Folder Sync (Pro)
+### 📁 Target Folder Sync
 Configure a fixed target folder in the settings. Copy files and folders there with one click via the context menu. Perfect for backups, sharing, or project exports.
 
 ### 🌍 Smart Localization & OS Detection
 *   **Automatic Language:** The plugin automatically adapts to your Obsidian language settings.
 *   **Smart OS Detection:** Settings and placeholders automatically adjust depending on whether you are using Windows, macOS, or Linux.
 
-## 💎 Free vs. Pro
+## 🆓 Free for Everyone
 
-| Feature | Free | Pro |
-| :--- | :---: | :---: |
-| Copy Files to Clipboard (`Cmd+C`) | ✅ | ✅ |
-| Drag & Drop Files (`Alt+Drag`) | ✅ | ✅ |
-| Audio Feedback | ✅ | ✅ |
-| **Copy Folders to Clipboard** | ❌ | ✅ |
-| **Drag & Drop Folders** | ❌ | ✅ |
-| **Copy to Fixed Target Folder** | ❌ | ✅ |
-| **Pandoc Export (Word, PDF, etc.)** | ❌ | ✅ |
-| **Custom Word Templates** | ❌ | ✅ |
-| **Custom Pandoc Arguments** | ❌ | ✅ |
-
-### How to Activate Pro
-1. Purchase a license key from [Lemon Squeezy](https://your-store.lemonsqueezy.com).
-2. Open Obsidian and go to **Settings > Natural Move**.
-3. Enter your license key in the **License Key** field.
-4. Click **Verify**.
-5. Once activated, all Pro features will be unlocked immediately.
+All plugin features are available to every user without a license. The settings page also lets you hide the target-folder copy action and the Pandoc export submenu from the file explorer context menu.
 
 ## 🛠️ Prerequisites for Pandoc Export
 

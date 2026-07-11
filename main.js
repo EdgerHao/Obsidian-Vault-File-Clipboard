@@ -38,7 +38,7 @@ __export(main_exports, {
   default: () => NaturalMove
 });
 module.exports = __toCommonJS(main_exports);
-var import_obsidian2 = require("obsidian");
+var import_obsidian = require("obsidian");
 var fs = __toESM(require("fs"));
 var path = __toESM(require("path"));
 var import_child_process = require("child_process");
@@ -88,15 +88,11 @@ var en_default = {
   SETTING_TEST_SOUND_NAME: "Test sound",
   SETTING_TEST_SOUND_DESC: "Click here to test the audio feedback.",
   SETTING_TEST_SOUND_BUTTON: "Test sound",
-  SETTING_LICENSE_KEY_NAME: "License key",
-  SETTING_LICENSE_KEY_DESC: "Enter your license key to unlock pro features (for example, custom pandoc arguments).",
-  SETTING_LICENSE_VERIFY_BUTTON: "Verify",
-  SETTING_BUY_PRO_NAME: "Get pro version",
-  SETTING_BUY_PRO_DESC: "Unlock folder copying, pandoc templates, and custom arguments.",
-  SETTING_BUY_PRO_BUTTON: "Buy license",
-  LICENSE_VALID: "License is valid. Pro features unlocked.",
-  LICENSE_INVALID: "Invalid license key.",
-  PRO_FEATURE_LOCKED: "This is a pro feature. Please enter a valid license key.",
+  SETTING_CONTEXT_MENU_HEADING: "Context menu",
+  SETTING_TARGET_FOLDER_MENU_NAME: "Show copy to target folder",
+  SETTING_TARGET_FOLDER_MENU_DESC: "Show the copy-to-target-folder action in the file explorer context menu.",
+  SETTING_PANDOC_MENU_NAME: "Show pandoc export",
+  SETTING_PANDOC_MENU_DESC: "Show the pandoc export submenu for Markdown files in the file explorer context menu.",
   COPY_COMMAND_NAME: "Copy selected files (from file explorer)",
   PLACEHOLDER_TARGET_FOLDER: "/path/to/folder",
   PLACEHOLDER_TEMPLATES_FOLDER: "/path/to/templates",
@@ -110,8 +106,7 @@ var en_default = {
   SETTING_HELP_DESC: "Open the official documentation and setup guide.",
   SETTING_HELP_BUTTON: "Open documentation",
   SETTING_HELP_BUG_BUTTON: "Report bug",
-  EXPORT_FALLBACK_YAML: "Exported without metadata (YAML error bypassed).",
-  LICENSE_CONNECTION_ERROR: "Connection error. Please check your internet connection."
+  EXPORT_FALLBACK_YAML: "Exported without metadata (YAML error bypassed)."
 };
 
 // src/lang/locale/de.ts
@@ -158,15 +153,6 @@ var de_default = {
   SETTING_TEST_SOUND_NAME: "Sound testen",
   SETTING_TEST_SOUND_DESC: "Klicke hier, um das Audio-Feedback zu testen.",
   SETTING_TEST_SOUND_BUTTON: "Test Sound",
-  SETTING_LICENSE_KEY_NAME: "Lizenzschl\xFCssel",
-  SETTING_LICENSE_KEY_DESC: "Gib deinen Lizenzschl\xFCssel ein, um pro-Funktionen freizuschalten (zum Beispiel eigene pandoc-Argumente).",
-  SETTING_LICENSE_VERIFY_BUTTON: "Pr\xFCfen",
-  SETTING_BUY_PRO_NAME: "pro-Version holen",
-  SETTING_BUY_PRO_DESC: "Schalte Ordner-Kopieren, pandoc-Vorlagen und eigene Argumente frei.",
-  SETTING_BUY_PRO_BUTTON: "Lizenz kaufen",
-  LICENSE_VALID: "Lizenz ist g\xFCltig. Pro-Funktionen freigeschaltet.",
-  LICENSE_INVALID: "Ung\xFCltiger Lizenzschl\xFCssel.",
-  PRO_FEATURE_LOCKED: "Dies ist eine pro-Funktion. Bitte gib einen g\xFCltigen Lizenzschl\xFCssel ein.",
   COPY_COMMAND_NAME: "Kopiere markierte Dateien (aus dem File Explorer)",
   PLACEHOLDER_TARGET_FOLDER: "/pfad/zum/ordner",
   PLACEHOLDER_TEMPLATES_FOLDER: "/pfad/zu/vorlagen",
@@ -180,8 +166,7 @@ var de_default = {
   SETTING_HELP_DESC: "\xD6ffne die offizielle Dokumentation und Installationsanleitung.",
   SETTING_HELP_BUTTON: "Dokumentation \xF6ffnen",
   SETTING_HELP_BUG_BUTTON: "Fehler melden",
-  EXPORT_FALLBACK_YAML: "Exportiert ohne Metadaten (YAML-Fehler umgangen).",
-  LICENSE_CONNECTION_ERROR: "Verbindungsfehler. Bitte \xFCberpr\xFCfe deine Internetverbindung."
+  EXPORT_FALLBACK_YAML: "Exportiert ohne Metadaten (YAML-Fehler umgangen)."
 };
 
 // src/lang/locale/fr.ts
@@ -228,15 +213,6 @@ var fr_default = {
   SETTING_TEST_SOUND_NAME: "Tester le son",
   SETTING_TEST_SOUND_DESC: "Cliquez ici pour tester le retour audio.",
   SETTING_TEST_SOUND_BUTTON: "Tester le son",
-  SETTING_LICENSE_KEY_NAME: "Cl\xE9 de licence",
-  SETTING_LICENSE_KEY_DESC: "Entrez votre cl\xE9 de licence pour d\xE9bloquer les fonctionnalit\xE9s pro (par exemple, arguments pandoc personnalis\xE9s).",
-  SETTING_LICENSE_VERIFY_BUTTON: "V\xE9rifier",
-  SETTING_BUY_PRO_NAME: "Obtenir la version pro",
-  SETTING_BUY_PRO_DESC: "D\xE9bloquez la copie de dossiers, les mod\xE8les pandoc et les arguments personnalis\xE9s.",
-  SETTING_BUY_PRO_BUTTON: "Acheter une licence",
-  LICENSE_VALID: "La licence est valide. Fonctionnalit\xE9s pro d\xE9bloqu\xE9es.",
-  LICENSE_INVALID: "Cl\xE9 de licence invalide.",
-  PRO_FEATURE_LOCKED: "C'est une fonctionnalit\xE9 pro. Veuillez entrer une cl\xE9 de licence valide.",
   COPY_COMMAND_NAME: "Copier les fichiers s\xE9lectionn\xE9s (depuis l'explorateur de fichiers)",
   PLACEHOLDER_TARGET_FOLDER: "/chemin/vers/dossier",
   PLACEHOLDER_TEMPLATES_FOLDER: "/chemin/vers/modeles",
@@ -250,8 +226,7 @@ var fr_default = {
   SETTING_HELP_DESC: "Ouvrir la documentation officielle et le guide d'installation.",
   SETTING_HELP_BUTTON: "Ouvrir la documentation",
   SETTING_HELP_BUG_BUTTON: "Signaler un bug",
-  EXPORT_FALLBACK_YAML: "Export\xE9 sans m\xE9tadonn\xE9es (erreur YAML contourn\xE9e).",
-  LICENSE_CONNECTION_ERROR: "Erreur de connexion. Veuillez v\xE9rifier votre connexion internet."
+  EXPORT_FALLBACK_YAML: "Export\xE9 sans m\xE9tadonn\xE9es (erreur YAML contourn\xE9e)."
 };
 
 // src/lang/locale/es.ts
@@ -298,15 +273,6 @@ var es_default = {
   SETTING_TEST_SOUND_NAME: "Probar sonido",
   SETTING_TEST_SOUND_DESC: "Haga clic aqu\xED para probar la retroalimentaci\xF3n de audio.",
   SETTING_TEST_SOUND_BUTTON: "Probar sonido",
-  SETTING_LICENSE_KEY_NAME: "Clave de licencia",
-  SETTING_LICENSE_KEY_DESC: "Ingrese su clave de licencia para desbloquear las funciones pro (por ejemplo, argumentos personalizados de pandoc).",
-  SETTING_LICENSE_VERIFY_BUTTON: "Verificar",
-  SETTING_BUY_PRO_NAME: "Obtener versi\xF3n pro",
-  SETTING_BUY_PRO_DESC: "Desbloquee la copia de carpetas, plantillas de pandoc y argumentos personalizados.",
-  SETTING_BUY_PRO_BUTTON: "Comprar licencia",
-  LICENSE_VALID: "La licencia es v\xE1lida. Funciones pro desbloqueadas.",
-  LICENSE_INVALID: "Clave de licencia inv\xE1lida.",
-  PRO_FEATURE_LOCKED: "Esta es una funci\xF3n pro. Ingrese una clave de licencia v\xE1lida.",
   COPY_COMMAND_NAME: "Copiar archivos seleccionados (desde el explorador de archivos)",
   PLACEHOLDER_TARGET_FOLDER: "/ruta/al/carpeta",
   PLACEHOLDER_TEMPLATES_FOLDER: "/ruta/a/plantillas",
@@ -320,8 +286,7 @@ var es_default = {
   SETTING_HELP_DESC: "Abre la documentaci\xF3n oficial y la gu\xEDa de configuraci\xF3n.",
   SETTING_HELP_BUTTON: "Abrir Documentaci\xF3n",
   SETTING_HELP_BUG_BUTTON: "Reportar error",
-  EXPORT_FALLBACK_YAML: "Exportado sin metadatos (error YAML omitido).",
-  LICENSE_CONNECTION_ERROR: "Error de conexi\xF3n. Por favor, comprueba tu conexi\xF3n a internet."
+  EXPORT_FALLBACK_YAML: "Exportado sin metadatos (error YAML omitido)."
 };
 
 // src/lang/locale/zh.ts
@@ -368,15 +333,11 @@ var zh_default = {
   SETTING_TEST_SOUND_NAME: "\u6D4B\u8BD5\u58F0\u97F3",
   SETTING_TEST_SOUND_DESC: "\u70B9\u51FB\u6B64\u5904\u6D4B\u8BD5\u97F3\u9891\u53CD\u9988\u3002",
   SETTING_TEST_SOUND_BUTTON: "\u6D4B\u8BD5\u58F0\u97F3",
-  SETTING_LICENSE_KEY_NAME: "\u8BB8\u53EF\u8BC1\u5BC6\u94A5",
-  SETTING_LICENSE_KEY_DESC: "\u8F93\u5165\u60A8\u7684\u8BB8\u53EF\u8BC1\u5BC6\u94A5\u4EE5\u89E3\u9501 pro \u529F\u80FD\uFF08\u4F8B\u5982\u81EA\u5B9A\u4E49 pandoc \u53C2\u6570\uFF09\u3002",
-  SETTING_LICENSE_VERIFY_BUTTON: "\u9A8C\u8BC1",
-  SETTING_BUY_PRO_NAME: "\u83B7\u53D6 pro \u7248\u672C",
-  SETTING_BUY_PRO_DESC: "\u89E3\u9501\u6587\u4EF6\u5939\u590D\u5236\u3001pandoc \u6A21\u677F\u548C\u81EA\u5B9A\u4E49\u53C2\u6570\u3002",
-  SETTING_BUY_PRO_BUTTON: "\u8D2D\u4E70\u8BB8\u53EF\u8BC1",
-  LICENSE_VALID: "\u8BB8\u53EF\u8BC1\u6709\u6548\u3002Pro \u529F\u80FD\u5DF2\u89E3\u9501\u3002",
-  LICENSE_INVALID: "\u8BB8\u53EF\u8BC1\u5BC6\u94A5\u65E0\u6548\u3002",
-  PRO_FEATURE_LOCKED: "\u8FD9\u662F\u4E00\u4E2A pro \u529F\u80FD\u3002\u8BF7\u8F93\u5165\u6709\u6548\u7684\u8BB8\u53EF\u8BC1\u5BC6\u94A5\u3002",
+  SETTING_CONTEXT_MENU_HEADING: "\u53F3\u952E\u83DC\u5355",
+  SETTING_TARGET_FOLDER_MENU_NAME: "\u663E\u793A\u201C\u590D\u5236\u5230\u76EE\u6807\u6587\u4EF6\u5939\u201D",
+  SETTING_TARGET_FOLDER_MENU_DESC: "\u5728\u6587\u4EF6\u8D44\u6E90\u7BA1\u7406\u5668\u53F3\u952E\u83DC\u5355\u4E2D\u663E\u793A\u590D\u5236\u5230\u76EE\u6807\u6587\u4EF6\u5939\u529F\u80FD\u3002",
+  SETTING_PANDOC_MENU_NAME: "\u663E\u793A Pandoc \u5BFC\u51FA",
+  SETTING_PANDOC_MENU_DESC: "\u5728 Markdown \u6587\u4EF6\u7684\u53F3\u952E\u83DC\u5355\u4E2D\u663E\u793A Pandoc \u5BFC\u51FA\u5B50\u83DC\u5355\u3002",
   COPY_COMMAND_NAME: "\u590D\u5236\u6240\u9009\u6587\u4EF6\uFF08\u4ECE\u6587\u4EF6\u8D44\u6E90\u7BA1\u7406\u5668\uFF09",
   PLACEHOLDER_TARGET_FOLDER: "/\u6587\u4EF6\u5939\u8DEF\u5F84",
   PLACEHOLDER_TEMPLATES_FOLDER: "/\u6A21\u677F\u6587\u4EF6\u5939\u8DEF\u5F84",
@@ -390,8 +351,7 @@ var zh_default = {
   SETTING_HELP_DESC: "\u6253\u5F00\u5B98\u65B9\u6587\u6863\u548C\u8BBE\u7F6E\u6307\u5357\u3002",
   SETTING_HELP_BUTTON: "\u6253\u5F00\u6587\u6863",
   SETTING_HELP_BUG_BUTTON: "\u62A5\u544A\u9519\u8BEF",
-  EXPORT_FALLBACK_YAML: "\u5DF2\u5BFC\u51FA\uFF0C\u65E0\u5143\u6570\u636E\uFF08\u5DF2\u7ED5\u8FC7 YAML \u9519\u8BEF\uFF09\u3002",
-  LICENSE_CONNECTION_ERROR: "\u8FDE\u63A5\u9519\u8BEF\u3002\u8BF7\u68C0\u67E5\u60A8\u7684\u4E92\u8054\u7F51\u8FDE\u63A5\u3002"
+  EXPORT_FALLBACK_YAML: "\u5DF2\u5BFC\u51FA\uFF0C\u65E0\u5143\u6570\u636E\uFF08\u5DF2\u7ED5\u8FC7 YAML \u9519\u8BEF\uFF09\u3002"
 };
 
 // src/lang/locale/ja.ts
@@ -438,15 +398,6 @@ var ja_default = {
   SETTING_TEST_SOUND_NAME: "\u30B5\u30A6\u30F3\u30C9\u30C6\u30B9\u30C8",
   SETTING_TEST_SOUND_DESC: "\u3053\u3053\u3092\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u30AA\u30FC\u30C7\u30A3\u30AA\u30D5\u30A3\u30FC\u30C9\u30D0\u30C3\u30AF\u3092\u30C6\u30B9\u30C8\u3057\u307E\u3059\u3002",
   SETTING_TEST_SOUND_BUTTON: "\u30B5\u30A6\u30F3\u30C9\u30C6\u30B9\u30C8",
-  SETTING_LICENSE_KEY_NAME: "\u30E9\u30A4\u30BB\u30F3\u30B9\u30AD\u30FC",
-  SETTING_LICENSE_KEY_DESC: "pro\u6A5F\u80FD\u3092\u30A2\u30F3\u30ED\u30C3\u30AF\u3059\u308B\u306B\u306F\u30E9\u30A4\u30BB\u30F3\u30B9\u30AD\u30FC\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\uFF08\u4F8B\uFF1A\u30AB\u30B9\u30BF\u30E0pandoc\u5F15\u6570\uFF09\u3002",
-  SETTING_LICENSE_VERIFY_BUTTON: "\u8A8D\u8A3C",
-  SETTING_BUY_PRO_NAME: "pro\u30D0\u30FC\u30B8\u30E7\u30F3\u3092\u5165\u624B",
-  SETTING_BUY_PRO_DESC: "\u30D5\u30A9\u30EB\u30C0\u306E\u30B3\u30D4\u30FC\u3001pandoc\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\u3001\u30AB\u30B9\u30BF\u30E0\u5F15\u6570\u3092\u30A2\u30F3\u30ED\u30C3\u30AF\u3057\u307E\u3059\u3002",
-  SETTING_BUY_PRO_BUTTON: "\u30E9\u30A4\u30BB\u30F3\u30B9\u3092\u8CFC\u5165",
-  LICENSE_VALID: "\u30E9\u30A4\u30BB\u30F3\u30B9\u306F\u6709\u52B9\u3067\u3059\u3002Pro\u6A5F\u80FD\u304C\u30A2\u30F3\u30ED\u30C3\u30AF\u3055\u308C\u307E\u3057\u305F\u3002",
-  LICENSE_INVALID: "\u7121\u52B9\u306A\u30E9\u30A4\u30BB\u30F3\u30B9\u30AD\u30FC\u3067\u3059\u3002",
-  PRO_FEATURE_LOCKED: "\u3053\u308C\u306Fpro\u6A5F\u80FD\u3067\u3059\u3002\u6709\u52B9\u306A\u30E9\u30A4\u30BB\u30F3\u30B9\u30AD\u30FC\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
   COPY_COMMAND_NAME: "\u9078\u629E\u3057\u305F\u30D5\u30A1\u30A4\u30EB\u3092\u30B3\u30D4\u30FC (\u30D5\u30A1\u30A4\u30EB\u30A8\u30AF\u30B9\u30D7\u30ED\u30FC\u30E9\u30FC\u304B\u3089)",
   PLACEHOLDER_TARGET_FOLDER: "/\u30D5\u30A9\u30EB\u30C0\u3078\u306E\u30D1\u30B9",
   PLACEHOLDER_TEMPLATES_FOLDER: "/\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\u3078\u306E\u30D1\u30B9",
@@ -460,8 +411,7 @@ var ja_default = {
   SETTING_HELP_DESC: "\u516C\u5F0F\u30C9\u30AD\u30E5\u30E1\u30F3\u30C8\u3068\u30BB\u30C3\u30C8\u30A2\u30C3\u30D7\u30AC\u30A4\u30C9\u3092\u958B\u304D\u307E\u3059\u3002",
   SETTING_HELP_BUTTON: "\u30C9\u30AD\u30E5\u30E1\u30F3\u30C8\u3092\u958B\u304F",
   SETTING_HELP_BUG_BUTTON: "\u30D0\u30B0\u3092\u5831\u544A",
-  EXPORT_FALLBACK_YAML: "\u30E1\u30BF\u30C7\u30FC\u30BF\u306A\u3057\u3067\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8\u3055\u308C\u307E\u3057\u305F\uFF08YAML\u30A8\u30E9\u30FC\u3092\u56DE\u907F\uFF09\u3002",
-  LICENSE_CONNECTION_ERROR: "\u63A5\u7D9A\u30A8\u30E9\u30FC\u3002\u30A4\u30F3\u30BF\u30FC\u30CD\u30C3\u30C8\u63A5\u7D9A\u3092\u78BA\u8A8D\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
+  EXPORT_FALLBACK_YAML: "\u30E1\u30BF\u30C7\u30FC\u30BF\u306A\u3057\u3067\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8\u3055\u308C\u307E\u3057\u305F\uFF08YAML\u30A8\u30E9\u30FC\u3092\u56DE\u907F\uFF09\u3002"
 };
 
 // src/lang/locale/ko.ts
@@ -508,15 +458,6 @@ var ko_default = {
   SETTING_TEST_SOUND_NAME: "\uC0AC\uC6B4\uB4DC \uD14C\uC2A4\uD2B8",
   SETTING_TEST_SOUND_DESC: "\uC5EC\uAE30\uB97C \uD074\uB9AD\uD558\uC5EC \uC624\uB514\uC624 \uD53C\uB4DC\uBC31\uC744 \uD14C\uC2A4\uD2B8\uD558\uC2ED\uC2DC\uC624.",
   SETTING_TEST_SOUND_BUTTON: "\uC0AC\uC6B4\uB4DC \uD14C\uC2A4\uD2B8",
-  SETTING_LICENSE_KEY_NAME: "\uB77C\uC774\uC120\uC2A4 \uD0A4",
-  SETTING_LICENSE_KEY_DESC: "pro \uAE30\uB2A5\uC744 \uC7A0\uAE08 \uD574\uC81C\uD558\uB824\uBA74 \uB77C\uC774\uC120\uC2A4 \uD0A4\uB97C \uC785\uB825\uD558\uC2ED\uC2DC\uC624 (\uC608: \uC0AC\uC6A9\uC790 \uC815\uC758 pandoc \uC778\uC218).",
-  SETTING_LICENSE_VERIFY_BUTTON: "\uC778\uC99D",
-  SETTING_BUY_PRO_NAME: "pro \uBC84\uC804 \uBC1B\uAE30",
-  SETTING_BUY_PRO_DESC: "\uD3F4\uB354 \uBCF5\uC0AC, pandoc \uD15C\uD50C\uB9BF \uBC0F \uC0AC\uC6A9\uC790 \uC815\uC758 \uC778\uC218\uB97C \uC7A0\uAE08 \uD574\uC81C\uD569\uB2C8\uB2E4.",
-  SETTING_BUY_PRO_BUTTON: "\uB77C\uC774\uC120\uC2A4 \uAD6C\uB9E4",
-  LICENSE_VALID: "\uB77C\uC774\uC120\uC2A4\uAC00 \uC720\uD6A8\uD569\uB2C8\uB2E4. Pro \uAE30\uB2A5\uC774 \uD65C\uC131\uD654\uB418\uC5C8\uC2B5\uB2C8\uB2E4.",
-  LICENSE_INVALID: "\uC720\uD6A8\uD558\uC9C0 \uC54A\uC740 \uB77C\uC774\uC120\uC2A4 \uD0A4\uC785\uB2C8\uB2E4.",
-  PRO_FEATURE_LOCKED: "\uC774\uAC83\uC740 pro \uAE30\uB2A5\uC785\uB2C8\uB2E4. \uC720\uD6A8\uD55C \uB77C\uC774\uC120\uC2A4 \uD0A4\uB97C \uC785\uB825\uD558\uC2ED\uC2DC\uC624.",
   COPY_COMMAND_NAME: "\uC120\uD0DD\uD55C \uD30C\uC77C \uBCF5\uC0AC (\uD30C\uC77C \uD0D0\uC0C9\uAE30\uC5D0\uC11C)",
   PLACEHOLDER_TARGET_FOLDER: "/\uD3F4\uB354/\uACBD\uB85C",
   PLACEHOLDER_TEMPLATES_FOLDER: "/\uD15C\uD50C\uB9BF/\uACBD\uB85C",
@@ -530,8 +471,7 @@ var ko_default = {
   SETTING_HELP_DESC: "\uACF5\uC2DD \uBB38\uC11C \uBC0F \uC124\uC815 \uAC00\uC774\uB4DC\uB97C \uC5FD\uB2C8\uB2E4.",
   SETTING_HELP_BUTTON: "\uBB38\uC11C \uC5F4\uAE30",
   SETTING_HELP_BUG_BUTTON: "\uBC84\uADF8 \uC2E0\uACE0",
-  EXPORT_FALLBACK_YAML: "\uBA54\uD0C0\uB370\uC774\uD130 \uC5C6\uC774 \uB0B4\uBCF4\uB0C8\uC2B5\uB2C8\uB2E4 (YAML \uC624\uB958 \uC6B0\uD68C).",
-  LICENSE_CONNECTION_ERROR: "\uC5F0\uACB0 \uC624\uB958. \uC778\uD130\uB137 \uC5F0\uACB0\uC744 \uD655\uC778\uD574 \uC8FC\uC138\uC694."
+  EXPORT_FALLBACK_YAML: "\uBA54\uD0C0\uB370\uC774\uD130 \uC5C6\uC774 \uB0B4\uBCF4\uB0C8\uC2B5\uB2C8\uB2E4 (YAML \uC624\uB958 \uC6B0\uD68C)."
 };
 
 // src/lang/locale/pt.ts
@@ -578,15 +518,6 @@ var pt_default = {
   SETTING_TEST_SOUND_NAME: "Testar Som",
   SETTING_TEST_SOUND_DESC: "Clique aqui para testar o feedback de \xE1udio.",
   SETTING_TEST_SOUND_BUTTON: "Testar Som",
-  SETTING_LICENSE_KEY_NAME: "Chave de Licen\xE7a",
-  SETTING_LICENSE_KEY_DESC: "Insira sua chave de licen\xE7a para desbloquear os recursos pro (por exemplo, argumentos personalizados do pandoc).",
-  SETTING_LICENSE_VERIFY_BUTTON: "Verificar",
-  SETTING_BUY_PRO_NAME: "Obter vers\xE3o pro",
-  SETTING_BUY_PRO_DESC: "Desbloqueie a c\xF3pia de pastas, modelos pandoc e argumentos personalizados.",
-  SETTING_BUY_PRO_BUTTON: "Comprar licen\xE7a",
-  LICENSE_VALID: "Licen\xE7a v\xE1lida. Recursos pro desbloqueados.",
-  LICENSE_INVALID: "Chave de licen\xE7a inv\xE1lida.",
-  PRO_FEATURE_LOCKED: "Este \xE9 um recurso pro. Por favor, insira uma chave de licen\xE7a v\xE1lida.",
   COPY_COMMAND_NAME: "Copiar arquivos selecionados (do explorador de arquivos)",
   PLACEHOLDER_TARGET_FOLDER: "/caminho/para/pasta",
   PLACEHOLDER_TEMPLATES_FOLDER: "/caminho/para/modelos",
@@ -600,8 +531,7 @@ var pt_default = {
   SETTING_HELP_DESC: "Abra a documenta\xE7\xE3o oficial e o guia de configura\xE7\xE3o.",
   SETTING_HELP_BUTTON: "Abrir Documenta\xE7\xE3o",
   SETTING_HELP_BUG_BUTTON: "Relatar erro",
-  EXPORT_FALLBACK_YAML: "Exportado sem metadados (erro YAML ignorado).",
-  LICENSE_CONNECTION_ERROR: "Erro de conex\xE3o. Por favor, verifique sua conex\xE3o com a internet."
+  EXPORT_FALLBACK_YAML: "Exportado sem metadados (erro YAML ignorado)."
 };
 
 // src/lang/locale/ru.ts
@@ -648,15 +578,6 @@ var ru_default = {
   SETTING_TEST_SOUND_NAME: "\u041F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u0437\u0432\u0443\u043A",
   SETTING_TEST_SOUND_DESC: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u0437\u0434\u0435\u0441\u044C, \u0447\u0442\u043E\u0431\u044B \u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u0437\u0432\u0443\u043A\u043E\u0432\u043E\u0439 \u043E\u0442\u043A\u043B\u0438\u043A.",
   SETTING_TEST_SOUND_BUTTON: "\u041F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u0437\u0432\u0443\u043A",
-  SETTING_LICENSE_KEY_NAME: "\u041B\u0438\u0446\u0435\u043D\u0437\u0438\u043E\u043D\u043D\u044B\u0439 \u043A\u043B\u044E\u0447",
-  SETTING_LICENSE_KEY_DESC: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043B\u0438\u0446\u0435\u043D\u0437\u0438\u043E\u043D\u043D\u044B\u0439 \u043A\u043B\u044E\u0447, \u0447\u0442\u043E\u0431\u044B \u0440\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u0442\u044C pro-\u0444\u0443\u043D\u043A\u0446\u0438\u0438 (\u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u0430\u0440\u0433\u0443\u043C\u0435\u043D\u0442\u044B pandoc).",
-  SETTING_LICENSE_VERIFY_BUTTON: "\u041F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C",
-  SETTING_BUY_PRO_NAME: "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u0432\u0435\u0440\u0441\u0438\u044E pro",
-  SETTING_BUY_PRO_DESC: "\u0420\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u0443\u0439\u0442\u0435 \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u043F\u0430\u043F\u043E\u043A, \u0448\u0430\u0431\u043B\u043E\u043D\u044B pandoc \u0438 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u0430\u0440\u0433\u0443\u043C\u0435\u043D\u0442\u044B.",
-  SETTING_BUY_PRO_BUTTON: "\u041A\u0443\u043F\u0438\u0442\u044C \u043B\u0438\u0446\u0435\u043D\u0437\u0438\u044E",
-  LICENSE_VALID: "\u041B\u0438\u0446\u0435\u043D\u0437\u0438\u044F \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u0430. Pro-\u0444\u0443\u043D\u043A\u0446\u0438\u0438 \u0440\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u043D\u044B.",
-  LICENSE_INVALID: "\u041D\u0435\u0432\u0435\u0440\u043D\u044B\u0439 \u043B\u0438\u0446\u0435\u043D\u0437\u0438\u043E\u043D\u043D\u044B\u0439 \u043A\u043B\u044E\u0447.",
-  PRO_FEATURE_LOCKED: "\u042D\u0442\u043E pro-\u0444\u0443\u043D\u043A\u0446\u0438\u044F. \u041F\u043E\u0436\u0430\u043B\u0443\u0439\u0441\u0442\u0430, \u0432\u0432\u0435\u0434\u0438\u0442\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0439 \u043B\u0438\u0446\u0435\u043D\u0437\u0438\u043E\u043D\u043D\u044B\u0439 \u043A\u043B\u044E\u0447.",
   COPY_COMMAND_NAME: "\u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u044B\u0435 \u0444\u0430\u0439\u043B\u044B (\u0438\u0437 \u043F\u0440\u043E\u0432\u043E\u0434\u043D\u0438\u043A\u0430)",
   PLACEHOLDER_TARGET_FOLDER: "/\u043F\u0443\u0442\u044C/\u043A/\u043F\u0430\u043F\u043A\u0435",
   PLACEHOLDER_TEMPLATES_FOLDER: "/\u043F\u0443\u0442\u044C/\u043A/\u0448\u0430\u0431\u043B\u043E\u043D\u0430\u043C",
@@ -670,8 +591,7 @@ var ru_default = {
   SETTING_HELP_DESC: "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043E\u0444\u0438\u0446\u0438\u0430\u043B\u044C\u043D\u0443\u044E \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430\u0446\u0438\u044E \u0438 \u0440\u0443\u043A\u043E\u0432\u043E\u0434\u0441\u0442\u0432\u043E \u043F\u043E \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0435.",
   SETTING_HELP_BUTTON: "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430\u0446\u0438\u044E",
   SETTING_HELP_BUG_BUTTON: "\u0421\u043E\u043E\u0431\u0449\u0438\u0442\u044C \u043E\u0431 \u043E\u0448\u0438\u0431\u043A\u0435",
-  EXPORT_FALLBACK_YAML: "\u042D\u043A\u0441\u043F\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u043E \u0431\u0435\u0437 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u043D\u044B\u0445 (\u043E\u0448\u0438\u0431\u043A\u0430 YAML \u043E\u0431\u043E\u0439\u0434\u0435\u043D\u0430).",
-  LICENSE_CONNECTION_ERROR: "\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F. \u041F\u043E\u0436\u0430\u043B\u0443\u0439\u0441\u0442\u0430, \u043F\u0440\u043E\u0432\u0435\u0440\u044C\u0442\u0435 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435 \u043A \u0438\u043D\u0442\u0435\u0440\u043D\u0435\u0442\u0443."
+  EXPORT_FALLBACK_YAML: "\u042D\u043A\u0441\u043F\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u043E \u0431\u0435\u0437 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u043D\u044B\u0445 (\u043E\u0448\u0438\u0431\u043A\u0430 YAML \u043E\u0431\u043E\u0439\u0434\u0435\u043D\u0430)."
 };
 
 // src/lang/helpers.ts
@@ -700,59 +620,6 @@ function t(str, ...args) {
   return text;
 }
 
-// src/license.ts
-var import_obsidian = require("obsidian");
-async function verifyLicense(licenseKey, instanceId) {
-  if (!licenseKey || licenseKey.trim().length < 5) {
-    return { isValid: false };
-  }
-  const key = licenseKey.trim();
-  try {
-    const isValidation = !!instanceId;
-    const endpoint = isValidation ? "validate" : "activate";
-    const body = {
-      license_key: key,
-      instance_name: "Obsidian Plugin"
-    };
-    if (isValidation) {
-      body.instance_id = instanceId;
-    }
-    const response = await (0, import_obsidian.requestUrl)({
-      url: `https://api.lemonsqueezy.com/v1/licenses/${endpoint}`,
-      method: "POST",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    });
-    const data = response.json;
-    const success = isValidation ? data.valid : data.activated;
-    if (success === true) {
-      return {
-        isValid: true,
-        message: isValidation ? "License is valid." : "License activated successfully.",
-        errorType: "none",
-        instanceId: data.instance?.id || instanceId
-      };
-    } else if (data.error) {
-      return {
-        isValid: false,
-        message: data.error,
-        errorType: "invalid"
-      };
-    }
-    return { isValid: false, errorType: "invalid" };
-  } catch (e) {
-    console.error("Lemon Squeezy Verification Error:", e);
-    return {
-      isValid: false,
-      message: "Connection error to license server.",
-      errorType: "connection"
-    };
-  }
-}
-
 // src/main.ts
 var electron = __toESM(require("electron"));
 var { clipboard } = electron;
@@ -762,9 +629,8 @@ var DEFAULT_SETTINGS = {
   pandocPath: "pandoc",
   customPandocArgs: "",
   wordTemplatesFolderPath: "",
-  licenseKey: "",
-  instanceId: "",
-  isPro: false
+  showCopyToTargetFolderMenu: true,
+  showPandocExportMenu: true
 };
 var PANDOC_FORMATS = {
   "docx": { name: "Word", ext: "docx", args: "", icon: "file-text", menuKey: "WORD_TEMPLATES_MENU" },
@@ -774,7 +640,7 @@ var PANDOC_FORMATS = {
   "markdown": { name: "Markdown", ext: "md", args: "-t markdown", icon: "file-text", menuKey: "MD_TEMPLATES_MENU" },
   "html": { name: "HTML", ext: "html", args: "--embed-resources --standalone", icon: "globe", menuKey: "HTML_TEMPLATES_MENU" }
 };
-var NaturalMove = class extends import_obsidian2.Plugin {
+var NaturalMove = class extends import_obsidian.Plugin {
   settings;
   audioCtx = null;
   boundDragStartHandler;
@@ -782,22 +648,6 @@ var NaturalMove = class extends import_obsidian2.Plugin {
   async onload() {
     console.debug(t("LOAD_PLUGIN"));
     await this.loadSettings();
-    if (this.settings.licenseKey) {
-      const status = await verifyLicense(this.settings.licenseKey, this.settings.instanceId);
-      if (status.isValid) {
-        this.settings.isPro = true;
-        if (status.instanceId) {
-          this.settings.instanceId = status.instanceId;
-          await this.saveSettings();
-        }
-      } else if (status.errorType === "invalid") {
-        this.settings.isPro = false;
-        this.settings.instanceId = "";
-        await this.saveSettings();
-      }
-    } else {
-      this.settings.isPro = false;
-    }
     this.initAudio();
     this.boundKeyDownHandler = (evt) => {
       if ((evt.metaKey || evt.ctrlKey) && (evt.key.toLowerCase() === "c" || evt.code === "KeyC")) {
@@ -807,11 +657,6 @@ var NaturalMove = class extends import_obsidian2.Plugin {
         }
         const files = this.getSelectedFiles();
         if (files.length > 0) {
-          const hasFolder = files.some((f) => f instanceof import_obsidian2.TFolder);
-          if (hasFolder && !this.settings.isPro) {
-            new import_obsidian2.Notice(t("PRO_FEATURE_LOCKED"));
-            return;
-          }
           evt.preventDefault();
           evt.stopPropagation();
           void this.copyFilesToClipboard(files);
@@ -825,14 +670,9 @@ var NaturalMove = class extends import_obsidian2.Plugin {
       callback: () => {
         const files = this.getSelectedFiles();
         if (files.length > 0) {
-          const hasFolder = files.some((f) => f instanceof import_obsidian2.TFolder);
-          if (hasFolder && !this.settings.isPro) {
-            new import_obsidian2.Notice(t("PRO_FEATURE_LOCKED"));
-            return;
-          }
           void this.copyFilesToClipboard(files);
         } else {
-          new import_obsidian2.Notice(t("NO_FILES_SELECTED"));
+          new import_obsidian.Notice(t("NO_FILES_SELECTED"));
         }
       }
     });
@@ -840,7 +680,7 @@ var NaturalMove = class extends import_obsidian2.Plugin {
     document.addEventListener("dragstart", this.boundDragStartHandler, true);
     this.registerEvent(
       this.app.workspace.on("file-menu", (menu, file) => {
-        if (file instanceof import_obsidian2.TAbstractFile) {
+        if (file instanceof import_obsidian.TAbstractFile) {
           this.addCopyMenuItems(menu, [file], false);
         }
       })
@@ -887,12 +727,6 @@ var NaturalMove = class extends import_obsidian2.Plugin {
       }
     }
     if (files.length > 0) {
-      const hasFolder = files.some((f) => f instanceof import_obsidian2.TFolder);
-      if (hasFolder && !this.settings.isPro) {
-        new import_obsidian2.Notice(t("PRO_FEATURE_LOCKED"));
-        evt.preventDefault();
-        return;
-      }
       const absolutePaths = files.map((f) => this.getAbsolutePath(f)).filter((p) => p !== null);
       if (absolutePaths.length > 0) {
         this.startNativeDrag(evt, files, absolutePaths);
@@ -978,36 +812,23 @@ var NaturalMove = class extends import_obsidian2.Plugin {
     const fileCount = files.length;
     const labelSuffix = fileCount > 1 ? ` (${fileCount})` : "";
     const prefix = isLink ? t("LINKED_FILE") : "";
-    const hasFolder = files.some((f) => f instanceof import_obsidian2.TFolder);
     menu.addItem((item) => {
-      const title = `${prefix}${t("COPY_TO_CLIPBOARD")}${labelSuffix}${hasFolder && !this.settings.isPro ? " (Pro)" : ""}`;
+      const title = `${prefix}${t("COPY_TO_CLIPBOARD")}${labelSuffix}`;
       item.setTitle(title).setIcon("copy").setSection("action").onClick(() => {
-        if (hasFolder && !this.settings.isPro) {
-          new import_obsidian2.Notice(t("PRO_FEATURE_LOCKED"));
-          return;
-        }
         this.copyFilesToClipboard(files);
       });
     });
-    menu.addItem((item) => {
-      const title = `${prefix}${t("COPY_TO_TARGET_FOLDER")}${labelSuffix}${!this.settings.isPro ? " (Pro)" : ""}`;
-      item.setTitle(title).setIcon("folder-check").setSection("action").onClick(() => {
-        if (!this.settings.isPro) {
-          new import_obsidian2.Notice(t("PRO_FEATURE_LOCKED"));
-          return;
-        }
-        this.copyToTargetFolder(files);
+    if (this.settings.showCopyToTargetFolderMenu) {
+      menu.addItem((item) => {
+        const title = `${prefix}${t("COPY_TO_TARGET_FOLDER")}${labelSuffix}`;
+        item.setTitle(title).setIcon("folder-check").setSection("action").onClick(() => this.copyToTargetFolder(files));
       });
-    });
-    const mdFiles = files.filter((f) => f instanceof import_obsidian2.TFile && f.extension === "md");
-    if (mdFiles.length > 0) {
+    }
+    const mdFiles = files.filter((f) => f instanceof import_obsidian.TFile && f.extension === "md");
+    if (mdFiles.length > 0 && this.settings.showPandocExportMenu) {
       menu.addItem((mainItem) => {
-        const mainTitle = t("EXPORT_SUBMENU_TITLE") + labelSuffix + (!this.settings.isPro ? " (Pro)" : "");
+        const mainTitle = t("EXPORT_SUBMENU_TITLE") + labelSuffix;
         mainItem.setTitle(mainTitle).setIcon("export").setSection("action");
-        if (!this.settings.isPro) {
-          mainItem.onClick(() => new import_obsidian2.Notice(t("PRO_FEATURE_LOCKED")));
-          return;
-        }
         const exportSubmenu = mainItem.setSubmenu();
         Object.entries(PANDOC_FORMATS).forEach(([key, format]) => {
           exportSubmenu.addItem((formatItem) => {
@@ -1073,7 +894,7 @@ var NaturalMove = class extends import_obsidian2.Plugin {
   copyFilesToClipboard(files) {
     const absolutePaths = files.map((f) => this.getAbsolutePath(f)).filter((p) => p !== null);
     if (absolutePaths.length === 0) {
-      new import_obsidian2.Notice(t("COPY_ERROR_PATHS"));
+      new import_obsidian.Notice(t("COPY_ERROR_PATHS"));
       return;
     }
     const platform2 = os.platform();
@@ -1092,10 +913,10 @@ pb's writeObjects:fileArray
           if (error) {
             console.error("AppleScript Error:", error);
             clipboard.writeText(absolutePaths.join("\n"));
-            new import_obsidian2.Notice(t("COPY_ERROR_GENERIC"));
+            new import_obsidian.Notice(t("COPY_ERROR_GENERIC"));
           } else {
             this.playSuccessSound();
-            new import_obsidian2.Notice(t("COPY_SUCCESS", absolutePaths.length.toString()));
+            new import_obsidian.Notice(t("COPY_SUCCESS", absolutePaths.length.toString()));
           }
         });
         child.stdin?.write(script);
@@ -1107,29 +928,25 @@ pb's writeObjects:fileArray
           if (error) {
             console.error("PowerShell Error:", error);
             clipboard.writeText(absolutePaths.join("\n"));
-            new import_obsidian2.Notice(t("COPY_ERROR_GENERIC"));
+            new import_obsidian.Notice(t("COPY_ERROR_GENERIC"));
           } else {
             this.playSuccessSound();
-            new import_obsidian2.Notice(t("COPY_SUCCESS", absolutePaths.length.toString()));
+            new import_obsidian.Notice(t("COPY_SUCCESS", absolutePaths.length.toString()));
           }
         });
       } else {
         clipboard.writeText(absolutePaths.join("\n"));
         this.playSuccessSound();
-        new import_obsidian2.Notice(t("COPY_SUCCESS", absolutePaths.length.toString()));
+        new import_obsidian.Notice(t("COPY_SUCCESS", absolutePaths.length.toString()));
       }
     } catch (err) {
       console.error("Clipboard Error:", err);
-      new import_obsidian2.Notice(t("CRITICAL_COPY_ERROR"));
+      new import_obsidian.Notice(t("CRITICAL_COPY_ERROR"));
     }
   }
   copyToTargetFolder(files) {
-    if (!this.settings.isPro) {
-      new import_obsidian2.Notice(t("PRO_FEATURE_LOCKED"));
-      return;
-    }
     if (!this.settings.targetFolderPath) {
-      new import_obsidian2.Notice(t("TARGET_FOLDER_NOT_SET"));
+      new import_obsidian.Notice(t("TARGET_FOLDER_NOT_SET"));
       return;
     }
     let successCount = 0;
@@ -1142,7 +959,7 @@ pb's writeObjects:fileArray
       }
       const destinationPath = path.join(this.settings.targetFolderPath, file.name);
       try {
-        if (file instanceof import_obsidian2.TFolder) {
+        if (file instanceof import_obsidian.TFolder) {
           fs.cpSync(sourcePath, destinationPath, { recursive: true });
         } else {
           fs.copyFileSync(sourcePath, destinationPath);
@@ -1155,10 +972,10 @@ pb's writeObjects:fileArray
     }
     if (successCount > 0) {
       this.playSuccessSound();
-      new import_obsidian2.Notice(t("TARGET_FOLDER_SUCCESS", successCount.toString()));
+      new import_obsidian.Notice(t("TARGET_FOLDER_SUCCESS", successCount.toString()));
     }
     if (errorCount > 0) {
-      new import_obsidian2.Notice(t("TARGET_FOLDER_ERROR", errorCount.toString()));
+      new import_obsidian.Notice(t("TARGET_FOLDER_ERROR", errorCount.toString()));
     }
   }
   async createVideoThumbnail(videoFile, tempDir) {
@@ -1242,7 +1059,7 @@ pb's writeObjects:fileArray
         attributes = `{width=${width}px}`;
       }
       const linkedFile = this.app.metadataCache.getFirstLinkpathDest(linkPath, file.path);
-      if (linkedFile instanceof import_obsidian2.TFile) {
+      if (linkedFile instanceof import_obsidian.TFile) {
         const absolutePath = this.getAbsolutePath(linkedFile);
         if (!absolutePath) continue;
         const extension = linkedFile.extension.toLowerCase();
@@ -1266,12 +1083,8 @@ pb's writeObjects:fileArray
     return tempMdPath;
   }
   async exportWithPandoc(files, format, templatePath) {
-    if (!this.settings.isPro) {
-      new import_obsidian2.Notice(t("PRO_FEATURE_LOCKED"));
-      return;
-    }
     if (!this.settings.targetFolderPath || !fs.existsSync(this.settings.targetFolderPath)) {
-      new import_obsidian2.Notice(t("TARGET_FOLDER_NOT_EXISTS"));
+      new import_obsidian.Notice(t("TARGET_FOLDER_NOT_EXISTS"));
       return;
     }
     let successCount = 0;
@@ -1279,7 +1092,7 @@ pb's writeObjects:fileArray
     let lastError = "";
     const pandocCmd = this.settings.pandocPath || "pandoc";
     const exportName = templatePath ? path.basename(templatePath, ".docx") : format.name;
-    new import_obsidian2.Notice(t("EXPORTING_FILES", files.length.toString(), exportName));
+    new import_obsidian.Notice(t("EXPORTING_FILES", files.length.toString(), exportName));
     const env = {
       ...process.env,
       PATH: `${process.env.PATH || ""}:/usr/local/bin:/opt/homebrew/bin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin`
@@ -1306,8 +1119,8 @@ pb's writeObjects:fileArray
           destName = file.basename + "_export." + format.ext;
         }
         const destPath = path.join(this.settings.targetFolderPath, destName);
-        let customArgs = this.settings.isPro && this.settings.customPandocArgs ? ` ${this.settings.customPandocArgs}` : "";
-        if (this.settings.isPro && templatePath && fs.existsSync(templatePath)) {
+        let customArgs = this.settings.customPandocArgs ? ` ${this.settings.customPandocArgs}` : "";
+        if (templatePath && fs.existsSync(templatePath)) {
           const ext = path.extname(templatePath).toLowerCase();
           if (ext === ".docx" || ext === ".pptx") {
             customArgs += ` --reference-doc="${templatePath}"`;
@@ -1351,7 +1164,7 @@ pb's writeObjects:fileArray
                 });
               });
               successCount++;
-              new import_obsidian2.Notice(t("EXPORT_FALLBACK_YAML") + ` (${file.name})`);
+              new import_obsidian.Notice(t("EXPORT_FALLBACK_YAML") + ` (${file.name})`);
             } catch (fallbackErr) {
               console.error(`Fallback-Fehler beim Export von ${file.name}:`, fallbackErr);
               errorCount++;
@@ -1372,20 +1185,20 @@ pb's writeObjects:fileArray
       }
     }
     if (pandocMissing) {
-      new import_obsidian2.Notice(t("PANDOC_NOT_FOUND"));
+      new import_obsidian.Notice(t("PANDOC_NOT_FOUND"));
       return;
     }
     if (successCount > 0) {
       this.playSuccessSound();
-      new import_obsidian2.Notice(t("EXPORT_SUCCESS", successCount.toString(), format.name));
+      new import_obsidian.Notice(t("EXPORT_SUCCESS", successCount.toString(), format.name));
     }
     if (errorCount > 0) {
-      new import_obsidian2.Notice(t("EXPORT_ERROR", errorCount.toString(), lastError.substring(0, 100)));
+      new import_obsidian.Notice(t("EXPORT_ERROR", errorCount.toString(), lastError.substring(0, 100)));
     }
   }
   getAbsolutePath(file) {
     const adapter = this.app.vault.adapter;
-    if (adapter instanceof import_obsidian2.FileSystemAdapter) {
+    if (adapter instanceof import_obsidian.FileSystemAdapter) {
       return adapter.getFullPath(file.path);
     }
     return null;
@@ -1420,13 +1233,22 @@ pb's writeObjects:fileArray
     }
   }
   async loadSettings() {
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    const savedData = await this.loadData() || {};
+    const hadLegacyLicenseData = ["licenseKey", "instanceId", "isPro"].some((key) => key in savedData);
+    this.settings = Object.assign({}, DEFAULT_SETTINGS, savedData);
+    const migratedSettings = this.settings;
+    delete migratedSettings.licenseKey;
+    delete migratedSettings.instanceId;
+    delete migratedSettings.isPro;
+    if (hadLegacyLicenseData) {
+      await this.saveSettings();
+    }
   }
   async saveSettings() {
     await this.saveData(this.settings);
   }
 };
-var NaturalMoveSettingTab = class extends import_obsidian2.PluginSettingTab {
+var NaturalMoveSettingTab = class extends import_obsidian.PluginSettingTab {
   plugin;
   constructor(app, plugin) {
     super(app, plugin);
@@ -1435,69 +1257,26 @@ var NaturalMoveSettingTab = class extends import_obsidian2.PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    new import_obsidian2.Setting(containerEl).setName(t("SETTINGS_TITLE")).setHeading();
-    const licenseSetting = new import_obsidian2.Setting(containerEl).setName(t("SETTING_LICENSE_KEY_NAME")).setHeading();
-    if (this.plugin.settings.isPro) {
-      licenseSetting.nameEl.createEl("span", {
-        text: " Pro",
-        cls: "natural-move-pro-badge"
-      });
-    }
-    new import_obsidian2.Setting(containerEl).setName(t("SETTING_BUY_PRO_NAME")).setDesc(t("SETTING_BUY_PRO_DESC")).addButton((btn) => btn.setButtonText(t("SETTING_BUY_PRO_BUTTON")).onClick(() => {
-      window.open("https://naturalis.lemonsqueezy.com/checkout/buy/f5b938e2-8022-4eec-a18d-167020fba0e6");
+    new import_obsidian.Setting(containerEl).setName(t("SETTINGS_TITLE")).setHeading();
+    new import_obsidian.Setting(containerEl).setName(t("SETTING_CONTEXT_MENU_HEADING")).setHeading();
+    new import_obsidian.Setting(containerEl).setName(t("SETTING_TARGET_FOLDER_MENU_NAME")).setDesc(t("SETTING_TARGET_FOLDER_MENU_DESC")).addToggle((toggle) => toggle.setValue(this.plugin.settings.showCopyToTargetFolderMenu).onChange(async (value) => {
+      this.plugin.settings.showCopyToTargetFolderMenu = value;
+      await this.plugin.saveSettings();
     }));
-    new import_obsidian2.Setting(containerEl).setName(t("SETTING_LICENSE_KEY_NAME")).setDesc(t("SETTING_LICENSE_KEY_DESC")).addText((text) => text.setPlaceholder("License key").setValue(this.plugin.settings.licenseKey).onChange(async (value) => {
-      const trimmedValue = value.trim();
-      this.plugin.settings.licenseKey = trimmedValue;
-      if (!trimmedValue) {
-        this.plugin.settings.isPro = false;
-        this.plugin.settings.instanceId = "";
-        await this.plugin.saveSettings();
-        this.display();
-      } else {
-        await this.plugin.saveSettings();
-      }
-    })).addButton((btn) => btn.setButtonText(t("SETTING_LICENSE_VERIFY_BUTTON")).setCta().onClick(async () => {
-      btn.setDisabled(true);
-      btn.setButtonText("...");
-      try {
-        const status = await verifyLicense(this.plugin.settings.licenseKey, this.plugin.settings.instanceId);
-        if (status.isValid) {
-          this.plugin.settings.isPro = true;
-          if (status.instanceId) {
-            this.plugin.settings.instanceId = status.instanceId;
-          }
-          new import_obsidian2.Notice(t("LICENSE_VALID"));
-        } else {
-          if (status.errorType === "invalid") {
-            this.plugin.settings.isPro = false;
-            this.plugin.settings.instanceId = "";
-            new import_obsidian2.Notice(t("LICENSE_INVALID") + (status.message ? `: ${status.message}` : ""));
-          } else {
-            new import_obsidian2.Notice(status.message || t("LICENSE_CONNECTION_ERROR"));
-          }
-        }
-        await this.plugin.saveSettings();
-        this.display();
-      } finally {
-        btn.setDisabled(false);
-        btn.setButtonText(t("SETTING_LICENSE_VERIFY_BUTTON"));
-      }
+    new import_obsidian.Setting(containerEl).setName(t("SETTING_PANDOC_MENU_NAME")).setDesc(t("SETTING_PANDOC_MENU_DESC")).addToggle((toggle) => toggle.setValue(this.plugin.settings.showPandocExportMenu).onChange(async (value) => {
+      this.plugin.settings.showPandocExportMenu = value;
+      await this.plugin.saveSettings();
     }));
     containerEl.createEl("hr");
     const isWin = os.platform() === "win32";
     const targetFolderPlaceholder = isWin ? "C:\\path\\to\\folder" : "/path/to/folder";
     const pandocPlaceholder = isWin ? "C:\\Program Files\\Pandoc\\pandoc.exe" : "/usr/local/bin/pandoc";
     const templatesFolderPlaceholder = isWin ? "C:\\path\\to\\templates" : "/path/to/templates";
-    new import_obsidian2.Setting(containerEl).setName(t("SETTING_TARGET_FOLDER_NAME") + (!this.plugin.settings.isPro ? " (Pro)" : "")).setDesc(t("SETTING_TARGET_FOLDER_DESC")).addText((text) => {
+    new import_obsidian.Setting(containerEl).setName(t("SETTING_TARGET_FOLDER_NAME")).setDesc(t("SETTING_TARGET_FOLDER_DESC")).addText((text) => {
       text.setPlaceholder(targetFolderPlaceholder).setValue(this.plugin.settings.targetFolderPath).onChange(async (value) => {
         this.plugin.settings.targetFolderPath = value.trim();
         await this.plugin.saveSettings();
       });
-      if (!this.plugin.settings.isPro) {
-        text.inputEl.disabled = true;
-        text.inputEl.classList.add("natural-move-disabled");
-      }
       return text;
     });
     const pandocDesc = document.createDocumentFragment();
@@ -1506,15 +1285,11 @@ var NaturalMoveSettingTab = class extends import_obsidian2.PluginSettingTab {
       text: t("SETTING_PANDOC_DOWNLOAD_LINK"),
       href: "https://pandoc.org/installing.html"
     });
-    new import_obsidian2.Setting(containerEl).setName(t("SETTING_PANDOC_PATH_NAME") + (!this.plugin.settings.isPro ? " (Pro)" : "")).setDesc(pandocDesc).addText((text) => {
+    new import_obsidian.Setting(containerEl).setName(t("SETTING_PANDOC_PATH_NAME")).setDesc(pandocDesc).addText((text) => {
       text.setPlaceholder(pandocPlaceholder).setValue(this.plugin.settings.pandocPath).onChange(async (value) => {
         this.plugin.settings.pandocPath = value.trim();
         await this.plugin.saveSettings();
       });
-      if (!this.plugin.settings.isPro) {
-        text.inputEl.disabled = true;
-        text.inputEl.classList.add("natural-move-disabled");
-      }
       return text;
     });
     const latexDesc = document.createDocumentFragment();
@@ -1530,39 +1305,30 @@ var NaturalMoveSettingTab = class extends import_obsidian2.PluginSettingTab {
         href: "https://tug.org/mactex/mactex-download.html"
       });
     }
-    new import_obsidian2.Setting(containerEl).setName(t("SETTING_LATEX_NAME")).setDesc(latexDesc);
-    new import_obsidian2.Setting(containerEl).setName(t("SETTING_CUSTOM_ARGS_NAME") + (!this.plugin.settings.isPro ? " (Pro)" : "")).setDesc(t("SETTING_CUSTOM_ARGS_DESC")).addTextArea((text) => {
+    new import_obsidian.Setting(containerEl).setName(t("SETTING_LATEX_NAME")).setDesc(latexDesc);
+    new import_obsidian.Setting(containerEl).setName(t("SETTING_CUSTOM_ARGS_NAME")).setDesc(t("SETTING_CUSTOM_ARGS_DESC")).addTextArea((text) => {
       text.setPlaceholder("--toc --citeproc ...").setValue(this.plugin.settings.customPandocArgs).onChange(async (value) => {
         this.plugin.settings.customPandocArgs = value.trim();
         await this.plugin.saveSettings();
       });
-      if (!this.plugin.settings.isPro) {
-        text.inputEl.disabled = true;
-        text.inputEl.classList.add("natural-move-disabled");
-        text.inputEl.title = t("PRO_FEATURE_LOCKED");
-      }
       return text;
     });
-    new import_obsidian2.Setting(containerEl).setName(t("SETTING_WORD_TEMPLATES_FOLDER_NAME") + (!this.plugin.settings.isPro ? " (Pro)" : "")).setDesc(t("SETTING_WORD_TEMPLATES_FOLDER_DESC")).addText((text) => {
+    new import_obsidian.Setting(containerEl).setName(t("SETTING_WORD_TEMPLATES_FOLDER_NAME")).setDesc(t("SETTING_WORD_TEMPLATES_FOLDER_DESC")).addText((text) => {
       text.setPlaceholder(templatesFolderPlaceholder).setValue(this.plugin.settings.wordTemplatesFolderPath).onChange(async (value) => {
         this.plugin.settings.wordTemplatesFolderPath = value.trim();
         await this.plugin.saveSettings();
       });
-      if (!this.plugin.settings.isPro) {
-        text.inputEl.disabled = true;
-        text.inputEl.classList.add("natural-move-disabled");
-      }
       return text;
     });
-    new import_obsidian2.Setting(containerEl).setName(t("SETTING_AUDIO_FEEDBACK_NAME")).setDesc(t("SETTING_AUDIO_FEEDBACK_DESC")).addToggle((toggle) => toggle.setValue(this.plugin.settings.enableAudioFeedback).onChange(async (value) => {
+    new import_obsidian.Setting(containerEl).setName(t("SETTING_AUDIO_FEEDBACK_NAME")).setDesc(t("SETTING_AUDIO_FEEDBACK_DESC")).addToggle((toggle) => toggle.setValue(this.plugin.settings.enableAudioFeedback).onChange(async (value) => {
       this.plugin.settings.enableAudioFeedback = value;
       await this.plugin.saveSettings();
     }));
-    new import_obsidian2.Setting(containerEl).setName(t("SETTING_TEST_SOUND_NAME")).setDesc(t("SETTING_TEST_SOUND_DESC")).addButton((btn) => btn.setButtonText(t("SETTING_TEST_SOUND_BUTTON")).onClick(() => {
+    new import_obsidian.Setting(containerEl).setName(t("SETTING_TEST_SOUND_NAME")).setDesc(t("SETTING_TEST_SOUND_DESC")).addButton((btn) => btn.setButtonText(t("SETTING_TEST_SOUND_BUTTON")).onClick(() => {
       this.plugin.playSuccessSound();
     }));
     containerEl.createEl("hr");
-    new import_obsidian2.Setting(containerEl).setName(t("SETTING_HELP_NAME")).setDesc(t("SETTING_HELP_DESC")).addButton((btn) => btn.setButtonText(t("SETTING_HELP_BUTTON")).onClick(() => {
+    new import_obsidian.Setting(containerEl).setName(t("SETTING_HELP_NAME")).setDesc(t("SETTING_HELP_DESC")).addButton((btn) => btn.setButtonText(t("SETTING_HELP_BUTTON")).onClick(() => {
       window.open("https://naturalis3.github.io/Obsidian-Natural-Move-Export/");
     })).addButton((btn) => btn.setButtonText(t("SETTING_HELP_BUG_BUTTON")).onClick(() => {
       window.open("https://github.com/Naturalis3/Obsidian-Natural-Move-Export/issues");

@@ -4,7 +4,6 @@ import * as path from 'path';
 import { exec } from 'child_process';
 import * as os from 'os';
 import { t } from './lang/helpers';
-import { verifyLicense } from './license';
 // @ts-ignore
 import * as electron from 'electron';
 
@@ -17,9 +16,8 @@ interface NaturalMoveSettings {
 	pandocPath: string;
 	customPandocArgs: string;
 	wordTemplatesFolderPath: string;
-	licenseKey: string;
-	instanceId: string;
-	isPro: boolean;
+	showCopyToTargetFolderMenu: boolean;
+	showPandocExportMenu: boolean;
 }
 
 const DEFAULT_SETTINGS: NaturalMoveSettings = {
@@ -28,9 +26,8 @@ const DEFAULT_SETTINGS: NaturalMoveSettings = {
 	pandocPath: 'pandoc',
 	customPandocArgs: '',
 	wordTemplatesFolderPath: '',
-	licenseKey: '',
-	instanceId: '',
-	isPro: false
+	showCopyToTargetFolderMenu: true,
+	showPandocExportMenu: true
 }
 
 import en from './lang/locale/en';
@@ -63,27 +60,6 @@ export default class NaturalMove extends Plugin {
 		console.debug(t('LOAD_PLUGIN'));
 		await this.loadSettings();
 
-		// Pro-Status beim Start prüfen (falls Key vorhanden)
-		if (this.settings.licenseKey) {
-			const status = await verifyLicense(this.settings.licenseKey, this.settings.instanceId);
-			// Nur wenn der Server explizit sagt "Ungültig", entziehen wir Pro.
-			// Bei Verbindungsfehlern behalten wir den gespeicherten Status bei.
-			if (status.isValid) {
-				this.settings.isPro = true;
-				if (status.instanceId) {
-					this.settings.instanceId = status.instanceId;
-					await this.saveSettings();
-				}
-			} else if (status.errorType === 'invalid') {
-				this.settings.isPro = false;
-				this.settings.instanceId = '';
-				await this.saveSettings();
-			}
-			// Bei 'connection' lassen wir isPro einfach so, wie es in den Settings steht.
-		} else {
-			this.settings.isPro = false;
-		}
-
 		// Audio Context initialisieren
 		this.initAudio();
 
@@ -104,13 +80,6 @@ export default class NaturalMove extends Plugin {
 
 				const files = this.getSelectedFiles();
 				if (files.length > 0) {
-					// PRO: Folder Copying
-					const hasFolder = files.some(f => f instanceof TFolder);
-					if (hasFolder && !this.settings.isPro) {
-						new Notice(t('PRO_FEATURE_LOCKED'));
-						return;
-					}
-
 					evt.preventDefault();
 					evt.stopPropagation();
 					void this.copyFilesToClipboard(files);
@@ -126,12 +95,6 @@ export default class NaturalMove extends Plugin {
 			callback: () => {
 				const files = this.getSelectedFiles();
 				if (files.length > 0) {
-					// PRO: Folder Copying
-					const hasFolder = files.some(f => f instanceof TFolder);
-					if (hasFolder && !this.settings.isPro) {
-						new Notice(t('PRO_FEATURE_LOCKED'));
-						return;
-					}
 					void this.copyFilesToClipboard(files);
 				} else {
 					new Notice(t('NO_FILES_SELECTED'));
@@ -214,14 +177,6 @@ export default class NaturalMove extends Plugin {
 		}
 
 		if (files.length > 0) {
-			// PRO: Folder Dragging
-			const hasFolder = files.some(f => f instanceof TFolder);
-			if (hasFolder && !this.settings.isPro) {
-				new Notice(t('PRO_FEATURE_LOCKED'));
-				evt.preventDefault();
-				return;
-			}
-
 			const absolutePaths = files
 				.map(f => this.getAbsolutePath(f))
 				.filter((p): p is string => p !== null);
@@ -333,53 +288,38 @@ export default class NaturalMove extends Plugin {
 		const labelSuffix = fileCount > 1 ? ` (${fileCount})` : '';
 		const prefix = isLink ? t('LINKED_FILE') : '';
 
-		// FREE: Copy to Clipboard (Files only) | PRO: Folders
-		const hasFolder = files.some(f => f instanceof TFolder);
+		// Files and folders can both be copied for free.
 		menu.addItem((item: MenuItem) => {
-			const title = `${prefix}${t('COPY_TO_CLIPBOARD')}${labelSuffix}${hasFolder && !this.settings.isPro ? ' (Pro)' : ''}`;
+			const title = `${prefix}${t('COPY_TO_CLIPBOARD')}${labelSuffix}`;
 			item
 				.setTitle(title)
 				.setIcon('copy')
 				.setSection('action')
 				.onClick(() => {
-					if (hasFolder && !this.settings.isPro) {
-						new Notice(t('PRO_FEATURE_LOCKED'));
-						return;
-					}
 					this.copyFilesToClipboard(files);
 				});
 		});
 
-		// PRO: Copy to Target Folder
-		menu.addItem((item: MenuItem) => {
-			const title = `${prefix}${t('COPY_TO_TARGET_FOLDER')}${labelSuffix}${!this.settings.isPro ? ' (Pro)' : ''}`;
-			item
-				.setTitle(title)
-				.setIcon('folder-check')
-				.setSection('action')
-				.onClick(() => {
-					if (!this.settings.isPro) {
-						new Notice(t('PRO_FEATURE_LOCKED'));
-						return;
-					}
-					this.copyToTargetFolder(files);
-				});
-		});
+		if (this.settings.showCopyToTargetFolderMenu) {
+			menu.addItem((item: MenuItem) => {
+				const title = `${prefix}${t('COPY_TO_TARGET_FOLDER')}${labelSuffix}`;
+				item
+					.setTitle(title)
+					.setIcon('folder-check')
+					.setSection('action')
+					.onClick(() => this.copyToTargetFolder(files));
+			});
+		}
 
-		// PRO: Pandoc Exports (Submenu)
+		// Pandoc export is free and can be hidden from the context menu in settings.
 		const mdFiles = files.filter((f): f is TFile => f instanceof TFile && f.extension === 'md');
-		if (mdFiles.length > 0) {
+		if (mdFiles.length > 0 && this.settings.showPandocExportMenu) {
 			menu.addItem((mainItem: MenuItem) => {
-				const mainTitle = t('EXPORT_SUBMENU_TITLE') + labelSuffix + (!this.settings.isPro ? ' (Pro)' : '');
+				const mainTitle = t('EXPORT_SUBMENU_TITLE') + labelSuffix;
 				mainItem
 					.setTitle(mainTitle)
 					.setIcon('export')
 					.setSection('action');
-
-				if (!this.settings.isPro) {
-					mainItem.onClick(() => new Notice(t('PRO_FEATURE_LOCKED')));
-					return;
-				}
 
 				const exportSubmenu = (mainItem as MenuItem & { setSubmenu: () => Menu }).setSubmenu();
 
@@ -401,7 +341,7 @@ export default class NaturalMove extends Plugin {
 								});
 						});
 
-						// 2. Templates (Pro)
+						// 2. Optional templates
 						if (this.settings.wordTemplatesFolderPath) {
 							try {
 								if (fs.existsSync(this.settings.wordTemplatesFolderPath)) {
@@ -531,10 +471,6 @@ pb's writeObjects:fileArray
 	}
 
 	private copyToTargetFolder(files: TAbstractFile[]) {
-		if (!this.settings.isPro) {
-			new Notice(t('PRO_FEATURE_LOCKED'));
-			return;
-		}
 		if (!this.settings.targetFolderPath) {
 			new Notice(t('TARGET_FOLDER_NOT_SET'));
 			return;
@@ -699,10 +635,6 @@ pb's writeObjects:fileArray
 	}
 
 	private async exportWithPandoc(files: TFile[], format: PandocFormat, templatePath?: string) {
-		if (!this.settings.isPro) {
-			new Notice(t('PRO_FEATURE_LOCKED'));
-			return;
-		}
 		if (!this.settings.targetFolderPath || !fs.existsSync(this.settings.targetFolderPath)) {
 			new Notice(t('TARGET_FOLDER_NOT_EXISTS'));
 			return;
@@ -755,10 +687,9 @@ pb's writeObjects:fileArray
 				const destPath = path.join(this.settings.targetFolderPath, destName);
 
 				// Pandoc Befehl zusammenbauen
-				let customArgs = (this.settings.isPro && this.settings.customPandocArgs) ? ` ${this.settings.customPandocArgs}` : '';
+				let customArgs = this.settings.customPandocArgs ? ` ${this.settings.customPandocArgs}` : '';
 				
-				// Pro Feature: Templates
-				if (this.settings.isPro && templatePath && fs.existsSync(templatePath)) {
+				if (templatePath && fs.existsSync(templatePath)) {
 					const ext = path.extname(templatePath).toLowerCase();
 					if (ext === '.docx' || ext === '.pptx') {
 						customArgs += ` --reference-doc="${templatePath}"`;
@@ -891,7 +822,19 @@ pb's writeObjects:fileArray
 	}
 
 	async loadSettings() {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		const savedData = (await this.loadData() || {}) as Record<string, unknown>;
+		const hadLegacyLicenseData = ['licenseKey', 'instanceId', 'isPro'].some(key => key in savedData);
+		this.settings = Object.assign({}, DEFAULT_SETTINGS, savedData);
+
+		// Remove license data saved by versions that still had paid feature gates.
+		const migratedSettings = this.settings as NaturalMoveSettings & Record<string, unknown>;
+		delete migratedSettings.licenseKey;
+		delete migratedSettings.instanceId;
+		delete migratedSettings.isPro;
+
+		if (hadLegacyLicenseData) {
+			await this.saveSettings();
+		}
 	}
 
 	async saveSettings() {
@@ -913,78 +856,26 @@ class NaturalMoveSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl).setName(t('SETTINGS_TITLE')).setHeading();
 
-		// --- LICENSE SECTION ---
-		const licenseSetting = new Setting(containerEl).setName(t('SETTING_LICENSE_KEY_NAME')).setHeading();
-		if (this.plugin.settings.isPro) {
-			licenseSetting.nameEl.createEl('span', { 
-				text: ' Pro', 
-				cls: 'natural-move-pro-badge' 
-			});
-		}
+		new Setting(containerEl).setName(t('SETTING_CONTEXT_MENU_HEADING')).setHeading();
 
 		new Setting(containerEl)
-			.setName(t('SETTING_BUY_PRO_NAME'))
-			.setDesc(t('SETTING_BUY_PRO_DESC'))
-			.addButton(btn => btn
-				.setButtonText(t('SETTING_BUY_PRO_BUTTON'))
-				.onClick(() => {
-					window.open("https://naturalis.lemonsqueezy.com/checkout/buy/f5b938e2-8022-4eec-a18d-167020fba0e6");
+			.setName(t('SETTING_TARGET_FOLDER_MENU_NAME'))
+			.setDesc(t('SETTING_TARGET_FOLDER_MENU_DESC'))
+			.addToggle(toggle => toggle
+				.setValue(this.plugin.settings.showCopyToTargetFolderMenu)
+				.onChange(async (value) => {
+					this.plugin.settings.showCopyToTargetFolderMenu = value;
+					await this.plugin.saveSettings();
 				}));
 
 		new Setting(containerEl)
-			.setName(t('SETTING_LICENSE_KEY_NAME'))
-			.setDesc(t('SETTING_LICENSE_KEY_DESC'))
-			.addText(text => text
-				.setPlaceholder('License key')
-				.setValue(this.plugin.settings.licenseKey)
+			.setName(t('SETTING_PANDOC_MENU_NAME'))
+			.setDesc(t('SETTING_PANDOC_MENU_DESC'))
+			.addToggle(toggle => toggle
+				.setValue(this.plugin.settings.showPandocExportMenu)
 				.onChange(async (value) => {
-					const trimmedValue = value.trim();
-					this.plugin.settings.licenseKey = trimmedValue;
-					
-					// Wenn der Key gelöscht wird, Pro sofort deaktivieren
-					if (!trimmedValue) {
-						this.plugin.settings.isPro = false;
-						this.plugin.settings.instanceId = '';
-						await this.plugin.saveSettings();
-						this.display(); // UI aktualisieren (Felder sperren)
-					} else {
-						await this.plugin.saveSettings();
-					}
-				}))
-			.addButton(btn => btn
-				.setButtonText(t('SETTING_LICENSE_VERIFY_BUTTON'))
-				.setCta()
-				.onClick(async () => {
-					// Verhindere Mehrfach-Klicks
-					btn.setDisabled(true);
-					btn.setButtonText("...");
-					
-					try {
-						const status = await verifyLicense(this.plugin.settings.licenseKey, this.plugin.settings.instanceId);
-						
-						if (status.isValid) {
-							this.plugin.settings.isPro = true;
-							if (status.instanceId) {
-								this.plugin.settings.instanceId = status.instanceId;
-							}
-							new Notice(t('LICENSE_VALID'));
-						} else {
-							if (status.errorType === 'invalid') {
-								this.plugin.settings.isPro = false;
-								this.plugin.settings.instanceId = '';
-								new Notice(t('LICENSE_INVALID') + (status.message ? `: ${status.message}` : ''));
-							} else {
-								// Verbindungsfehler: Wir lassen den Status wie er ist, informieren aber den User
-								new Notice(status.message || t('LICENSE_CONNECTION_ERROR'));
-							}
-						}
-						
-						await this.plugin.saveSettings();
-						this.display(); // Refresh UI
-					} finally {
-						btn.setDisabled(false);
-						btn.setButtonText(t('SETTING_LICENSE_VERIFY_BUTTON'));
-					}
+					this.plugin.settings.showPandocExportMenu = value;
+					await this.plugin.saveSettings();
 				}));
 
 		containerEl.createEl('hr');
@@ -995,7 +886,7 @@ class NaturalMoveSettingTab extends PluginSettingTab {
 		const templatesFolderPlaceholder = isWin ? 'C:\\path\\to\\templates' : '/path/to/templates';
 
 		new Setting(containerEl)
-			.setName(t('SETTING_TARGET_FOLDER_NAME') + (!this.plugin.settings.isPro ? ' (Pro)' : ''))
+			.setName(t('SETTING_TARGET_FOLDER_NAME'))
 			.setDesc(t('SETTING_TARGET_FOLDER_DESC'))
 			.addText(text => {
 				text
@@ -1006,10 +897,6 @@ class NaturalMoveSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					});
 				
-				if (!this.plugin.settings.isPro) {
-					text.inputEl.disabled = true;
-					text.inputEl.classList.add('natural-move-disabled');
-				}
 				return text;
 			});
 
@@ -1021,7 +908,7 @@ class NaturalMoveSettingTab extends PluginSettingTab {
 		});
 
 		new Setting(containerEl)
-			.setName(t('SETTING_PANDOC_PATH_NAME') + (!this.plugin.settings.isPro ? ' (Pro)' : ''))
+			.setName(t('SETTING_PANDOC_PATH_NAME'))
 			.setDesc(pandocDesc)
 			.addText(text => {
 				text
@@ -1032,10 +919,6 @@ class NaturalMoveSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					});
 				
-				if (!this.plugin.settings.isPro) {
-					text.inputEl.disabled = true;
-					text.inputEl.classList.add('natural-move-disabled');
-				}
 				return text;
 			});
 
@@ -1058,7 +941,7 @@ class NaturalMoveSettingTab extends PluginSettingTab {
 			.setDesc(latexDesc);
 
 		new Setting(containerEl)
-			.setName(t('SETTING_CUSTOM_ARGS_NAME') + (!this.plugin.settings.isPro ? ' (Pro)' : ''))
+			.setName(t('SETTING_CUSTOM_ARGS_NAME'))
 			.setDesc(t('SETTING_CUSTOM_ARGS_DESC'))
 			.addTextArea(text => {
 				text
@@ -1069,17 +952,11 @@ class NaturalMoveSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					});
 				
-				// Lock if not Pro
-				if (!this.plugin.settings.isPro) {
-					text.inputEl.disabled = true;
-					text.inputEl.classList.add('natural-move-disabled');
-					text.inputEl.title = t('PRO_FEATURE_LOCKED');
-				}
 				return text;
 			});
 
 		new Setting(containerEl)
-			.setName(t('SETTING_WORD_TEMPLATES_FOLDER_NAME') + (!this.plugin.settings.isPro ? ' (Pro)' : ''))
+			.setName(t('SETTING_WORD_TEMPLATES_FOLDER_NAME'))
 			.setDesc(t('SETTING_WORD_TEMPLATES_FOLDER_DESC'))
 			.addText(text => {
 				text
@@ -1090,10 +967,6 @@ class NaturalMoveSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					});
 				
-				if (!this.plugin.settings.isPro) {
-					text.inputEl.disabled = true;
-					text.inputEl.classList.add('natural-move-disabled');
-				}
 				return text;
 			});
 
