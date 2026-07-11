@@ -23,9 +23,9 @@
 
 ### BRAT
 
-Add this repository and select the `codex/vault-file-clipboard` branch:
+Add this repository to BRAT:
 
-`https://github.com/EdgerHao/Obsidian-Natural-Move-Export`
+`https://github.com/EdgerHao/Obsidian-Vault-File-Clipboard`
 
 ### Manual
 

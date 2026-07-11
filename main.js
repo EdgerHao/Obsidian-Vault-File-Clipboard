@@ -899,9 +899,9 @@ var VaultFileClipboardSettingTab = class extends import_obsidian.PluginSettingTa
     }));
     containerEl.createEl("hr");
     new import_obsidian.Setting(containerEl).setName(t("SETTING_HELP_NAME")).setDesc(t("SETTING_HELP_DESC")).addButton((btn) => btn.setButtonText(t("SETTING_HELP_BUTTON")).onClick(() => {
-      window.open("https://github.com/EdgerHao/Obsidian-Natural-Move-Export/tree/codex/vault-file-clipboard");
+      window.open("https://github.com/EdgerHao/Obsidian-Vault-File-Clipboard");
     })).addButton((btn) => btn.setButtonText(t("SETTING_HELP_BUG_BUTTON")).onClick(() => {
-      window.open("https://github.com/EdgerHao/Obsidian-Natural-Move-Export/issues");
+      window.open("https://github.com/EdgerHao/Obsidian-Vault-File-Clipboard/issues");
     }));
   }
 };

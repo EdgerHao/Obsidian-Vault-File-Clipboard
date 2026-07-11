@@ -759,12 +759,12 @@ class VaultFileClipboardSettingTab extends PluginSettingTab {
 				.addButton(btn => btn
 					.setButtonText(t('SETTING_HELP_BUTTON'))
 					.onClick(() => {
-						window.open("https://github.com/EdgerHao/Obsidian-Natural-Move-Export/tree/codex/vault-file-clipboard");
+						window.open("https://github.com/EdgerHao/Obsidian-Vault-File-Clipboard");
 					}))
 			.addButton(btn => btn
 					.setButtonText(t('SETTING_HELP_BUG_BUTTON'))
 					.onClick(() => {
-						window.open("https://github.com/EdgerHao/Obsidian-Natural-Move-Export/issues");
+						window.open("https://github.com/EdgerHao/Obsidian-Vault-File-Clipboard/issues");
 				}));
 	}
 }

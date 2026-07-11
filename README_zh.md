@@ -23,9 +23,9 @@
 
 ### BRAT
 
-添加以下仓库并选择 `codex/vault-file-clipboard` 分支：
+在 BRAT 中添加以下仓库：
 
-`https://github.com/EdgerHao/Obsidian-Natural-Move-Export`
+`https://github.com/EdgerHao/Obsidian-Vault-File-Clipboard`
 
 ### 手动安装
 

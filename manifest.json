@@ -1,7 +1,7 @@
 {
 	"id": "vault-file-clipboard",
 	"name": "Vault File Clipboard",
-	"version": "1.0.0",
+	"version": "0.0.1",
 	"minAppVersion": "0.15.0",
 	"description": "Copy, paste, and drag files and folders between your Obsidian vault and the operating system.",
 	"author": "Naturalis",
