@@ -1,8 +1,9 @@
 import { App, Notice, Plugin, TFile, TFolder, TAbstractFile, Menu, MenuItem, PluginSettingTab, Setting, FileSystemAdapter } from 'obsidian';
 import * as fs from 'fs';
 import * as path from 'path';
-import { exec } from 'child_process';
+import { exec, execFile } from 'child_process';
 import * as os from 'os';
+import { fileURLToPath } from 'url';
 import { t } from './lang/helpers';
 // @ts-ignore
 import * as electron from 'electron';
@@ -16,6 +17,7 @@ interface NaturalMoveSettings {
 	pandocPath: string;
 	customPandocArgs: string;
 	wordTemplatesFolderPath: string;
+	showPasteFromClipboardMenu: boolean;
 	showCopyToTargetFolderMenu: boolean;
 	showPandocExportMenu: boolean;
 }
@@ -26,6 +28,7 @@ const DEFAULT_SETTINGS: NaturalMoveSettings = {
 	pandocPath: 'pandoc',
 	customPandocArgs: '',
 	wordTemplatesFolderPath: '',
+	showPasteFromClipboardMenu: true,
 	showCopyToTargetFolderMenu: true,
 	showPandocExportMenu: true
 }
@@ -288,6 +291,17 @@ export default class NaturalMove extends Plugin {
 		const labelSuffix = fileCount > 1 ? ` (${fileCount})` : '';
 		const prefix = isLink ? t('LINKED_FILE') : '';
 
+		// Import files copied in Finder/Explorer into the selected vault folder.
+		if (this.settings.showPasteFromClipboardMenu && files.length === 1 && files[0] instanceof TFolder) {
+			menu.addItem((item: MenuItem) => {
+				item
+					.setTitle(t('PASTE_FROM_CLIPBOARD'))
+					.setIcon('clipboard-paste')
+					.setSection('action')
+					.onClick(() => void this.pasteExternalFiles(files[0] as TFolder));
+			});
+		}
+
 		// Files and folders can both be copied for free.
 		menu.addItem((item: MenuItem) => {
 			const title = `${prefix}${t('COPY_TO_CLIPBOARD')}${labelSuffix}`;
@@ -468,6 +482,166 @@ pb's writeObjects:fileArray
 			console.error('Clipboard Error:', err);
 			new Notice(t('CRITICAL_COPY_ERROR'));
 		}
+	}
+
+	private async pasteExternalFiles(targetFolder: TFolder) {
+		const sourcePaths = await this.getFilePathsFromClipboard();
+		if (sourcePaths.length === 0) {
+			new Notice(t('PASTE_NO_FILES'));
+			return;
+		}
+
+		const targetPath = this.getAbsolutePath(targetFolder);
+		if (!targetPath) {
+			new Notice(t('COPY_ERROR_PATHS'));
+			return;
+		}
+
+		let successCount = 0;
+		let errorCount = 0;
+
+		for (const sourcePath of sourcePaths) {
+			try {
+				const sourceStat = fs.statSync(sourcePath);
+				const destinationPath = this.getAvailableDestinationPath(targetPath, path.basename(sourcePath));
+				const resolvedSource = path.resolve(sourcePath);
+				const resolvedDestination = path.resolve(destinationPath);
+
+				// Prevent recursively copying a directory into itself or one of its descendants.
+				if (sourceStat.isDirectory() && (resolvedDestination === resolvedSource || resolvedDestination.startsWith(resolvedSource + path.sep))) {
+					throw new Error('Cannot copy a folder into itself.');
+				}
+
+				if (sourceStat.isDirectory()) {
+					fs.cpSync(sourcePath, destinationPath, { recursive: true, errorOnExist: true });
+				} else if (sourceStat.isFile()) {
+					fs.copyFileSync(sourcePath, destinationPath, fs.constants.COPYFILE_EXCL);
+				} else {
+					throw new Error('Unsupported clipboard item type.');
+				}
+
+				successCount++;
+			} catch (error) {
+				console.error(`Paste Error (${sourcePath}):`, error);
+				errorCount++;
+			}
+		}
+
+		if (successCount > 0) {
+			this.playSuccessSound();
+			new Notice(t('PASTE_SUCCESS', successCount.toString(), targetFolder.path || '/'));
+		}
+		if (errorCount > 0) {
+			new Notice(t('PASTE_ERROR', errorCount.toString()));
+		}
+	}
+
+	private getAvailableDestinationPath(targetFolderPath: string, sourceName: string): string {
+		const initialPath = path.join(targetFolderPath, sourceName);
+		if (!fs.existsSync(initialPath)) return initialPath;
+
+		const extension = path.extname(sourceName);
+		const baseName = extension ? path.basename(sourceName, extension) : sourceName;
+		let counter = 1;
+		let candidatePath: string;
+
+		do {
+			candidatePath = path.join(targetFolderPath, `${baseName} (${counter})${extension}`);
+			counter++;
+		} while (fs.existsSync(candidatePath));
+
+		return candidatePath;
+	}
+
+	private async getFilePathsFromClipboard(): Promise<string[]> {
+		let clipboardPaths: string[] = [];
+
+		try {
+			if (os.platform() === 'darwin') {
+				clipboardPaths = await this.readMacFileClipboard();
+			} else if (os.platform() === 'win32') {
+				clipboardPaths = await this.readWindowsFileClipboard();
+			}
+		} catch (error) {
+			console.debug('Native file clipboard read failed, using URI fallback:', error);
+		}
+
+		if (clipboardPaths.length === 0) {
+			const formats = clipboard.availableFormats();
+			const uriFormat = formats.find((format: string) =>
+				format.toLowerCase() === 'text/uri-list' ||
+				format.toLowerCase() === 'x-special/gnome-copied-files'
+			);
+
+			if (uriFormat) {
+				clipboardPaths = this.parseClipboardPathList(clipboard.read(uriFormat));
+			}
+		}
+
+		return [...new Set(clipboardPaths.map(value => path.resolve(value)))]
+			.filter(value => fs.existsSync(value));
+	}
+
+	private readMacFileClipboard(): Promise<string[]> {
+		const script = `
+ObjC.import('AppKit');
+const pasteboard = $.NSPasteboard.generalPasteboard;
+const urls = pasteboard.readObjectsForClassesOptions([$.NSURL], null);
+const paths = [];
+if (urls) {
+    for (let index = 0; index < urls.count; index++) {
+        const url = urls.objectAtIndex(index);
+        if (url.isFileURL) paths.push(ObjC.unwrap(url.path));
+    }
+}
+JSON.stringify(paths);
+`;
+
+		return this.runClipboardCommand('osascript', ['-l', 'JavaScript', '-e', script]);
+	}
+
+	private readWindowsFileClipboard(): Promise<string[]> {
+		const script = "@(Get-Clipboard -Format FileDropList | ForEach-Object { $_.FullName }) | ConvertTo-Json -Compress";
+		return this.runClipboardCommand('powershell.exe', ['-NoProfile', '-Command', script]);
+	}
+
+	private runClipboardCommand(command: string, args: string[]): Promise<string[]> {
+		return new Promise(resolve => {
+			execFile(command, args, { encoding: 'utf8' }, (error, stdout) => {
+				if (error || !stdout.trim()) {
+					resolve([]);
+					return;
+				}
+
+				try {
+					const parsed = JSON.parse(stdout.trim()) as unknown;
+					if (Array.isArray(parsed)) {
+						resolve(parsed.filter((value): value is string => typeof value === 'string'));
+					} else if (typeof parsed === 'string') {
+						resolve([parsed]);
+					} else {
+						resolve([]);
+					}
+				} catch {
+					resolve(this.parseClipboardPathList(stdout));
+				}
+			});
+		});
+	}
+
+	private parseClipboardPathList(rawValue: string): string[] {
+		return rawValue
+			.split(/\r?\n/)
+			.map(value => value.trim())
+			.filter(value => value.length > 0 && value !== 'copy' && value !== 'cut' && !value.startsWith('#'))
+			.map(value => {
+				try {
+					return value.startsWith('file://') ? fileURLToPath(value) : value;
+				} catch {
+					return '';
+				}
+			})
+			.filter(value => value.length > 0 && path.isAbsolute(value));
 	}
 
 	private copyToTargetFolder(files: TAbstractFile[]) {
@@ -857,6 +1031,16 @@ class NaturalMoveSettingTab extends PluginSettingTab {
 		new Setting(containerEl).setName(t('SETTINGS_TITLE')).setHeading();
 
 		new Setting(containerEl).setName(t('SETTING_CONTEXT_MENU_HEADING')).setHeading();
+
+		new Setting(containerEl)
+			.setName(t('SETTING_PASTE_MENU_NAME'))
+			.setDesc(t('SETTING_PASTE_MENU_DESC'))
+			.addToggle(toggle => toggle
+				.setValue(this.plugin.settings.showPasteFromClipboardMenu)
+				.onChange(async (value) => {
+					this.plugin.settings.showPasteFromClipboardMenu = value;
+					await this.plugin.saveSettings();
+				}));
 
 		new Setting(containerEl)
 			.setName(t('SETTING_TARGET_FOLDER_MENU_NAME'))

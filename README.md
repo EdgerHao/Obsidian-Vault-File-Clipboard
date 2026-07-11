@@ -19,6 +19,9 @@ Obsidian's File Explorer is powerful, but isolated. Copying files out of Obsidia
 Select files in Obsidian and press `Cmd + C` (macOS) or `Ctrl + C` (Win). You can then paste them directly onto your desktop or into any other application with `Cmd + V`.
 Files and entire folders are both supported.
 
+### 📥 Paste External Files into Obsidian
+Copy files or folders in Finder, File Explorer, or a Linux file manager. Then right-click an Obsidian folder and choose **Natural move: paste external files here**. Name conflicts are resolved automatically without overwriting existing files.
+
 ### 🖱️ Direct Drag & Drop
 Hold the `Alt` key and drag files or folders from Obsidian directly into other apps (e.g., Mail, Slack, or a folder).
 
@@ -38,7 +41,7 @@ Configure a fixed target folder in the settings. Copy files and folders there wi
 
 ## 🆓 Free for Everyone
 
-All plugin features are available to every user without a license. The settings page also lets you hide the target-folder copy action and the Pandoc export submenu from the file explorer context menu.
+All plugin features are available to every user without a license. The settings page also lets you hide the external-paste action, target-folder copy action, and Pandoc export submenu from the file explorer context menu.
 
 ## 🛠️ Prerequisites for Pandoc Export
 

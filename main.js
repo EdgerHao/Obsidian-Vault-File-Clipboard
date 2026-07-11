@@ -43,6 +43,7 @@ var fs = __toESM(require("fs"));
 var path = __toESM(require("path"));
 var import_child_process = require("child_process");
 var os = __toESM(require("os"));
+var import_url = require("url");
 
 // src/lang/locale/en.ts
 var en_default = {
@@ -50,6 +51,10 @@ var en_default = {
   UNLOAD_PLUGIN: "Unloading natural move/export plugin",
   COPY_TO_CLIPBOARD: "Natural move: copy to clipboard",
   COPY_TO_TARGET_FOLDER: "Natural move: copy to target folder",
+  PASTE_FROM_CLIPBOARD: "Natural move: paste external files here",
+  PASTE_NO_FILES: "No external files or folders were found on the system clipboard.",
+  PASTE_SUCCESS: "%1 item(s) pasted into %2.",
+  PASTE_ERROR: "%1 item(s) could not be pasted.",
   EXPORT_AS_PANDOC: "Export as %1 (.%2) to target folder",
   LINKED_FILE: "Linked file ",
   NO_FILES_SELECTED: "No files selected in file explorer.",
@@ -89,6 +94,8 @@ var en_default = {
   SETTING_TEST_SOUND_DESC: "Click here to test the audio feedback.",
   SETTING_TEST_SOUND_BUTTON: "Test sound",
   SETTING_CONTEXT_MENU_HEADING: "Context menu",
+  SETTING_PASTE_MENU_NAME: "Show paste external files",
+  SETTING_PASTE_MENU_DESC: "Show an action on folder context menus that imports files and folders copied in Finder or File Explorer.",
   SETTING_TARGET_FOLDER_MENU_NAME: "Show copy to target folder",
   SETTING_TARGET_FOLDER_MENU_DESC: "Show the copy-to-target-folder action in the file explorer context menu.",
   SETTING_PANDOC_MENU_NAME: "Show pandoc export",
@@ -295,6 +302,10 @@ var zh_default = {
   UNLOAD_PLUGIN: "\u6B63\u5728\u5378\u8F7D natural move/export \u63D2\u4EF6",
   COPY_TO_CLIPBOARD: "Natural move: \u590D\u5236\u5230\u526A\u8D34\u677F",
   COPY_TO_TARGET_FOLDER: "Natural move: \u590D\u5236\u5230\u76EE\u6807\u6587\u4EF6\u5939",
+  PASTE_FROM_CLIPBOARD: "Natural move: \u7C98\u8D34\u5916\u90E8\u6587\u4EF6\u5230\u6B64\u5904",
+  PASTE_NO_FILES: "\u7CFB\u7EDF\u526A\u8D34\u677F\u4E2D\u6CA1\u6709\u53EF\u7C98\u8D34\u7684\u5916\u90E8\u6587\u4EF6\u6216\u6587\u4EF6\u5939\u3002",
+  PASTE_SUCCESS: "\u5DF2\u5C06 %1 \u4E2A\u9879\u76EE\u7C98\u8D34\u5230 %2\u3002",
+  PASTE_ERROR: "%1 \u4E2A\u9879\u76EE\u7C98\u8D34\u5931\u8D25\u3002",
   EXPORT_AS_PANDOC: "\u4EE5 %1 (.%2) \u683C\u5F0F\u5BFC\u51FA\u5230\u76EE\u6807\u6587\u4EF6\u5939",
   LINKED_FILE: "\u94FE\u63A5\u6587\u4EF6 ",
   NO_FILES_SELECTED: "\u6587\u4EF6\u8D44\u6E90\u7BA1\u7406\u5668\u4E2D\u672A\u9009\u62E9\u6587\u4EF6\u3002",
@@ -334,6 +345,8 @@ var zh_default = {
   SETTING_TEST_SOUND_DESC: "\u70B9\u51FB\u6B64\u5904\u6D4B\u8BD5\u97F3\u9891\u53CD\u9988\u3002",
   SETTING_TEST_SOUND_BUTTON: "\u6D4B\u8BD5\u58F0\u97F3",
   SETTING_CONTEXT_MENU_HEADING: "\u53F3\u952E\u83DC\u5355",
+  SETTING_PASTE_MENU_NAME: "\u663E\u793A\u201C\u7C98\u8D34\u5916\u90E8\u6587\u4EF6\u201D",
+  SETTING_PASTE_MENU_DESC: "\u5728\u6587\u4EF6\u5939\u53F3\u952E\u83DC\u5355\u4E2D\u663E\u793A\u5BFC\u5165\u529F\u80FD\uFF0C\u53EF\u7C98\u8D34\u4ECE\u8BBF\u8FBE\u6216\u6587\u4EF6\u8D44\u6E90\u7BA1\u7406\u5668\u590D\u5236\u7684\u6587\u4EF6\u548C\u6587\u4EF6\u5939\u3002",
   SETTING_TARGET_FOLDER_MENU_NAME: "\u663E\u793A\u201C\u590D\u5236\u5230\u76EE\u6807\u6587\u4EF6\u5939\u201D",
   SETTING_TARGET_FOLDER_MENU_DESC: "\u5728\u6587\u4EF6\u8D44\u6E90\u7BA1\u7406\u5668\u53F3\u952E\u83DC\u5355\u4E2D\u663E\u793A\u590D\u5236\u5230\u76EE\u6807\u6587\u4EF6\u5939\u529F\u80FD\u3002",
   SETTING_PANDOC_MENU_NAME: "\u663E\u793A Pandoc \u5BFC\u51FA",
@@ -629,6 +642,7 @@ var DEFAULT_SETTINGS = {
   pandocPath: "pandoc",
   customPandocArgs: "",
   wordTemplatesFolderPath: "",
+  showPasteFromClipboardMenu: true,
   showCopyToTargetFolderMenu: true,
   showPandocExportMenu: true
 };
@@ -812,6 +826,11 @@ var NaturalMove = class extends import_obsidian.Plugin {
     const fileCount = files.length;
     const labelSuffix = fileCount > 1 ? ` (${fileCount})` : "";
     const prefix = isLink ? t("LINKED_FILE") : "";
+    if (this.settings.showPasteFromClipboardMenu && files.length === 1 && files[0] instanceof import_obsidian.TFolder) {
+      menu.addItem((item) => {
+        item.setTitle(t("PASTE_FROM_CLIPBOARD")).setIcon("clipboard-paste").setSection("action").onClick(() => void this.pasteExternalFiles(files[0]));
+      });
+    }
     menu.addItem((item) => {
       const title = `${prefix}${t("COPY_TO_CLIPBOARD")}${labelSuffix}`;
       item.setTitle(title).setIcon("copy").setSection("action").onClick(() => {
@@ -944,6 +963,135 @@ pb's writeObjects:fileArray
       new import_obsidian.Notice(t("CRITICAL_COPY_ERROR"));
     }
   }
+  async pasteExternalFiles(targetFolder) {
+    const sourcePaths = await this.getFilePathsFromClipboard();
+    if (sourcePaths.length === 0) {
+      new import_obsidian.Notice(t("PASTE_NO_FILES"));
+      return;
+    }
+    const targetPath = this.getAbsolutePath(targetFolder);
+    if (!targetPath) {
+      new import_obsidian.Notice(t("COPY_ERROR_PATHS"));
+      return;
+    }
+    let successCount = 0;
+    let errorCount = 0;
+    for (const sourcePath of sourcePaths) {
+      try {
+        const sourceStat = fs.statSync(sourcePath);
+        const destinationPath = this.getAvailableDestinationPath(targetPath, path.basename(sourcePath));
+        const resolvedSource = path.resolve(sourcePath);
+        const resolvedDestination = path.resolve(destinationPath);
+        if (sourceStat.isDirectory() && (resolvedDestination === resolvedSource || resolvedDestination.startsWith(resolvedSource + path.sep))) {
+          throw new Error("Cannot copy a folder into itself.");
+        }
+        if (sourceStat.isDirectory()) {
+          fs.cpSync(sourcePath, destinationPath, { recursive: true, errorOnExist: true });
+        } else if (sourceStat.isFile()) {
+          fs.copyFileSync(sourcePath, destinationPath, fs.constants.COPYFILE_EXCL);
+        } else {
+          throw new Error("Unsupported clipboard item type.");
+        }
+        successCount++;
+      } catch (error) {
+        console.error(`Paste Error (${sourcePath}):`, error);
+        errorCount++;
+      }
+    }
+    if (successCount > 0) {
+      this.playSuccessSound();
+      new import_obsidian.Notice(t("PASTE_SUCCESS", successCount.toString(), targetFolder.path || "/"));
+    }
+    if (errorCount > 0) {
+      new import_obsidian.Notice(t("PASTE_ERROR", errorCount.toString()));
+    }
+  }
+  getAvailableDestinationPath(targetFolderPath, sourceName) {
+    const initialPath = path.join(targetFolderPath, sourceName);
+    if (!fs.existsSync(initialPath)) return initialPath;
+    const extension = path.extname(sourceName);
+    const baseName = extension ? path.basename(sourceName, extension) : sourceName;
+    let counter = 1;
+    let candidatePath;
+    do {
+      candidatePath = path.join(targetFolderPath, `${baseName} (${counter})${extension}`);
+      counter++;
+    } while (fs.existsSync(candidatePath));
+    return candidatePath;
+  }
+  async getFilePathsFromClipboard() {
+    let clipboardPaths = [];
+    try {
+      if (os.platform() === "darwin") {
+        clipboardPaths = await this.readMacFileClipboard();
+      } else if (os.platform() === "win32") {
+        clipboardPaths = await this.readWindowsFileClipboard();
+      }
+    } catch (error) {
+      console.debug("Native file clipboard read failed, using URI fallback:", error);
+    }
+    if (clipboardPaths.length === 0) {
+      const formats = clipboard.availableFormats();
+      const uriFormat = formats.find(
+        (format) => format.toLowerCase() === "text/uri-list" || format.toLowerCase() === "x-special/gnome-copied-files"
+      );
+      if (uriFormat) {
+        clipboardPaths = this.parseClipboardPathList(clipboard.read(uriFormat));
+      }
+    }
+    return [...new Set(clipboardPaths.map((value) => path.resolve(value)))].filter((value) => fs.existsSync(value));
+  }
+  readMacFileClipboard() {
+    const script = `
+ObjC.import('AppKit');
+const pasteboard = $.NSPasteboard.generalPasteboard;
+const urls = pasteboard.readObjectsForClassesOptions([$.NSURL], null);
+const paths = [];
+if (urls) {
+    for (let index = 0; index < urls.count; index++) {
+        const url = urls.objectAtIndex(index);
+        if (url.isFileURL) paths.push(ObjC.unwrap(url.path));
+    }
+}
+JSON.stringify(paths);
+`;
+    return this.runClipboardCommand("osascript", ["-l", "JavaScript", "-e", script]);
+  }
+  readWindowsFileClipboard() {
+    const script = "@(Get-Clipboard -Format FileDropList | ForEach-Object { $_.FullName }) | ConvertTo-Json -Compress";
+    return this.runClipboardCommand("powershell.exe", ["-NoProfile", "-Command", script]);
+  }
+  runClipboardCommand(command, args) {
+    return new Promise((resolve2) => {
+      (0, import_child_process.execFile)(command, args, { encoding: "utf8" }, (error, stdout) => {
+        if (error || !stdout.trim()) {
+          resolve2([]);
+          return;
+        }
+        try {
+          const parsed = JSON.parse(stdout.trim());
+          if (Array.isArray(parsed)) {
+            resolve2(parsed.filter((value) => typeof value === "string"));
+          } else if (typeof parsed === "string") {
+            resolve2([parsed]);
+          } else {
+            resolve2([]);
+          }
+        } catch {
+          resolve2(this.parseClipboardPathList(stdout));
+        }
+      });
+    });
+  }
+  parseClipboardPathList(rawValue) {
+    return rawValue.split(/\r?\n/).map((value) => value.trim()).filter((value) => value.length > 0 && value !== "copy" && value !== "cut" && !value.startsWith("#")).map((value) => {
+      try {
+        return value.startsWith("file://") ? (0, import_url.fileURLToPath)(value) : value;
+      } catch {
+        return "";
+      }
+    }).filter((value) => value.length > 0 && path.isAbsolute(value));
+  }
   copyToTargetFolder(files) {
     if (!this.settings.targetFolderPath) {
       new import_obsidian.Notice(t("TARGET_FOLDER_NOT_SET"));
@@ -979,7 +1127,7 @@ pb's writeObjects:fileArray
     }
   }
   async createVideoThumbnail(videoFile, tempDir) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve2, reject) => {
       const video = document.createElement("video");
       video.classList.add("natural-move-hidden-video");
       video.muted = true;
@@ -1010,7 +1158,7 @@ pb's writeObjects:fileArray
             const base64Data = dataUrl.replace(/^data:image\/png;base64,/, "");
             const thumbPath = path.join(tempDir, `thumb_${videoFile.name}.png`);
             fs.writeFileSync(thumbPath, base64Data, "base64");
-            resolve(thumbPath);
+            resolve2(thumbPath);
           } else {
             reject(new Error("Canvas context is null"));
           }
@@ -1132,14 +1280,14 @@ pb's writeObjects:fileArray
         customArgs += ` --resource-path="${originalDir}"`;
         const cmd = `"${pandocCmd}" "${sourcePath}" ${format.args}${customArgs} -o "${destPath}"`;
         try {
-          await new Promise((resolve, reject) => {
+          await new Promise((resolve2, reject) => {
             (0, import_child_process.exec)(cmd, { env }, (error, stdout, stderr) => {
               if (error) {
                 console.error("Pandoc Error:", error, stderr);
                 lastError = stderr || error.message;
                 reject(error);
               } else {
-                resolve();
+                resolve2();
               }
             });
           });
@@ -1153,13 +1301,13 @@ pb's writeObjects:fileArray
             console.debug("YAML error detected, trying fallback without metadata...");
             const fallbackCmd = `"${pandocCmd}" "${sourcePath}" ${format.args}${customArgs} -f markdown-yaml_metadata_block -o "${destPath}"`;
             try {
-              await new Promise((resolve, reject) => {
+              await new Promise((resolve2, reject) => {
                 (0, import_child_process.exec)(fallbackCmd, { env }, (error, stdout, stderr) => {
                   if (error) {
                     lastError = stderr || error.message;
                     reject(error);
                   } else {
-                    resolve();
+                    resolve2();
                   }
                 });
               });
@@ -1259,6 +1407,10 @@ var NaturalMoveSettingTab = class extends import_obsidian.PluginSettingTab {
     containerEl.empty();
     new import_obsidian.Setting(containerEl).setName(t("SETTINGS_TITLE")).setHeading();
     new import_obsidian.Setting(containerEl).setName(t("SETTING_CONTEXT_MENU_HEADING")).setHeading();
+    new import_obsidian.Setting(containerEl).setName(t("SETTING_PASTE_MENU_NAME")).setDesc(t("SETTING_PASTE_MENU_DESC")).addToggle((toggle) => toggle.setValue(this.plugin.settings.showPasteFromClipboardMenu).onChange(async (value) => {
+      this.plugin.settings.showPasteFromClipboardMenu = value;
+      await this.plugin.saveSettings();
+    }));
     new import_obsidian.Setting(containerEl).setName(t("SETTING_TARGET_FOLDER_MENU_NAME")).setDesc(t("SETTING_TARGET_FOLDER_MENU_DESC")).addToggle((toggle) => toggle.setValue(this.plugin.settings.showCopyToTargetFolderMenu).onChange(async (value) => {
       this.plugin.settings.showCopyToTargetFolderMenu = value;
       await this.plugin.saveSettings();
