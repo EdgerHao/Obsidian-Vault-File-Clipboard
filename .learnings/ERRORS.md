@@ -33,6 +33,37 @@ Run `npm ci` before linting or building the plugin.
 
 ---
 
+## [ERR-20260711-005] curl-github-tree
+
+**Logged**: 2026-07-11T17:30:00+08:00
+**Priority**: low
+**Status**: resolved
+**Area**: infra
+
+### Summary
+A GitHub API URL containing `?recursive=1` was interpreted as a zsh glob.
+
+### Error
+```
+zsh: no matches found: https://api.github.com/.../trees/master?recursive=1
+```
+
+### Context
+- The URL was passed to curl without shell quoting.
+
+### Suggested Fix
+Quote URLs containing shell glob characters such as `?` and `&`.
+
+### Metadata
+- Reproducible: yes
+- Related Files: none
+
+### Resolution
+- **Resolved**: 2026-07-11T17:30:00+08:00
+- **Notes**: Continued with a quoted URL.
+
+---
+
 ## [ERR-20260711-004] macos-finder-clipboard
 
 **Logged**: 2026-07-11T16:25:00+08:00
