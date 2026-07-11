@@ -1,6 +1,6 @@
 {
   "name": "obsidian-plugin",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Ein neues Obsidian Plugin",
   "main": "main.js",
   "scripts": {
