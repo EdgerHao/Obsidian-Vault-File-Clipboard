@@ -586,7 +586,9 @@ pb's writeObjects:fileArray
 		const script = `
 ObjC.import('AppKit');
 const pasteboard = $.NSPasteboard.generalPasteboard;
-const urls = pasteboard.readObjectsForClassesOptions([$.NSURL], null);
+const readableClasses = $.NSArray.arrayWithObject($.NSURL);
+const readOptions = $.NSDictionary.dictionary;
+const urls = pasteboard.readObjectsForClassesOptions(readableClasses, readOptions);
 const paths = [];
 if (urls) {
     for (let index = 0; index < urls.count; index++) {
