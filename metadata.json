@@ -1,5 +1,5 @@
 {
-  "name": "Natural Move/Export",
-  "description": "Native system copy-paste, drag & drop, and professional Pandoc exports.",
+  "name": "Vault File Clipboard",
+  "description": "Copy, paste, and drag files and folders between your Obsidian vault and the operating system.",
   "requestFramePermissions": []
 }

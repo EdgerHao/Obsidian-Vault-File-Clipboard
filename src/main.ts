@@ -1,4 +1,4 @@
-import { App, Notice, Plugin, TFile, TFolder, TAbstractFile, Menu, MenuItem, PluginSettingTab, Setting, FileSystemAdapter } from 'obsidian';
+import { App, Notice, Plugin, TFolder, TAbstractFile, Menu, MenuItem, PluginSettingTab, Setting, FileSystemAdapter } from 'obsidian';
 import * as fs from 'fs';
 import * as path from 'path';
 import { exec, execFile } from 'child_process';
@@ -11,49 +11,22 @@ import * as electron from 'electron';
 // Wir nutzen Electron für den Zugriff auf das Dateisystem-Clipboard und Drag & Drop
 const { clipboard } = electron;
 
-interface NaturalMoveSettings {
+interface VaultFileClipboardSettings {
 	targetFolderPath: string;
 	enableAudioFeedback: boolean;
-	pandocPath: string;
-	customPandocArgs: string;
-	wordTemplatesFolderPath: string;
 	showPasteFromClipboardMenu: boolean;
 	showCopyToTargetFolderMenu: boolean;
-	showPandocExportMenu: boolean;
 }
 
-const DEFAULT_SETTINGS: NaturalMoveSettings = {
+const DEFAULT_SETTINGS: VaultFileClipboardSettings = {
 	targetFolderPath: '',
 	enableAudioFeedback: true,
-	pandocPath: 'pandoc',
-	customPandocArgs: '',
-	wordTemplatesFolderPath: '',
 	showPasteFromClipboardMenu: true,
-	showCopyToTargetFolderMenu: true,
-	showPandocExportMenu: true
+	showCopyToTargetFolderMenu: true
 }
 
-import en from './lang/locale/en';
-
-interface PandocFormat {
-	name: string;
-	ext: string;
-	args: string;
-	icon: string;
-	menuKey: keyof typeof en;
-}
-
-const PANDOC_FORMATS: Record<string, PandocFormat> = {
-	'docx': { name: 'Word', ext: 'docx', args: '', icon: 'file-text', menuKey: 'WORD_TEMPLATES_MENU' },
-	'pptx': { name: 'PowerPoint', ext: 'pptx', args: '', icon: 'presentation', menuKey: 'PPT_TEMPLATES_MENU' },
-	'pdf': { name: 'PDF', ext: 'pdf', args: '', icon: 'file-text', menuKey: 'PDF_TEMPLATES_MENU' },
-	'beamer': { name: 'Beamer-Slides', ext: 'pdf', args: '-t beamer', icon: 'presentation', menuKey: 'BEAMER_TEMPLATES_MENU' },
-	'markdown': { name: 'Markdown', ext: 'md', args: '-t markdown', icon: 'file-text', menuKey: 'MD_TEMPLATES_MENU' },
-	'html': { name: 'HTML', ext: 'html', args: '--embed-resources --standalone', icon: 'globe', menuKey: 'HTML_TEMPLATES_MENU' }
-};
-
-export default class NaturalMove extends Plugin {
-	settings!: NaturalMoveSettings;
+export default class VaultFileClipboard extends Plugin {
+	settings!: VaultFileClipboardSettings;
 	private audioCtx: AudioContext | null = null;
 	private boundDragStartHandler!: (evt: DragEvent) => void;
 
@@ -140,13 +113,13 @@ export default class NaturalMove extends Plugin {
 			})
 		);
 
-		this.addSettingTab(new NaturalMoveSettingTab(this.app, this));
+		this.addSettingTab(new VaultFileClipboardSettingTab(this.app, this));
 	}
 
 	onunload() {
 		console.debug(t('UNLOAD_PLUGIN'));
 		if (this.audioCtx) void this.audioCtx.close();
-		document.getElementById('natural-move-style')?.remove();
+		document.getElementById('vault-file-clipboard-style')?.remove();
 		document.removeEventListener('dragstart', this.boundDragStartHandler, true);
 		document.removeEventListener('keydown', this.boundKeyDownHandler, true);
 	}
@@ -339,74 +312,6 @@ export default class NaturalMove extends Plugin {
 			});
 		}
 
-		// Pandoc export is free and can be hidden from the context menu in settings.
-		const mdFiles = files.filter((f): f is TFile => f instanceof TFile && f.extension === 'md');
-		if (mdFiles.length > 0 && this.settings.showPandocExportMenu) {
-			menu.addItem((mainItem: MenuItem) => {
-				const mainTitle = t('EXPORT_SUBMENU_TITLE') + labelSuffix;
-				mainItem
-					.setTitle(mainTitle)
-					.setIcon('export')
-					.setSection('action');
-
-				const exportSubmenu = (mainItem as MenuItem & { setSubmenu: () => Menu }).setSubmenu();
-
-				Object.entries(PANDOC_FORMATS).forEach(([key, format]) => {
-					exportSubmenu.addItem((formatItem: MenuItem) => {
-						formatItem
-							.setTitle(t(format.menuKey))
-							.setIcon(format.icon);
-
-						const formatSubmenu = (formatItem as MenuItem & { setSubmenu: () => Menu }).setSubmenu();
-
-						// 1. Standard Export (No Template)
-						formatSubmenu.addItem((item: MenuItem) => {
-							item
-								.setTitle(t('EXPORT_WITHOUT_TEMPLATE'))
-								.setIcon(format.icon)
-								.onClick(async () => {
-									await this.exportWithPandoc(mdFiles, format);
-								});
-						});
-
-						// 2. Optional templates
-						if (this.settings.wordTemplatesFolderPath) {
-							try {
-								if (fs.existsSync(this.settings.wordTemplatesFolderPath)) {
-									const templateExts: Record<string, string[]> = {
-										'docx': ['.docx'],
-										'pptx': ['.pptx'],
-										'pdf': ['.tex', '.latex'],
-										'beamer': ['.tex', '.latex']
-									};
-
-									const allowedExts = templateExts[key] || [];
-									if (allowedExts.length === 0) return; // Skip formats without template support
-									const templateFiles = fs.readdirSync(this.settings.wordTemplatesFolderPath)
-										.filter(f => allowedExts.some(ext => f.endsWith(ext)));
-									
-									templateFiles.forEach(templateFile => {
-										formatSubmenu.addItem((item: MenuItem) => {
-											const templateName = path.basename(templateFile, path.extname(templateFile));
-											const isExperimental = ['pdf', 'beamer', 'pptx'].includes(key);
-											item
-												.setTitle(t('EXPORT_WITH_TEMPLATE', templateName) + (isExperimental ? ' ' + t('EXPERIMENTAL') : ''))
-												.setIcon('file-text')
-												.onClick(async () => {
-													const templatePath = path.join(this.settings.wordTemplatesFolderPath, templateFile);
-													await this.exportWithPandoc(mdFiles, format, templatePath);
-												});
-										});
-									});
-								}
-							} catch (e) {
-								console.error('Error reading templates folder:', e);
-							}
-						}
-					});
-				});
-			});
-		}
 	}
 
 	private getSelectedFiles(): TAbstractFile[] {
@@ -715,271 +620,6 @@ JSON.stringify(paths);
 		}
 	}
 
-	private async createVideoThumbnail(videoFile: TFile, tempDir: string): Promise<string> {
-		return new Promise((resolve, reject) => {
-			const video = document.createElement('video');
-			video.classList.add('natural-move-hidden-video');
-			video.muted = true;
-			video.src = this.app.vault.getResourcePath(videoFile);
-			video.crossOrigin = "anonymous";
-
-			video.onloadedmetadata = () => {
-				video.currentTime = Math.min(1, video.duration / 2);
-			};
-
-			video.onseeked = () => {
-				try {
-					const canvas = document.createElement('canvas');
-					canvas.width = video.videoWidth || 640;
-					canvas.height = video.videoHeight || 360;
-					const ctx = canvas.getContext('2d');
-					if (ctx) {
-						ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-						
-						// Draw Play Button Overlay
-						ctx.fillStyle = "rgba(0,0,0,0.5)";
-						ctx.beginPath();
-						ctx.arc(canvas.width/2, canvas.height/2, 40, 0, Math.PI*2);
-						ctx.fill();
-						ctx.fillStyle = "white";
-						ctx.beginPath();
-						ctx.moveTo(canvas.width/2 - 12, canvas.height/2 - 20);
-						ctx.lineTo(canvas.width/2 + 20, canvas.height/2);
-						ctx.lineTo(canvas.width/2 - 12, canvas.height/2 + 20);
-						ctx.fill();
-
-						const dataUrl = canvas.toDataURL('image/png');
-						const base64Data = dataUrl.replace(/^data:image\/png;base64,/, "");
-						const thumbPath = path.join(tempDir, `thumb_${videoFile.name}.png`);
-						fs.writeFileSync(thumbPath, base64Data, 'base64');
-						resolve(thumbPath);
-					} else {
-						reject(new Error("Canvas context is null"));
-					}
-				} catch (e) {
-					reject(e instanceof Error ? e : new Error(String(e)));
-				} finally {
-					video.remove();
-				}
-			};
-
-			video.onerror = (e) => {
-				video.remove();
-				const errorMessage = e instanceof Event ? 'Video playback error' : String(e);
-				reject(new Error(`Error loading video: ${errorMessage}`));
-			};
-		});
-	}
-
-	private async processMarkdownForExport(file: TFile, tempDir: string): Promise<string> {
-		let content = await this.app.vault.read(file);
-		
-		// Match Obsidian embeds: ![[filename.ext]] or ![[filename.ext|alt]]
-		const embedRegex = /!\[\[(.*?)\]\]/g;
-		const matches = [...content.matchAll(embedRegex)];
-
-		for (const match of matches) {
-			const fullMatch = match[0];
-			const linkContent = match[1];
-			const altParts = linkContent.split('|');
-			const linkPath = altParts.shift() || '';
-			
-			let caption = "";
-			let width = "";
-			let height = "";
-
-			if (altParts.length > 0) {
-				const lastPart = altParts[altParts.length - 1];
-				if (/^\d+$/.test(lastPart)) {
-					width = lastPart;
-					altParts.pop();
-				} else if (/^\d+x\d+$/.test(lastPart)) {
-					const [w, h] = lastPart.split('x');
-					width = w;
-					height = h;
-					altParts.pop();
-				}
-				caption = altParts.join('|');
-			}
-
-			let attributes = "";
-			if (width && height) {
-				attributes = `{width=${width}px height=${height}px}`;
-			} else if (width) {
-				attributes = `{width=${width}px}`;
-			}
-
-			const linkedFile = this.app.metadataCache.getFirstLinkpathDest(linkPath, file.path);
-			if (linkedFile instanceof TFile) {
-				const absolutePath = this.getAbsolutePath(linkedFile);
-				if (!absolutePath) continue;
-				
-				const extension = linkedFile.extension.toLowerCase();
-				const safePath = absolutePath.replace(/\\/g, '/');
-
-				if (['png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg', 'webp'].includes(extension)) {
-					// Replace with absolute image link and add Pandoc size attributes
-					content = content.replace(fullMatch, `![${caption}](${safePath})${attributes}`);
-				} else if (['mp4', 'webm', 'ogg', 'mov'].includes(extension)) {
-					// Video
-					try {
-						const thumbPath = await this.createVideoThumbnail(linkedFile, tempDir);
-						const safeThumbPath = thumbPath.replace(/\\/g, '/');
-						content = content.replace(fullMatch, `[![${caption}](${safeThumbPath})${attributes}](file:///${safePath})`);
-					} catch (e) {
-						console.error("Failed to generate thumbnail for", linkedFile.name, e);
-						// Fallback to text link
-						content = content.replace(fullMatch, `[🎥 ${linkedFile.name}](file:///${safePath})`);
-					}
-				}
-			}
-		}
-
-		const tempMdPath = path.join(tempDir, `temp_${file.name}`);
-		fs.writeFileSync(tempMdPath, content, 'utf8');
-		return tempMdPath;
-	}
-
-	private async exportWithPandoc(files: TFile[], format: PandocFormat, templatePath?: string) {
-		if (!this.settings.targetFolderPath || !fs.existsSync(this.settings.targetFolderPath)) {
-			new Notice(t('TARGET_FOLDER_NOT_EXISTS'));
-			return;
-		}
-
-		let successCount = 0;
-		let errorCount = 0;
-		let lastError = "";
-		const pandocCmd = this.settings.pandocPath || 'pandoc';
-
-		const exportName = templatePath ? path.basename(templatePath, '.docx') : format.name;
-		new Notice(t('EXPORTING_FILES', files.length.toString(), exportName));
-
-		// Erweitere PATH für Mac (Homebrew, MacTeX)
-		const env = {
-			...process.env,
-			PATH: `${process.env.PATH || ''}:/usr/local/bin:/opt/homebrew/bin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin`
-		};
-
-		let pandocMissing = false;
-		
-		// Create a temporary directory for pre-processing
-		const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'natural-move-'));
-
-		try {
-			for (const file of files) {
-				const originalSourcePath = this.getAbsolutePath(file);
-				if (!originalSourcePath) {
-					errorCount++;
-					continue;
-				}
-
-				// Pre-process markdown to handle images and videos
-				let sourcePath = originalSourcePath;
-				if (file.extension === 'md') {
-					try {
-						sourcePath = await this.processMarkdownForExport(file, tempDir);
-					} catch (e) {
-						console.error("Pre-processing failed for", file.name, e);
-						// Fallback to original source path if pre-processing fails
-					}
-				}
-
-				let destName = file.basename + '.' + format.ext;
-				// Verhindere Überschreiben der Quelldatei, falls Zielordner = Vault-Ordner
-				if (format.ext === 'md' && originalSourcePath === path.join(this.settings.targetFolderPath, destName)) {
-					destName = file.basename + '_export.' + format.ext;
-				}
-				
-				const destPath = path.join(this.settings.targetFolderPath, destName);
-
-				// Pandoc Befehl zusammenbauen
-				let customArgs = this.settings.customPandocArgs ? ` ${this.settings.customPandocArgs}` : '';
-				
-				if (templatePath && fs.existsSync(templatePath)) {
-					const ext = path.extname(templatePath).toLowerCase();
-					if (ext === '.docx' || ext === '.pptx') {
-						customArgs += ` --reference-doc="${templatePath}"`;
-					} else {
-						customArgs += ` --template="${templatePath}"`;
-					}
-				}
-
-				// Add resource path so Pandoc can find relative files if any are left
-				const originalDir = path.dirname(originalSourcePath);
-				customArgs += ` --resource-path="${originalDir}"`;
-
-				const cmd = `"${pandocCmd}" "${sourcePath}" ${format.args}${customArgs} -o "${destPath}"`;
-
-			try {
-				await new Promise<void>((resolve, reject) => {
-					exec(cmd, { env }, (error, stdout, stderr) => {
-						if (error) {
-							console.error('Pandoc Error:', error, stderr);
-							lastError = stderr || error.message;
-							reject(error);
-						} else {
-							resolve();
-						}
-					});
-				});
-				successCount++;
-			} catch (err: unknown) {
-				console.error(`Fehler beim Export von ${file.name}:`, err);
-				
-				const errorMessage = err instanceof Error ? err.message : String(err);
-				const errorCode = err && typeof err === 'object' && 'code' in err ? String((err as Record<string, unknown>).code) : '';
-				const errorStr = errorMessage + ' ' + (lastError || '');
-				if (errorStr.toLowerCase().includes('yaml') || errorStr.toLowerCase().includes('metadata')) {
-					console.debug('YAML error detected, trying fallback without metadata...');
-					const fallbackCmd = `"${pandocCmd}" "${sourcePath}" ${format.args}${customArgs} -f markdown-yaml_metadata_block -o "${destPath}"`;
-					try {
-						await new Promise<void>((resolve, reject) => {
-							exec(fallbackCmd, { env }, (error, stdout, stderr) => {
-								if (error) {
-									lastError = stderr || error.message;
-									reject(error);
-								} else {
-									resolve();
-								}
-							});
-						});
-						successCount++;
-						new Notice(t('EXPORT_FALLBACK_YAML') + ` (${file.name})`);
-					} catch (fallbackErr: unknown) {
-						console.error(`Fallback-Fehler beim Export von ${file.name}:`, fallbackErr);
-						errorCount++;
-					}
-				} else if (errorCode === 'ENOENT' || errorMessage.includes('command not found') || errorMessage.includes('nicht gefunden')) {
-					pandocMissing = true;
-					break;
-				} else {
-					errorCount++;
-				}
-			}
-		}
-		} finally {
-			// Clean up temporary directory
-			try {
-				fs.rmSync(tempDir, { recursive: true, force: true });
-			} catch (e) {
-				console.error("Failed to clean up temporary directory", e);
-			}
-		}
-
-		if (pandocMissing) {
-			new Notice(t('PANDOC_NOT_FOUND'));
-			return;
-		}
-
-		if (successCount > 0) {
-			this.playSuccessSound();
-			new Notice(t('EXPORT_SUCCESS', successCount.toString(), format.name));
-		}
-		if (errorCount > 0) {
-			new Notice(t('EXPORT_ERROR', errorCount.toString(), lastError.substring(0, 100)));
-		}
-	}
-
 	private getAbsolutePath(file: TAbstractFile): string | null {
 		const adapter = this.app.vault.adapter;
 		if (adapter instanceof FileSystemAdapter) {
@@ -1028,19 +668,7 @@ JSON.stringify(paths);
 	}
 
 	async loadSettings() {
-		const savedData = (await this.loadData() || {}) as Record<string, unknown>;
-		const hadLegacyLicenseData = ['licenseKey', 'instanceId', 'isPro'].some(key => key in savedData);
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, savedData);
-
-		// Remove license data saved by versions that still had paid feature gates.
-		const migratedSettings = this.settings as NaturalMoveSettings & Record<string, unknown>;
-		delete migratedSettings.licenseKey;
-		delete migratedSettings.instanceId;
-		delete migratedSettings.isPro;
-
-		if (hadLegacyLicenseData) {
-			await this.saveSettings();
-		}
+		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
 	}
 
 	async saveSettings() {
@@ -1048,10 +676,10 @@ JSON.stringify(paths);
 	}
 }
 
-class NaturalMoveSettingTab extends PluginSettingTab {
-	plugin: NaturalMove;
+class VaultFileClipboardSettingTab extends PluginSettingTab {
+	plugin: VaultFileClipboard;
 
-	constructor(app: App, plugin: NaturalMove) {
+	constructor(app: App, plugin: VaultFileClipboard) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
@@ -1084,22 +712,10 @@ class NaturalMoveSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 				}));
 
-		new Setting(containerEl)
-			.setName(t('SETTING_PANDOC_MENU_NAME'))
-			.setDesc(t('SETTING_PANDOC_MENU_DESC'))
-			.addToggle(toggle => toggle
-				.setValue(this.plugin.settings.showPandocExportMenu)
-				.onChange(async (value) => {
-					this.plugin.settings.showPandocExportMenu = value;
-					await this.plugin.saveSettings();
-				}));
-
 		containerEl.createEl('hr');
 
 		const isWin = os.platform() === 'win32';
 		const targetFolderPlaceholder = isWin ? 'C:\\path\\to\\folder' : '/path/to/folder';
-		const pandocPlaceholder = isWin ? 'C:\\Program Files\\Pandoc\\pandoc.exe' : '/usr/local/bin/pandoc';
-		const templatesFolderPlaceholder = isWin ? 'C:\\path\\to\\templates' : '/path/to/templates';
 
 		new Setting(containerEl)
 			.setName(t('SETTING_TARGET_FOLDER_NAME'))
@@ -1110,76 +726,6 @@ class NaturalMoveSettingTab extends PluginSettingTab {
 					.setValue(this.plugin.settings.targetFolderPath)
 					.onChange(async (value) => {
 						this.plugin.settings.targetFolderPath = value.trim();
-						await this.plugin.saveSettings();
-					});
-				
-				return text;
-			});
-
-		const pandocDesc = document.createDocumentFragment();
-		pandocDesc.appendText(t('SETTING_PANDOC_PATH_DESC') + ' ');
-		pandocDesc.createEl('a', { 
-			text: t('SETTING_PANDOC_DOWNLOAD_LINK'), 
-			href: 'https://pandoc.org/installing.html' 
-		});
-
-		new Setting(containerEl)
-			.setName(t('SETTING_PANDOC_PATH_NAME'))
-			.setDesc(pandocDesc)
-			.addText(text => {
-				text
-					.setPlaceholder(pandocPlaceholder)
-					.setValue(this.plugin.settings.pandocPath)
-					.onChange(async (value) => {
-						this.plugin.settings.pandocPath = value.trim();
-						await this.plugin.saveSettings();
-					});
-				
-				return text;
-			});
-
-		const latexDesc = document.createDocumentFragment();
-		latexDesc.appendText(t('SETTING_LATEX_DESC') + ' ');
-		if (isWin) {
-			latexDesc.createEl('a', { 
-				text: t('SETTING_LATEX_WIN_BUTTON'), 
-				href: 'https://miktex.org/download' 
-			});
-		} else {
-			latexDesc.createEl('a', { 
-				text: t('SETTING_LATEX_MAC_BUTTON'), 
-				href: 'https://tug.org/mactex/mactex-download.html' 
-			});
-		}
-
-		new Setting(containerEl)
-			.setName(t('SETTING_LATEX_NAME'))
-			.setDesc(latexDesc);
-
-		new Setting(containerEl)
-			.setName(t('SETTING_CUSTOM_ARGS_NAME'))
-			.setDesc(t('SETTING_CUSTOM_ARGS_DESC'))
-			.addTextArea(text => {
-				text
-					.setPlaceholder('--toc --citeproc ...')
-					.setValue(this.plugin.settings.customPandocArgs)
-					.onChange(async (value) => {
-						this.plugin.settings.customPandocArgs = value.trim();
-						await this.plugin.saveSettings();
-					});
-				
-				return text;
-			});
-
-		new Setting(containerEl)
-			.setName(t('SETTING_WORD_TEMPLATES_FOLDER_NAME'))
-			.setDesc(t('SETTING_WORD_TEMPLATES_FOLDER_DESC'))
-			.addText(text => {
-				text
-					.setPlaceholder(templatesFolderPlaceholder)
-					.setValue(this.plugin.settings.wordTemplatesFolderPath)
-					.onChange(async (value) => {
-						this.plugin.settings.wordTemplatesFolderPath = value.trim();
 						await this.plugin.saveSettings();
 					});
 				
@@ -1210,15 +756,15 @@ class NaturalMoveSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName(t('SETTING_HELP_NAME'))
 			.setDesc(t('SETTING_HELP_DESC'))
+				.addButton(btn => btn
+					.setButtonText(t('SETTING_HELP_BUTTON'))
+					.onClick(() => {
+						window.open("https://github.com/EdgerHao/Obsidian-Natural-Move-Export/tree/codex/vault-file-clipboard");
+					}))
 			.addButton(btn => btn
-				.setButtonText(t('SETTING_HELP_BUTTON'))
-				.onClick(() => {
-					window.open("https://naturalis3.github.io/Obsidian-Natural-Move-Export/");
-				}))
-			.addButton(btn => btn
-				.setButtonText(t('SETTING_HELP_BUG_BUTTON'))
-				.onClick(() => {
-					window.open("https://github.com/Naturalis3/Obsidian-Natural-Move-Export/issues");
+					.setButtonText(t('SETTING_HELP_BUG_BUTTON'))
+					.onClick(() => {
+						window.open("https://github.com/EdgerHao/Obsidian-Natural-Move-Export/issues");
 				}));
 	}
 }

@@ -35,7 +35,7 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/main.ts
 var main_exports = {};
 __export(main_exports, {
-  default: () => NaturalMove
+  default: () => VaultFileClipboard
 });
 module.exports = __toCommonJS(main_exports);
 var import_obsidian = require("obsidian");
@@ -47,15 +47,14 @@ var import_url = require("url");
 
 // src/lang/locale/en.ts
 var en_default = {
-  LOAD_PLUGIN: "Loading natural move/export plugin",
-  UNLOAD_PLUGIN: "Unloading natural move/export plugin",
-  COPY_TO_CLIPBOARD: "Natural move: copy to clipboard",
-  COPY_TO_TARGET_FOLDER: "Natural move: copy to target folder",
-  PASTE_FROM_CLIPBOARD: "Natural move: paste external files here",
+  LOAD_PLUGIN: "Loading Vault File Clipboard plugin",
+  UNLOAD_PLUGIN: "Unloading Vault File Clipboard plugin",
+  COPY_TO_CLIPBOARD: "Vault File Clipboard: copy to clipboard",
+  COPY_TO_TARGET_FOLDER: "Vault File Clipboard: copy to target folder",
+  PASTE_FROM_CLIPBOARD: "Vault File Clipboard: paste external files here",
   PASTE_NO_FILES: "No external files or folders were found on the system clipboard.",
   PASTE_SUCCESS: "%1 item(s) pasted into %2.",
   PASTE_ERROR: "%1 item(s) could not be pasted.",
-  EXPORT_AS_PANDOC: "Export as %1 (.%2) to target folder",
   LINKED_FILE: "Linked file ",
   NO_FILES_SELECTED: "No files selected in file explorer.",
   COPY_SUCCESS: "%1 file(s) copied to clipboard.",
@@ -65,31 +64,11 @@ var en_default = {
   TARGET_FOLDER_SUCCESS: "%1 item(s) copied to target folder.",
   TARGET_FOLDER_ERROR: "%1 error(s) during copying.",
   TARGET_FOLDER_NOT_SET: "Please set a target folder in settings first.",
-  TARGET_FOLDER_NOT_EXISTS: "Target folder does not exist or is not configured.",
-  EXPORTING_FILES: "Exporting %1 file(s) as %2...",
-  EXPORT_SUCCESS: "%1 file(s) successfully exported as %2.",
-  EXPORT_ERROR: "Error during export (%1x). Last error: %2",
-  SETTINGS_TITLE: "Natural move/export settings",
+  SETTINGS_TITLE: "Vault File Clipboard settings",
   SETTING_TARGET_FOLDER_NAME: "Target folder (absolute path)",
-  SETTING_TARGET_FOLDER_DESC: "Enter the absolute path to the folder on your computer where files should be copied.",
-  SETTING_PANDOC_PATH_NAME: "Pandoc path",
-  SETTING_PANDOC_PATH_DESC: "The path to the pandoc installation (e.g. 'pandoc' or '/usr/local/bin/pandoc'). Required for Word/PowerPoint export.",
-  SETTING_CUSTOM_ARGS_NAME: "Custom pandoc arguments",
-  SETTING_CUSTOM_ARGS_DESC: "Additional command-line arguments for pandoc (e.g. '--toc'). These are appended to every export.",
-  SETTING_WORD_TEMPLATES_FOLDER_NAME: "Templates folder",
-  SETTING_WORD_TEMPLATES_FOLDER_DESC: "Absolute path to a folder containing template files (.docx for Word, .pptx for PowerPoint, .tex for PDF/Beamer).",
-  WORD_TEMPLATES_MENU: "Word export",
-  PPT_TEMPLATES_MENU: "PowerPoint export",
-  PDF_TEMPLATES_MENU: "PDF export",
-  BEAMER_TEMPLATES_MENU: "Beamer export",
-  HTML_TEMPLATES_MENU: "HTML export",
-  MD_TEMPLATES_MENU: "Markdown export",
-  EXPORT_SUBMENU_TITLE: "Natural move export",
-  EXPORT_WITHOUT_TEMPLATE: "Standard export (no template)",
-  EXPORT_WITH_TEMPLATE: "Template: %1",
-  EXPERIMENTAL: "(experimental)",
+  SETTING_TARGET_FOLDER_DESC: "Enter the absolute path to the folder where files should be copied.",
   SETTING_AUDIO_FEEDBACK_NAME: "Audio feedback",
-  SETTING_AUDIO_FEEDBACK_DESC: "Plays a short sound when a file is successfully copied.",
+  SETTING_AUDIO_FEEDBACK_DESC: "Play a short sound after a successful copy or paste.",
   SETTING_TEST_SOUND_NAME: "Test sound",
   SETTING_TEST_SOUND_DESC: "Click here to test the audio feedback.",
   SETTING_TEST_SOUND_BUTTON: "Test sound",
@@ -98,31 +77,19 @@ var en_default = {
   SETTING_PASTE_MENU_DESC: "Show an action on folder context menus that imports files and folders copied in Finder or File Explorer.",
   SETTING_TARGET_FOLDER_MENU_NAME: "Show copy to target folder",
   SETTING_TARGET_FOLDER_MENU_DESC: "Show the copy-to-target-folder action in the file explorer context menu.",
-  SETTING_PANDOC_MENU_NAME: "Show pandoc export",
-  SETTING_PANDOC_MENU_DESC: "Show the pandoc export submenu for Markdown files in the file explorer context menu.",
   COPY_COMMAND_NAME: "Copy selected files (from file explorer)",
-  PLACEHOLDER_TARGET_FOLDER: "/path/to/folder",
-  PLACEHOLDER_TEMPLATES_FOLDER: "/path/to/templates",
-  SETTING_PANDOC_DOWNLOAD_LINK: "Download pandoc here",
-  SETTING_LATEX_NAME: "PDF export requirements (LaTeX)",
-  SETTING_LATEX_DESC: "To export as PDF, pandoc requires a LaTeX distribution.",
-  SETTING_LATEX_MAC_BUTTON: "Get MacTeX (macOS)",
-  SETTING_LATEX_WIN_BUTTON: "Get MiKTeX (Windows)",
-  PANDOC_NOT_FOUND: "Pandoc not found. Please install pandoc or check the path in settings.",
   SETTING_HELP_NAME: "Documentation and help",
-  SETTING_HELP_DESC: "Open the official documentation and setup guide.",
+  SETTING_HELP_DESC: "Open the project documentation or report a problem.",
   SETTING_HELP_BUTTON: "Open documentation",
-  SETTING_HELP_BUG_BUTTON: "Report bug",
-  EXPORT_FALLBACK_YAML: "Exported without metadata (YAML error bypassed)."
+  SETTING_HELP_BUG_BUTTON: "Report bug"
 };
 
 // src/lang/locale/de.ts
 var de_default = {
-  LOAD_PLUGIN: "Lade natural move/export plugin",
-  UNLOAD_PLUGIN: "Entlade natural move/export plugin",
-  COPY_TO_CLIPBOARD: "Natural move: in Zwischenablage kopieren",
-  COPY_TO_TARGET_FOLDER: "Natural move: in Zielordner kopieren",
-  EXPORT_AS_PANDOC: "Als %1 (.%2) in Zielordner exportieren",
+  LOAD_PLUGIN: "Lade Vault File Clipboard plugin",
+  UNLOAD_PLUGIN: "Entlade Vault File Clipboard plugin",
+  COPY_TO_CLIPBOARD: "Vault File Clipboard: in Zwischenablage kopieren",
+  COPY_TO_TARGET_FOLDER: "Vault File Clipboard: in Zielordner kopieren",
   LINKED_FILE: "Verlinkte Datei ",
   NO_FILES_SELECTED: "Keine Dateien im File Explorer markiert.",
   COPY_SUCCESS: "%1 Datei(en) in Zwischenablage kopiert.",
@@ -132,57 +99,27 @@ var de_default = {
   TARGET_FOLDER_SUCCESS: "%1 Element(e) in Zielordner kopiert.",
   TARGET_FOLDER_ERROR: "%1 Fehler beim Kopieren.",
   TARGET_FOLDER_NOT_SET: "Bitte lege zuerst einen Zielordner in den Einstellungen fest.",
-  TARGET_FOLDER_NOT_EXISTS: "Zielordner existiert nicht oder ist nicht konfiguriert.",
-  EXPORTING_FILES: "Exportiere %1 Datei(en) als %2...",
-  EXPORT_SUCCESS: "%1 Datei(en) erfolgreich als %2 exportiert.",
-  EXPORT_ERROR: "Fehler beim Exportieren (%1x). Letzter Fehler: %2",
-  SETTINGS_TITLE: "Natural move/export Einstellungen",
+  SETTINGS_TITLE: "Vault File Clipboard Einstellungen",
   SETTING_TARGET_FOLDER_NAME: "Zielordner (Absoluter Pfad)",
-  SETTING_TARGET_FOLDER_DESC: "Gib den absoluten Pfad zu dem Ordner auf deinem Computer an, in den Dateien kopiert werden sollen.",
-  SETTING_PANDOC_PATH_NAME: "Pandoc Pfad",
-  SETTING_PANDOC_PATH_DESC: "Der Pfad zur pandoc-Installation (z.B. 'pandoc' oder '/usr/local/bin/pandoc'). Wird f\xFCr den Export nach Word/PowerPoint ben\xF6tigt.",
-  SETTING_CUSTOM_ARGS_NAME: "Eigene pandoc-Argumente",
-  SETTING_CUSTOM_ARGS_DESC: "Zus\xE4tzliche Kommandozeilen-Argumente f\xFCr pandoc (z.B. '--toc'). Diese werden bei jedem Export angeh\xE4ngt.",
-  SETTING_WORD_TEMPLATES_FOLDER_NAME: "Vorlagen-Ordner",
-  SETTING_WORD_TEMPLATES_FOLDER_DESC: "Absoluter Pfad zu einem Ordner mit Vorlagen (.docx f\xFCr Word, .pptx f\xFCr PowerPoint, .tex f\xFCr PDF/Beamer).",
-  WORD_TEMPLATES_MENU: "Word Export",
-  PPT_TEMPLATES_MENU: "PowerPoint Export",
-  PDF_TEMPLATES_MENU: "PDF Export",
-  BEAMER_TEMPLATES_MENU: "Beamer Export",
-  HTML_TEMPLATES_MENU: "HTML Export",
-  MD_TEMPLATES_MENU: "Markdown Export",
-  EXPORT_SUBMENU_TITLE: "Natural move export",
-  EXPORT_WITHOUT_TEMPLATE: "Standard Export (Ohne Vorlage)",
-  EXPORT_WITH_TEMPLATE: "Vorlage: %1",
-  EXPERIMENTAL: "(Experimentell)",
+  SETTING_TARGET_FOLDER_DESC: "Gib den absoluten Pfad zu dem Ordner an, in den Dateien kopiert werden sollen.",
   SETTING_AUDIO_FEEDBACK_NAME: "Audio-Feedback",
   SETTING_AUDIO_FEEDBACK_DESC: "Spielt einen kurzen Sound ab, wenn eine Datei erfolgreich kopiert wurde.",
   SETTING_TEST_SOUND_NAME: "Sound testen",
   SETTING_TEST_SOUND_DESC: "Klicke hier, um das Audio-Feedback zu testen.",
   SETTING_TEST_SOUND_BUTTON: "Test Sound",
   COPY_COMMAND_NAME: "Kopiere markierte Dateien (aus dem File Explorer)",
-  PLACEHOLDER_TARGET_FOLDER: "/pfad/zum/ordner",
-  PLACEHOLDER_TEMPLATES_FOLDER: "/pfad/zu/vorlagen",
-  SETTING_PANDOC_DOWNLOAD_LINK: "Hier pandoc herunterladen",
-  SETTING_LATEX_NAME: "PDF-Export Voraussetzungen (LaTeX)",
-  SETTING_LATEX_DESC: "F\xFCr den PDF-Export ben\xF6tigt pandoc eine LaTeX-Distribution.",
-  SETTING_LATEX_MAC_BUTTON: "MacTeX laden (macOS)",
-  SETTING_LATEX_WIN_BUTTON: "MiKTeX laden (Windows)",
-  PANDOC_NOT_FOUND: "Pandoc nicht gefunden. Bitte installiere pandoc oder pr\xFCfe den Pfad in den Einstellungen.",
   SETTING_HELP_NAME: "Dokumentation und Hilfe",
-  SETTING_HELP_DESC: "\xD6ffne die offizielle Dokumentation und Installationsanleitung.",
+  SETTING_HELP_DESC: "\xD6ffne die Projektdokumentation.",
   SETTING_HELP_BUTTON: "Dokumentation \xF6ffnen",
-  SETTING_HELP_BUG_BUTTON: "Fehler melden",
-  EXPORT_FALLBACK_YAML: "Exportiert ohne Metadaten (YAML-Fehler umgangen)."
+  SETTING_HELP_BUG_BUTTON: "Fehler melden"
 };
 
 // src/lang/locale/fr.ts
 var fr_default = {
-  LOAD_PLUGIN: "Chargement du plugin natural move/export",
-  UNLOAD_PLUGIN: "D\xE9chargement du plugin natural move/export",
-  COPY_TO_CLIPBOARD: "Natural move: copier dans le presse-papiers",
-  COPY_TO_TARGET_FOLDER: "Natural move: copier dans le dossier cible",
-  EXPORT_AS_PANDOC: "Exporter en %1 (.%2) vers le dossier cible",
+  LOAD_PLUGIN: "Chargement du plugin Vault File Clipboard",
+  UNLOAD_PLUGIN: "D\xE9chargement du plugin Vault File Clipboard",
+  COPY_TO_CLIPBOARD: "Vault File Clipboard : copier dans le presse-papiers",
+  COPY_TO_TARGET_FOLDER: "Vault File Clipboard : copier dans le dossier cible",
   LINKED_FILE: "Fichier li\xE9 ",
   NO_FILES_SELECTED: "Aucun fichier s\xE9lectionn\xE9 dans l'explorateur de fichiers.",
   COPY_SUCCESS: "%1 fichier(s) copi\xE9(s) dans le presse-papiers.",
@@ -192,57 +129,27 @@ var fr_default = {
   TARGET_FOLDER_SUCCESS: "%1 \xE9l\xE9ment(s) copi\xE9(s) dans le dossier cible.",
   TARGET_FOLDER_ERROR: "%1 erreur(s) lors de la copie.",
   TARGET_FOLDER_NOT_SET: "Veuillez d'abord d\xE9finir un dossier cible dans les param\xE8tres.",
-  TARGET_FOLDER_NOT_EXISTS: "Le dossier cible n'existe pas ou n'est pas configur\xE9.",
-  EXPORTING_FILES: "Exportation de %1 fichier(s) en %2...",
-  EXPORT_SUCCESS: "%1 fichier(s) export\xE9(s) avec succ\xE8s en %2.",
-  EXPORT_ERROR: "Erreur lors de l'exportation (%1x). Derni\xE8re erreur : %2",
-  SETTINGS_TITLE: "Param\xE8tres de natural move/export",
+  SETTINGS_TITLE: "Param\xE8tres de Vault File Clipboard",
   SETTING_TARGET_FOLDER_NAME: "Dossier cible (chemin absolu)",
-  SETTING_TARGET_FOLDER_DESC: "Entrez le chemin absolu du dossier sur votre ordinateur o\xF9 les fichiers doivent \xEAtre copi\xE9s.",
-  SETTING_PANDOC_PATH_NAME: "Chemin Pandoc",
-  SETTING_PANDOC_PATH_DESC: "Le chemin vers l'installation de pandoc (ex: 'pandoc' ou '/usr/local/bin/pandoc'). Requis pour l'exportation Word/PowerPoint.",
-  SETTING_CUSTOM_ARGS_NAME: "Arguments pandoc personnalis\xE9s",
-  SETTING_CUSTOM_ARGS_DESC: "Arguments de ligne de commande suppl\xE9mentaires pour pandoc (ex: '--toc'). Ils sont ajout\xE9s \xE0 chaque exportation.",
-  SETTING_WORD_TEMPLATES_FOLDER_NAME: "Dossier des mod\xE8les",
-  SETTING_WORD_TEMPLATES_FOLDER_DESC: "Chemin absolu vers un dossier contenant des fichiers de mod\xE8les (.docx pour Word, .pptx pour PowerPoint, .tex pour PDF/Beamer).",
-  WORD_TEMPLATES_MENU: "Export Word",
-  PPT_TEMPLATES_MENU: "Export PowerPoint",
-  PDF_TEMPLATES_MENU: "Export PDF",
-  BEAMER_TEMPLATES_MENU: "Export Beamer",
-  HTML_TEMPLATES_MENU: "Export HTML",
-  MD_TEMPLATES_MENU: "Export Markdown",
-  EXPORT_SUBMENU_TITLE: "Export natural move",
-  EXPORT_WITHOUT_TEMPLATE: "Export standard (sans mod\xE8le)",
-  EXPORT_WITH_TEMPLATE: "Mod\xE8le : %1",
-  EXPERIMENTAL: "(Exp\xE9rimental)",
+  SETTING_TARGET_FOLDER_DESC: "Entrez le chemin absolu du dossier o\xF9 les fichiers doivent \xEAtre copi\xE9s.",
   SETTING_AUDIO_FEEDBACK_NAME: "Retour audio",
   SETTING_AUDIO_FEEDBACK_DESC: "Joue un court son lorsqu'un fichier est copi\xE9 avec succ\xE8s.",
   SETTING_TEST_SOUND_NAME: "Tester le son",
   SETTING_TEST_SOUND_DESC: "Cliquez ici pour tester le retour audio.",
   SETTING_TEST_SOUND_BUTTON: "Tester le son",
   COPY_COMMAND_NAME: "Copier les fichiers s\xE9lectionn\xE9s (depuis l'explorateur de fichiers)",
-  PLACEHOLDER_TARGET_FOLDER: "/chemin/vers/dossier",
-  PLACEHOLDER_TEMPLATES_FOLDER: "/chemin/vers/modeles",
-  SETTING_PANDOC_DOWNLOAD_LINK: "T\xE9l\xE9charger pandoc ici",
-  SETTING_LATEX_NAME: "Pr\xE9requis pour l'export PDF (LaTeX)",
-  SETTING_LATEX_DESC: "Pour exporter en PDF, pandoc n\xE9cessite une distribution LaTeX.",
-  SETTING_LATEX_MAC_BUTTON: "Obtenir MacTeX (macOS)",
-  SETTING_LATEX_WIN_BUTTON: "Obtenir MiKTeX (Windows)",
-  PANDOC_NOT_FOUND: "Pandoc introuvable. Veuillez installer pandoc ou v\xE9rifier le chemin dans les param\xE8tres.",
   SETTING_HELP_NAME: "Documentation et aide",
-  SETTING_HELP_DESC: "Ouvrir la documentation officielle et le guide d'installation.",
+  SETTING_HELP_DESC: "Ouvrir la documentation du projet.",
   SETTING_HELP_BUTTON: "Ouvrir la documentation",
-  SETTING_HELP_BUG_BUTTON: "Signaler un bug",
-  EXPORT_FALLBACK_YAML: "Export\xE9 sans m\xE9tadonn\xE9es (erreur YAML contourn\xE9e)."
+  SETTING_HELP_BUG_BUTTON: "Signaler un bug"
 };
 
 // src/lang/locale/es.ts
 var es_default = {
-  LOAD_PLUGIN: "Cargando el complemento natural move/export",
-  UNLOAD_PLUGIN: "Descargando el complemento natural move/export",
-  COPY_TO_CLIPBOARD: "Natural move: copiar al portapapeles",
-  COPY_TO_TARGET_FOLDER: "Natural move: copiar a la carpeta de destino",
-  EXPORT_AS_PANDOC: "Exportar como %1 (.%2) a la carpeta de destino",
+  LOAD_PLUGIN: "Cargando el complemento Vault File Clipboard",
+  UNLOAD_PLUGIN: "Descargando el complemento Vault File Clipboard",
+  COPY_TO_CLIPBOARD: "Vault File Clipboard: copiar al portapapeles",
+  COPY_TO_TARGET_FOLDER: "Vault File Clipboard: copiar a la carpeta de destino",
   LINKED_FILE: "Archivo vinculado ",
   NO_FILES_SELECTED: "No hay archivos seleccionados en el explorador de archivos.",
   COPY_SUCCESS: "%1 archivo(s) copiado(s) al portapapeles.",
@@ -252,61 +159,31 @@ var es_default = {
   TARGET_FOLDER_SUCCESS: "%1 elemento(s) copiado(s) a la carpeta de destino.",
   TARGET_FOLDER_ERROR: "%1 error(es) durante la copia.",
   TARGET_FOLDER_NOT_SET: "Primero establezca una carpeta de destino en la configuraci\xF3n.",
-  TARGET_FOLDER_NOT_EXISTS: "La carpeta de destino no existe o no est\xE1 configurada.",
-  EXPORTING_FILES: "Exportando %1 archivo(s) como %2...",
-  EXPORT_SUCCESS: "%1 archivo(s) exportado(s) con \xE9xito como %2.",
-  EXPORT_ERROR: "Error durante la exportaci\xF3n (%1x). \xDAltimo error: %2",
-  SETTINGS_TITLE: "Configuraci\xF3n de natural move/export",
+  SETTINGS_TITLE: "Configuraci\xF3n de Vault File Clipboard",
   SETTING_TARGET_FOLDER_NAME: "Carpeta de destino (ruta absoluta)",
-  SETTING_TARGET_FOLDER_DESC: "Ingrese la ruta absoluta a la carpeta en su computadora donde se deben copiar los archivos.",
-  SETTING_PANDOC_PATH_NAME: "Ruta de Pandoc",
-  SETTING_PANDOC_PATH_DESC: "La ruta a la instalaci\xF3n de pandoc (p. ej., 'pandoc' o '/usr/local/bin/pandoc'). Requerido para la exportaci\xF3n a Word/PowerPoint.",
-  SETTING_CUSTOM_ARGS_NAME: "Argumentos personalizados de pandoc",
-  SETTING_CUSTOM_ARGS_DESC: "Argumentos de l\xEDnea de comandos adicionales para pandoc (p. ej., '--toc'). Se a\xF1aden a cada exportaci\xF3n.",
-  SETTING_WORD_TEMPLATES_FOLDER_NAME: "Carpeta de plantillas",
-  SETTING_WORD_TEMPLATES_FOLDER_DESC: "Ruta absoluta a una carpeta que contiene archivos de plantilla (.docx para Word, .pptx para PowerPoint, .tex para PDF/Beamer).",
-  WORD_TEMPLATES_MENU: "Exportaci\xF3n a Word",
-  PPT_TEMPLATES_MENU: "Exportaci\xF3n a PowerPoint",
-  PDF_TEMPLATES_MENU: "Exportaci\xF3n a PDF",
-  BEAMER_TEMPLATES_MENU: "Exportaci\xF3n a Beamer",
-  HTML_TEMPLATES_MENU: "Exportaci\xF3n a HTML",
-  MD_TEMPLATES_MENU: "Exportaci\xF3n a Markdown",
-  EXPORT_SUBMENU_TITLE: "Exportaci\xF3n natural move",
-  EXPORT_WITHOUT_TEMPLATE: "Exportaci\xF3n est\xE1ndar (sin plantilla)",
-  EXPORT_WITH_TEMPLATE: "Plantilla: %1",
-  EXPERIMENTAL: "(Experimental)",
+  SETTING_TARGET_FOLDER_DESC: "Ingrese la ruta absoluta de la carpeta donde se deben copiar los archivos.",
   SETTING_AUDIO_FEEDBACK_NAME: "Retroalimentaci\xF3n de audio",
   SETTING_AUDIO_FEEDBACK_DESC: "Reproduce un sonido corto cuando un archivo se copia con \xE9xito.",
   SETTING_TEST_SOUND_NAME: "Probar sonido",
   SETTING_TEST_SOUND_DESC: "Haga clic aqu\xED para probar la retroalimentaci\xF3n de audio.",
   SETTING_TEST_SOUND_BUTTON: "Probar sonido",
   COPY_COMMAND_NAME: "Copiar archivos seleccionados (desde el explorador de archivos)",
-  PLACEHOLDER_TARGET_FOLDER: "/ruta/al/carpeta",
-  PLACEHOLDER_TEMPLATES_FOLDER: "/ruta/a/plantillas",
-  SETTING_PANDOC_DOWNLOAD_LINK: "Descargar pandoc aqu\xED",
-  SETTING_LATEX_NAME: "Requisitos de exportaci\xF3n PDF (LaTeX)",
-  SETTING_LATEX_DESC: "Para exportar a PDF, pandoc requiere una distribuci\xF3n LaTeX.",
-  SETTING_LATEX_MAC_BUTTON: "Obtener MacTeX (macOS)",
-  SETTING_LATEX_WIN_BUTTON: "Obtener MiKTeX (Windows)",
-  PANDOC_NOT_FOUND: "Pandoc no encontrado. Por favor, instala pandoc o comprueba la ruta en los ajustes.",
   SETTING_HELP_NAME: "Documentaci\xF3n y ayuda",
-  SETTING_HELP_DESC: "Abre la documentaci\xF3n oficial y la gu\xEDa de configuraci\xF3n.",
-  SETTING_HELP_BUTTON: "Abrir Documentaci\xF3n",
-  SETTING_HELP_BUG_BUTTON: "Reportar error",
-  EXPORT_FALLBACK_YAML: "Exportado sin metadatos (error YAML omitido)."
+  SETTING_HELP_DESC: "Abre la documentaci\xF3n del proyecto.",
+  SETTING_HELP_BUTTON: "Abrir documentaci\xF3n",
+  SETTING_HELP_BUG_BUTTON: "Reportar error"
 };
 
 // src/lang/locale/zh.ts
 var zh_default = {
-  LOAD_PLUGIN: "\u6B63\u5728\u52A0\u8F7D natural move/export \u63D2\u4EF6",
-  UNLOAD_PLUGIN: "\u6B63\u5728\u5378\u8F7D natural move/export \u63D2\u4EF6",
-  COPY_TO_CLIPBOARD: "Natural move: \u590D\u5236\u5230\u526A\u8D34\u677F",
-  COPY_TO_TARGET_FOLDER: "Natural move: \u590D\u5236\u5230\u76EE\u6807\u6587\u4EF6\u5939",
-  PASTE_FROM_CLIPBOARD: "Natural move: \u7C98\u8D34\u5916\u90E8\u6587\u4EF6\u5230\u6B64\u5904",
+  LOAD_PLUGIN: "\u6B63\u5728\u52A0\u8F7D Vault File Clipboard \u63D2\u4EF6",
+  UNLOAD_PLUGIN: "\u6B63\u5728\u5378\u8F7D Vault File Clipboard \u63D2\u4EF6",
+  COPY_TO_CLIPBOARD: "Vault File Clipboard: \u590D\u5236\u5230\u526A\u8D34\u677F",
+  COPY_TO_TARGET_FOLDER: "Vault File Clipboard: \u590D\u5236\u5230\u76EE\u6807\u6587\u4EF6\u5939",
+  PASTE_FROM_CLIPBOARD: "Vault File Clipboard: \u7C98\u8D34\u5916\u90E8\u6587\u4EF6\u5230\u6B64\u5904",
   PASTE_NO_FILES: "\u7CFB\u7EDF\u526A\u8D34\u677F\u4E2D\u6CA1\u6709\u53EF\u7C98\u8D34\u7684\u5916\u90E8\u6587\u4EF6\u6216\u6587\u4EF6\u5939\u3002",
   PASTE_SUCCESS: "\u5DF2\u5C06 %1 \u4E2A\u9879\u76EE\u7C98\u8D34\u5230 %2\u3002",
   PASTE_ERROR: "%1 \u4E2A\u9879\u76EE\u7C98\u8D34\u5931\u8D25\u3002",
-  EXPORT_AS_PANDOC: "\u4EE5 %1 (.%2) \u683C\u5F0F\u5BFC\u51FA\u5230\u76EE\u6807\u6587\u4EF6\u5939",
   LINKED_FILE: "\u94FE\u63A5\u6587\u4EF6 ",
   NO_FILES_SELECTED: "\u6587\u4EF6\u8D44\u6E90\u7BA1\u7406\u5668\u4E2D\u672A\u9009\u62E9\u6587\u4EF6\u3002",
   COPY_SUCCESS: "\u5DF2\u5C06 %1 \u4E2A\u6587\u4EF6\u590D\u5236\u5230\u526A\u8D34\u677F\u3002",
@@ -316,31 +193,11 @@ var zh_default = {
   TARGET_FOLDER_SUCCESS: "\u5DF2\u5C06 %1 \u4E2A\u9879\u76EE\u590D\u5236\u5230\u76EE\u6807\u6587\u4EF6\u5939\u3002",
   TARGET_FOLDER_ERROR: "\u590D\u5236\u8FC7\u7A0B\u4E2D\u51FA\u73B0 %1 \u4E2A\u9519\u8BEF\u3002",
   TARGET_FOLDER_NOT_SET: "\u8BF7\u5148\u5728\u8BBE\u7F6E\u4E2D\u8BBE\u7F6E\u76EE\u6807\u6587\u4EF6\u5939\u3002",
-  TARGET_FOLDER_NOT_EXISTS: "\u76EE\u6807\u6587\u4EF6\u5939\u4E0D\u5B58\u5728\u6216\u672A\u914D\u7F6E\u3002",
-  EXPORTING_FILES: "\u6B63\u5728\u4EE5 %2 \u683C\u5F0F\u5BFC\u51FA %1 \u4E2A\u6587\u4EF6...",
-  EXPORT_SUCCESS: "\u5DF2\u6210\u529F\u4EE5 %2 \u683C\u5F0F\u5BFC\u51FA %1 \u4E2A\u6587\u4EF6\u3002",
-  EXPORT_ERROR: "\u5BFC\u51FA\u8FC7\u7A0B\u4E2D\u51FA\u9519 (%1x)\u3002\u6700\u540E\u4E00\u6B21\u9519\u8BEF\uFF1A%2",
-  SETTINGS_TITLE: "Natural move/export \u8BBE\u7F6E",
+  SETTINGS_TITLE: "Vault File Clipboard \u8BBE\u7F6E",
   SETTING_TARGET_FOLDER_NAME: "\u76EE\u6807\u6587\u4EF6\u5939\uFF08\u7EDD\u5BF9\u8DEF\u5F84\uFF09",
-  SETTING_TARGET_FOLDER_DESC: "\u8F93\u5165\u7535\u8111\u4E0A\u8981\u590D\u5236\u6587\u4EF6\u7684\u6587\u4EF6\u5939\u7684\u7EDD\u5BF9\u8DEF\u5F84\u3002",
-  SETTING_PANDOC_PATH_NAME: "Pandoc \u8DEF\u5F84",
-  SETTING_PANDOC_PATH_DESC: "pandoc \u5B89\u88C5\u8DEF\u5F84\uFF08\u4F8B\u5982 'pandoc' \u6216 '/usr/local/bin/pandoc'\uFF09\u3002\u5BFC\u51FA Word/PowerPoint \u65F6\u9700\u8981\u3002",
-  SETTING_CUSTOM_ARGS_NAME: "\u81EA\u5B9A\u4E49 pandoc \u53C2\u6570",
-  SETTING_CUSTOM_ARGS_DESC: "pandoc \u7684\u9644\u52A0\u547D\u4EE4\u884C\u53C2\u6570\uFF08\u4F8B\u5982 '--toc'\uFF09\u3002\u8FD9\u4E9B\u53C2\u6570\u5C06\u9644\u52A0\u5230\u6BCF\u6B21\u5BFC\u51FA\u4E2D\u3002",
-  SETTING_WORD_TEMPLATES_FOLDER_NAME: "\u6A21\u677F\u6587\u4EF6\u5939",
-  SETTING_WORD_TEMPLATES_FOLDER_DESC: "\u5305\u542B\u6A21\u677F\u6587\u4EF6\u7684\u6587\u4EF6\u5939\u7684\u7EDD\u5BF9\u8DEF\u5F84\uFF08Word \u4E3A .docx\uFF0CPowerPoint \u4E3A .pptx\uFF0CPDF/Beamer \u4E3A .tex\uFF09\u3002",
-  WORD_TEMPLATES_MENU: "Word \u5BFC\u51FA",
-  PPT_TEMPLATES_MENU: "PowerPoint \u5BFC\u51FA",
-  PDF_TEMPLATES_MENU: "PDF \u5BFC\u51FA",
-  BEAMER_TEMPLATES_MENU: "Beamer \u5BFC\u51FA",
-  HTML_TEMPLATES_MENU: "HTML \u5BFC\u51FA",
-  MD_TEMPLATES_MENU: "Markdown \u5BFC\u51FA",
-  EXPORT_SUBMENU_TITLE: "Natural move \u5BFC\u51FA",
-  EXPORT_WITHOUT_TEMPLATE: "\u6807\u51C6\u5BFC\u51FA\uFF08\u65E0\u6A21\u677F\uFF09",
-  EXPORT_WITH_TEMPLATE: "\u6A21\u677F\uFF1A%1",
-  EXPERIMENTAL: "(\u5B9E\u9A8C\u6027)",
+  SETTING_TARGET_FOLDER_DESC: "\u8F93\u5165\u8981\u5C06\u6587\u4EF6\u590D\u5236\u5230\u7684\u6587\u4EF6\u5939\u7EDD\u5BF9\u8DEF\u5F84\u3002",
   SETTING_AUDIO_FEEDBACK_NAME: "\u97F3\u9891\u53CD\u9988",
-  SETTING_AUDIO_FEEDBACK_DESC: "\u6210\u529F\u590D\u5236\u6587\u4EF6\u65F6\u64AD\u653E\u77ED\u4FC3\u7684\u58F0\u97F3\u3002",
+  SETTING_AUDIO_FEEDBACK_DESC: "\u6210\u529F\u590D\u5236\u6216\u7C98\u8D34\u540E\u64AD\u653E\u77ED\u4FC3\u7684\u58F0\u97F3\u3002",
   SETTING_TEST_SOUND_NAME: "\u6D4B\u8BD5\u58F0\u97F3",
   SETTING_TEST_SOUND_DESC: "\u70B9\u51FB\u6B64\u5904\u6D4B\u8BD5\u97F3\u9891\u53CD\u9988\u3002",
   SETTING_TEST_SOUND_BUTTON: "\u6D4B\u8BD5\u58F0\u97F3",
@@ -349,31 +206,19 @@ var zh_default = {
   SETTING_PASTE_MENU_DESC: "\u5728\u6587\u4EF6\u5939\u53F3\u952E\u83DC\u5355\u4E2D\u663E\u793A\u5BFC\u5165\u529F\u80FD\uFF0C\u53EF\u7C98\u8D34\u4ECE\u8BBF\u8FBE\u6216\u6587\u4EF6\u8D44\u6E90\u7BA1\u7406\u5668\u590D\u5236\u7684\u6587\u4EF6\u548C\u6587\u4EF6\u5939\u3002",
   SETTING_TARGET_FOLDER_MENU_NAME: "\u663E\u793A\u201C\u590D\u5236\u5230\u76EE\u6807\u6587\u4EF6\u5939\u201D",
   SETTING_TARGET_FOLDER_MENU_DESC: "\u5728\u6587\u4EF6\u8D44\u6E90\u7BA1\u7406\u5668\u53F3\u952E\u83DC\u5355\u4E2D\u663E\u793A\u590D\u5236\u5230\u76EE\u6807\u6587\u4EF6\u5939\u529F\u80FD\u3002",
-  SETTING_PANDOC_MENU_NAME: "\u663E\u793A Pandoc \u5BFC\u51FA",
-  SETTING_PANDOC_MENU_DESC: "\u5728 Markdown \u6587\u4EF6\u7684\u53F3\u952E\u83DC\u5355\u4E2D\u663E\u793A Pandoc \u5BFC\u51FA\u5B50\u83DC\u5355\u3002",
   COPY_COMMAND_NAME: "\u590D\u5236\u6240\u9009\u6587\u4EF6\uFF08\u4ECE\u6587\u4EF6\u8D44\u6E90\u7BA1\u7406\u5668\uFF09",
-  PLACEHOLDER_TARGET_FOLDER: "/\u6587\u4EF6\u5939\u8DEF\u5F84",
-  PLACEHOLDER_TEMPLATES_FOLDER: "/\u6A21\u677F\u6587\u4EF6\u5939\u8DEF\u5F84",
-  SETTING_PANDOC_DOWNLOAD_LINK: "\u5728\u6B64\u4E0B\u8F7D pandoc",
-  SETTING_LATEX_NAME: "PDF \u5BFC\u51FA\u8981\u6C42 (LaTeX)",
-  SETTING_LATEX_DESC: "\u8981\u5BFC\u51FA\u4E3A PDF\uFF0Cpandoc \u9700\u8981 LaTeX \u53D1\u884C\u7248\u3002",
-  SETTING_LATEX_MAC_BUTTON: "\u83B7\u53D6 MacTeX (macOS)",
-  SETTING_LATEX_WIN_BUTTON: "\u83B7\u53D6 MiKTeX (Windows)",
-  PANDOC_NOT_FOUND: "\u672A\u627E\u5230 pandoc\u3002\u8BF7\u5B89\u88C5 pandoc \u6216\u5728\u8BBE\u7F6E\u4E2D\u68C0\u67E5\u8DEF\u5F84\u3002",
   SETTING_HELP_NAME: "\u6587\u6863\u4E0E\u5E2E\u52A9",
-  SETTING_HELP_DESC: "\u6253\u5F00\u5B98\u65B9\u6587\u6863\u548C\u8BBE\u7F6E\u6307\u5357\u3002",
+  SETTING_HELP_DESC: "\u6253\u5F00\u9879\u76EE\u6587\u6863\u6216\u62A5\u544A\u95EE\u9898\u3002",
   SETTING_HELP_BUTTON: "\u6253\u5F00\u6587\u6863",
-  SETTING_HELP_BUG_BUTTON: "\u62A5\u544A\u9519\u8BEF",
-  EXPORT_FALLBACK_YAML: "\u5DF2\u5BFC\u51FA\uFF0C\u65E0\u5143\u6570\u636E\uFF08\u5DF2\u7ED5\u8FC7 YAML \u9519\u8BEF\uFF09\u3002"
+  SETTING_HELP_BUG_BUTTON: "\u62A5\u544A\u9519\u8BEF"
 };
 
 // src/lang/locale/ja.ts
 var ja_default = {
-  LOAD_PLUGIN: "Natural move/export \u30D7\u30E9\u30B0\u30A4\u30F3\u3092\u8AAD\u307F\u8FBC\u3093\u3067\u3044\u307E\u3059",
-  UNLOAD_PLUGIN: "Natural move/export \u30D7\u30E9\u30B0\u30A4\u30F3\u3092\u89E3\u9664\u3057\u3066\u3044\u307E\u3059",
-  COPY_TO_CLIPBOARD: "Natural move: \u30AF\u30EA\u30C3\u30D7\u30DC\u30FC\u30C9\u306B\u30B3\u30D4\u30FC",
-  COPY_TO_TARGET_FOLDER: "Natural move: \u30BF\u30FC\u30B2\u30C3\u30C8\u30D5\u30A9\u30EB\u30C0\u306B\u30B3\u30D4\u30FC",
-  EXPORT_AS_PANDOC: "%1 (.%2) \u3068\u3057\u3066\u30BF\u30FC\u30B2\u30C3\u30C8\u30D5\u30A9\u30EB\u30C0\u306B\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8",
+  LOAD_PLUGIN: "Vault File Clipboard \u30D7\u30E9\u30B0\u30A4\u30F3\u3092\u8AAD\u307F\u8FBC\u3093\u3067\u3044\u307E\u3059",
+  UNLOAD_PLUGIN: "Vault File Clipboard \u30D7\u30E9\u30B0\u30A4\u30F3\u3092\u89E3\u9664\u3057\u3066\u3044\u307E\u3059",
+  COPY_TO_CLIPBOARD: "Vault File Clipboard: \u30AF\u30EA\u30C3\u30D7\u30DC\u30FC\u30C9\u306B\u30B3\u30D4\u30FC",
+  COPY_TO_TARGET_FOLDER: "Vault File Clipboard: \u30BF\u30FC\u30B2\u30C3\u30C8\u30D5\u30A9\u30EB\u30C0\u306B\u30B3\u30D4\u30FC",
   LINKED_FILE: "\u30EA\u30F3\u30AF\u3055\u308C\u305F\u30D5\u30A1\u30A4\u30EB ",
   NO_FILES_SELECTED: "\u30D5\u30A1\u30A4\u30EB\u30A8\u30AF\u30B9\u30D7\u30ED\u30FC\u30E9\u30FC\u3067\u30D5\u30A1\u30A4\u30EB\u304C\u9078\u629E\u3055\u308C\u3066\u3044\u307E\u305B\u3093\u3002",
   COPY_SUCCESS: "%1 \u500B\u306E\u30D5\u30A1\u30A4\u30EB\u3092\u30AF\u30EA\u30C3\u30D7\u30DC\u30FC\u30C9\u306B\u30B3\u30D4\u30FC\u3057\u307E\u3057\u305F\u3002",
@@ -383,57 +228,27 @@ var ja_default = {
   TARGET_FOLDER_SUCCESS: "%1 \u500B\u306E\u30A2\u30A4\u30C6\u30E0\u3092\u30BF\u30FC\u30B2\u30C3\u30C8\u30D5\u30A9\u30EB\u30C0\u306B\u30B3\u30D4\u30FC\u3057\u307E\u3057\u305F\u3002",
   TARGET_FOLDER_ERROR: "\u30B3\u30D4\u30FC\u4E2D\u306B %1 \u500B\u306E\u30A8\u30E9\u30FC\u304C\u767A\u751F\u3057\u307E\u3057\u305F\u3002",
   TARGET_FOLDER_NOT_SET: "\u6700\u521D\u306B\u8A2D\u5B9A\u3067\u30BF\u30FC\u30B2\u30C3\u30C8\u30D5\u30A9\u30EB\u30C0\u3092\u6307\u5B9A\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
-  TARGET_FOLDER_NOT_EXISTS: "\u30BF\u30FC\u30B2\u30C3\u30C8\u30D5\u30A9\u30EB\u30C0\u304C\u5B58\u5728\u3057\u306A\u3044\u304B\u3001\u8A2D\u5B9A\u3055\u308C\u3066\u3044\u307E\u305B\u3093\u3002",
-  EXPORTING_FILES: "%1 \u500B\u306E\u30D5\u30A1\u30A4\u30EB\u3092 %2 \u3068\u3057\u3066\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8\u3057\u3066\u3044\u307E\u3059...",
-  EXPORT_SUCCESS: "%1 \u500B\u306E\u30D5\u30A1\u30A4\u30EB\u3092 %2 \u3068\u3057\u3066\u6B63\u5E38\u306B\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8\u3057\u307E\u3057\u305F\u3002",
-  EXPORT_ERROR: "\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8\u4E2D\u306B\u30A8\u30E9\u30FC\u304C\u767A\u751F\u3057\u307E\u3057\u305F (%1x)\u3002\u6700\u5F8C\u306E\u30A8\u30E9\u30FC: %2",
-  SETTINGS_TITLE: "Natural move/export \u8A2D\u5B9A",
+  SETTINGS_TITLE: "Vault File Clipboard \u8A2D\u5B9A",
   SETTING_TARGET_FOLDER_NAME: "\u30BF\u30FC\u30B2\u30C3\u30C8\u30D5\u30A9\u30EB\u30C0 (\u7D76\u5BFE\u30D1\u30B9)",
-  SETTING_TARGET_FOLDER_DESC: "\u30D5\u30A1\u30A4\u30EB\u3092\u30B3\u30D4\u30FC\u3059\u308B\u30B3\u30F3\u30D4\u30E5\u30FC\u30BF\u4E0A\u306E\u30D5\u30A9\u30EB\u30C0\u306E\u7D76\u5BFE\u30D1\u30B9\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
-  SETTING_PANDOC_PATH_NAME: "Pandoc \u30D1\u30B9",
-  SETTING_PANDOC_PATH_DESC: "pandoc \u306E\u30A4\u30F3\u30B9\u30C8\u30FC\u30EB\u30D1\u30B9 (\u4F8B: 'pandoc' \u307E\u305F\u306F '/usr/local/bin/pandoc')\u3002Word/PowerPoint \u30A8\u30AF\u30B9\u30DD\u30FC\u30C8\u306B\u5FC5\u8981\u3067\u3059\u3002",
-  SETTING_CUSTOM_ARGS_NAME: "\u30AB\u30B9\u30BF\u30E0 pandoc \u5F15\u6570",
-  SETTING_CUSTOM_ARGS_DESC: "pandoc \u306E\u8FFD\u52A0\u30B3\u30DE\u30F3\u30C9\u30E9\u30A4\u30F3\u5F15\u6570 (\u4F8B: '--toc')\u3002\u3053\u308C\u3089\u306F\u3059\u3079\u3066\u306E\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8\u306B\u8FFD\u52A0\u3055\u308C\u307E\u3059\u3002",
-  SETTING_WORD_TEMPLATES_FOLDER_NAME: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\u30D5\u30A9\u30EB\u30C0",
-  SETTING_WORD_TEMPLATES_FOLDER_DESC: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\u30D5\u30A1\u30A4\u30EB\u3092\u542B\u3080\u30D5\u30A9\u30EB\u30C0\u3078\u306E\u7D76\u5BFE\u30D1\u30B9 (Word\u306F.docx\u3001PowerPoint\u306F.pptx\u3001PDF/Beamer\u306F.tex)\u3002",
-  WORD_TEMPLATES_MENU: "Word \u30A8\u30AF\u30B9\u30DD\u30FC\u30C8",
-  PPT_TEMPLATES_MENU: "PowerPoint \u30A8\u30AF\u30B9\u30DD\u30FC\u30C8",
-  PDF_TEMPLATES_MENU: "PDF \u30A8\u30AF\u30B9\u30DD\u30FC\u30C8",
-  BEAMER_TEMPLATES_MENU: "Beamer \u30A8\u30AF\u30B9\u30DD\u30FC\u30C8",
-  HTML_TEMPLATES_MENU: "HTML \u30A8\u30AF\u30B9\u30DD\u30FC\u30C8",
-  MD_TEMPLATES_MENU: "Markdown \u30A8\u30AF\u30B9\u30DD\u30FC\u30C8",
-  EXPORT_SUBMENU_TITLE: "Natural move \u30A8\u30AF\u30B9\u30DD\u30FC\u30C8",
-  EXPORT_WITHOUT_TEMPLATE: "\u6A19\u6E96\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8 (\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\u306A\u3057)",
-  EXPORT_WITH_TEMPLATE: "\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8: %1",
-  EXPERIMENTAL: "(\u5B9F\u9A13\u7684)",
+  SETTING_TARGET_FOLDER_DESC: "\u30D5\u30A1\u30A4\u30EB\u3092\u30B3\u30D4\u30FC\u3059\u308B\u30D5\u30A9\u30EB\u30C0\u306E\u7D76\u5BFE\u30D1\u30B9\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
   SETTING_AUDIO_FEEDBACK_NAME: "\u30AA\u30FC\u30C7\u30A3\u30AA\u30D5\u30A3\u30FC\u30C9\u30D0\u30C3\u30AF",
   SETTING_AUDIO_FEEDBACK_DESC: "\u30D5\u30A1\u30A4\u30EB\u306E\u30B3\u30D4\u30FC\u306B\u6210\u529F\u3057\u305F\u3068\u304D\u306B\u77ED\u3044\u97F3\u3092\u518D\u751F\u3057\u307E\u3059\u3002",
   SETTING_TEST_SOUND_NAME: "\u30B5\u30A6\u30F3\u30C9\u30C6\u30B9\u30C8",
   SETTING_TEST_SOUND_DESC: "\u3053\u3053\u3092\u30AF\u30EA\u30C3\u30AF\u3057\u3066\u30AA\u30FC\u30C7\u30A3\u30AA\u30D5\u30A3\u30FC\u30C9\u30D0\u30C3\u30AF\u3092\u30C6\u30B9\u30C8\u3057\u307E\u3059\u3002",
   SETTING_TEST_SOUND_BUTTON: "\u30B5\u30A6\u30F3\u30C9\u30C6\u30B9\u30C8",
   COPY_COMMAND_NAME: "\u9078\u629E\u3057\u305F\u30D5\u30A1\u30A4\u30EB\u3092\u30B3\u30D4\u30FC (\u30D5\u30A1\u30A4\u30EB\u30A8\u30AF\u30B9\u30D7\u30ED\u30FC\u30E9\u30FC\u304B\u3089)",
-  PLACEHOLDER_TARGET_FOLDER: "/\u30D5\u30A9\u30EB\u30C0\u3078\u306E\u30D1\u30B9",
-  PLACEHOLDER_TEMPLATES_FOLDER: "/\u30C6\u30F3\u30D7\u30EC\u30FC\u30C8\u3078\u306E\u30D1\u30B9",
-  SETTING_PANDOC_DOWNLOAD_LINK: "\u3053\u3053\u3067pandoc\u3092\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9",
-  SETTING_LATEX_NAME: "PDF\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8\u306E\u8981\u4EF6 (LaTeX)",
-  SETTING_LATEX_DESC: "PDF\u3068\u3057\u3066\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8\u3059\u308B\u306B\u306F\u3001pandoc\u306BLaTeX\u30C7\u30A3\u30B9\u30C8\u30EA\u30D3\u30E5\u30FC\u30B7\u30E7\u30F3\u304C\u5FC5\u8981\u3067\u3059\u3002",
-  SETTING_LATEX_MAC_BUTTON: "MacTeX\u3092\u5165\u624B (macOS)",
-  SETTING_LATEX_WIN_BUTTON: "MiKTeX\u3092\u5165\u624B (Windows)",
-  PANDOC_NOT_FOUND: "Pandoc\u304C\u898B\u3064\u304B\u308A\u307E\u305B\u3093\u3002pandoc\u3092\u30A4\u30F3\u30B9\u30C8\u30FC\u30EB\u3059\u308B\u304B\u3001\u8A2D\u5B9A\u3067\u30D1\u30B9\u3092\u78BA\u8A8D\u3057\u3066\u304F\u3060\u3055\u3044\u3002",
   SETTING_HELP_NAME: "\u30C9\u30AD\u30E5\u30E1\u30F3\u30C8\u3068\u30D8\u30EB\u30D7",
-  SETTING_HELP_DESC: "\u516C\u5F0F\u30C9\u30AD\u30E5\u30E1\u30F3\u30C8\u3068\u30BB\u30C3\u30C8\u30A2\u30C3\u30D7\u30AC\u30A4\u30C9\u3092\u958B\u304D\u307E\u3059\u3002",
+  SETTING_HELP_DESC: "\u30D7\u30ED\u30B8\u30A7\u30AF\u30C8\u306E\u30C9\u30AD\u30E5\u30E1\u30F3\u30C8\u3092\u958B\u304D\u307E\u3059\u3002",
   SETTING_HELP_BUTTON: "\u30C9\u30AD\u30E5\u30E1\u30F3\u30C8\u3092\u958B\u304F",
-  SETTING_HELP_BUG_BUTTON: "\u30D0\u30B0\u3092\u5831\u544A",
-  EXPORT_FALLBACK_YAML: "\u30E1\u30BF\u30C7\u30FC\u30BF\u306A\u3057\u3067\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8\u3055\u308C\u307E\u3057\u305F\uFF08YAML\u30A8\u30E9\u30FC\u3092\u56DE\u907F\uFF09\u3002"
+  SETTING_HELP_BUG_BUTTON: "\u30D0\u30B0\u3092\u5831\u544A"
 };
 
 // src/lang/locale/ko.ts
 var ko_default = {
-  LOAD_PLUGIN: "Natural move/export \uD50C\uB7EC\uADF8\uC778\uC744 \uBD88\uB7EC\uC624\uB294 \uC911",
-  UNLOAD_PLUGIN: "Natural move/export \uD50C\uB7EC\uADF8\uC778\uC744 \uD574\uC81C\uD558\uB294 \uC911",
-  COPY_TO_CLIPBOARD: "Natural move: \uD074\uB9BD\uBCF4\uB4DC\uC5D0 \uBCF5\uC0AC",
-  COPY_TO_TARGET_FOLDER: "Natural move: \uB300\uC0C1 \uD3F4\uB354\uB85C \uBCF5\uC0AC",
-  EXPORT_AS_PANDOC: "%1 (.%2) \uD615\uC2DD\uC73C\uB85C \uB300\uC0C1 \uD3F4\uB354\uC5D0 \uB0B4\uBCF4\uB0B4\uAE30",
+  LOAD_PLUGIN: "Vault File Clipboard \uD50C\uB7EC\uADF8\uC778\uC744 \uBD88\uB7EC\uC624\uB294 \uC911",
+  UNLOAD_PLUGIN: "Vault File Clipboard \uD50C\uB7EC\uADF8\uC778\uC744 \uD574\uC81C\uD558\uB294 \uC911",
+  COPY_TO_CLIPBOARD: "Vault File Clipboard: \uD074\uB9BD\uBCF4\uB4DC\uC5D0 \uBCF5\uC0AC",
+  COPY_TO_TARGET_FOLDER: "Vault File Clipboard: \uB300\uC0C1 \uD3F4\uB354\uB85C \uBCF5\uC0AC",
   LINKED_FILE: "\uC5F0\uACB0\uB41C \uD30C\uC77C ",
   NO_FILES_SELECTED: "\uD30C\uC77C \uD0D0\uC0C9\uAE30\uC5D0\uC11C \uC120\uD0DD\uB41C \uD30C\uC77C\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
   COPY_SUCCESS: "%1\uAC1C\uC758 \uD30C\uC77C\uC744 \uD074\uB9BD\uBCF4\uB4DC\uC5D0 \uBCF5\uC0AC\uD588\uC2B5\uB2C8\uB2E4.",
@@ -443,57 +258,27 @@ var ko_default = {
   TARGET_FOLDER_SUCCESS: "%1\uAC1C\uC758 \uD56D\uBAA9\uC744 \uB300\uC0C1 \uD3F4\uB354\uB85C \uBCF5\uC0AC\uD588\uC2B5\uB2C8\uB2E4.",
   TARGET_FOLDER_ERROR: "\uBCF5\uC0AC \uC911 %1\uAC1C\uC758 \uC624\uB958\uAC00 \uBC1C\uC0DD\uD588\uC2B5\uB2C8\uB2E4.",
   TARGET_FOLDER_NOT_SET: "\uBA3C\uC800 \uC124\uC815\uC5D0\uC11C \uB300\uC0C1 \uD3F4\uB354\uB97C \uC9C0\uC815\uD558\uC2ED\uC2DC\uC624.",
-  TARGET_FOLDER_NOT_EXISTS: "\uB300\uC0C1 \uD3F4\uB354\uAC00 \uC874\uC7AC\uD558\uC9C0 \uC54A\uAC70\uB098 \uC124\uC815\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.",
-  EXPORTING_FILES: "%1\uAC1C\uC758 \uD30C\uC77C\uC744 %2 \uD615\uC2DD\uC73C\uB85C \uB0B4\uBCF4\uB0B4\uB294 \uC911...",
-  EXPORT_SUCCESS: "%1\uAC1C\uC758 \uD30C\uC77C\uC744 %2 \uD615\uC2DD\uC73C\uB85C \uC131\uACF5\uC801\uC73C\uB85C \uB0B4\uBCF4\uB0C8\uC2B5\uB2C8\uB2E4.",
-  EXPORT_ERROR: "\uB0B4\uBCF4\uB0B4\uAE30 \uC911 \uC624\uB958 \uBC1C\uC0DD (%1x). \uB9C8\uC9C0\uB9C9 \uC624\uB958: %2",
-  SETTINGS_TITLE: "Natural move/export \uC124\uC815",
+  SETTINGS_TITLE: "Vault File Clipboard \uC124\uC815",
   SETTING_TARGET_FOLDER_NAME: "\uB300\uC0C1 \uD3F4\uB354 (\uC808\uB300 \uACBD\uB85C)",
-  SETTING_TARGET_FOLDER_DESC: "\uD30C\uC77C\uC744 \uBCF5\uC0AC\uD560 \uCEF4\uD4E8\uD130 \uD3F4\uB354\uC758 \uC808\uB300 \uACBD\uB85C\uB97C \uC785\uB825\uD558\uC2ED\uC2DC\uC624.",
-  SETTING_PANDOC_PATH_NAME: "Pandoc \uACBD\uB85C",
-  SETTING_PANDOC_PATH_DESC: "pandoc \uC124\uCE58 \uACBD\uB85C (\uC608: 'pandoc' \uB610\uB294 '/usr/local/bin/pandoc'). Word/PowerPoint \uB0B4\uBCF4\uB0B4\uAE30\uC5D0 \uD544\uC694\uD569\uB2C8\uB2E4.",
-  SETTING_CUSTOM_ARGS_NAME: "\uC0AC\uC6A9\uC790 \uC815\uC758 pandoc \uC778\uC218",
-  SETTING_CUSTOM_ARGS_DESC: "pandoc \uCD94\uAC00 \uBA85\uB839\uC904 \uC778\uC218 (\uC608: '--toc'). \uBAA8\uB4E0 \uB0B4\uBCF4\uB0B4\uAE30\uC5D0 \uCD94\uAC00\uB429\uB2C8\uB2E4.",
-  SETTING_WORD_TEMPLATES_FOLDER_NAME: "\uD15C\uD50C\uB9BF \uD3F4\uB354",
-  SETTING_WORD_TEMPLATES_FOLDER_DESC: "\uD15C\uD50C\uB9BF \uD30C\uC77C\uC774 \uD3EC\uD568\uB41C \uD3F4\uB354\uC758 \uC808\uB300 \uACBD\uB85C\uC785\uB2C8\uB2E4 (Word\uB294 .docx, PowerPoint\uB294 .pptx, PDF/Beamer\uB294 .tex).",
-  WORD_TEMPLATES_MENU: "Word \uB0B4\uBCF4\uB0B4\uAE30",
-  PPT_TEMPLATES_MENU: "PowerPoint \uB0B4\uBCF4\uB0B4\uAE30",
-  PDF_TEMPLATES_MENU: "PDF \uB0B4\uBCF4\uB0B4\uAE30",
-  BEAMER_TEMPLATES_MENU: "Beamer \uB0B4\uBCF4\uB0B4\uAE30",
-  HTML_TEMPLATES_MENU: "HTML \uB0B4\uBCF4\uB0B4\uAE30",
-  MD_TEMPLATES_MENU: "Markdown \uB0B4\uBCF4\uB0B4\uAE30",
-  EXPORT_SUBMENU_TITLE: "Natural move \uB0B4\uBCF4\uB0B4\uAE30",
-  EXPORT_WITHOUT_TEMPLATE: "\uD45C\uC900 \uB0B4\uBCF4\uB0B4\uAE30 (\uD15C\uD50C\uB9BF \uC5C6\uC74C)",
-  EXPORT_WITH_TEMPLATE: "\uD15C\uD50C\uB9BF: %1",
-  EXPERIMENTAL: "(\uC2E4\uD5D8\uC801)",
+  SETTING_TARGET_FOLDER_DESC: "\uD30C\uC77C\uC744 \uBCF5\uC0AC\uD560 \uD3F4\uB354\uC758 \uC808\uB300 \uACBD\uB85C\uB97C \uC785\uB825\uD558\uC2ED\uC2DC\uC624.",
   SETTING_AUDIO_FEEDBACK_NAME: "\uC624\uB514\uC624 \uD53C\uB4DC\uBC31",
   SETTING_AUDIO_FEEDBACK_DESC: "\uD30C\uC77C \uBCF5\uC0AC \uC131\uACF5 \uC2DC \uC9E7\uC740 \uD6A8\uACFC\uC74C\uC744 \uC7AC\uC0DD\uD569\uB2C8\uB2E4.",
   SETTING_TEST_SOUND_NAME: "\uC0AC\uC6B4\uB4DC \uD14C\uC2A4\uD2B8",
   SETTING_TEST_SOUND_DESC: "\uC5EC\uAE30\uB97C \uD074\uB9AD\uD558\uC5EC \uC624\uB514\uC624 \uD53C\uB4DC\uBC31\uC744 \uD14C\uC2A4\uD2B8\uD558\uC2ED\uC2DC\uC624.",
   SETTING_TEST_SOUND_BUTTON: "\uC0AC\uC6B4\uB4DC \uD14C\uC2A4\uD2B8",
   COPY_COMMAND_NAME: "\uC120\uD0DD\uD55C \uD30C\uC77C \uBCF5\uC0AC (\uD30C\uC77C \uD0D0\uC0C9\uAE30\uC5D0\uC11C)",
-  PLACEHOLDER_TARGET_FOLDER: "/\uD3F4\uB354/\uACBD\uB85C",
-  PLACEHOLDER_TEMPLATES_FOLDER: "/\uD15C\uD50C\uB9BF/\uACBD\uB85C",
-  SETTING_PANDOC_DOWNLOAD_LINK: "\uC5EC\uAE30\uC11C pandoc \uB2E4\uC6B4\uB85C\uB4DC",
-  SETTING_LATEX_NAME: "PDF \uB0B4\uBCF4\uB0B4\uAE30 \uC694\uAD6C \uC0AC\uD56D (LaTeX)",
-  SETTING_LATEX_DESC: "PDF\uB85C \uB0B4\uBCF4\uB0B4\uB824\uBA74 pandoc\uC5D0 LaTeX \uBC30\uD3EC\uD310\uC774 \uD544\uC694\uD569\uB2C8\uB2E4.",
-  SETTING_LATEX_MAC_BUTTON: "MacTeX \uB2E4\uC6B4\uB85C\uB4DC (macOS)",
-  SETTING_LATEX_WIN_BUTTON: "MiKTeX \uB2E4\uC6B4\uB85C\uB4DC (Windows)",
-  PANDOC_NOT_FOUND: "Pandoc\uC744 \uCC3E\uC744 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. pandoc\uC744 \uC124\uCE58\uD558\uAC70\uB098 \uC124\uC815\uC5D0\uC11C \uACBD\uB85C\uB97C \uD655\uC778\uD558\uC138\uC694.",
   SETTING_HELP_NAME: "\uBB38\uC11C \uBC0F \uB3C4\uC6C0\uB9D0",
-  SETTING_HELP_DESC: "\uACF5\uC2DD \uBB38\uC11C \uBC0F \uC124\uC815 \uAC00\uC774\uB4DC\uB97C \uC5FD\uB2C8\uB2E4.",
+  SETTING_HELP_DESC: "\uD504\uB85C\uC81D\uD2B8 \uBB38\uC11C\uB97C \uC5FD\uB2C8\uB2E4.",
   SETTING_HELP_BUTTON: "\uBB38\uC11C \uC5F4\uAE30",
-  SETTING_HELP_BUG_BUTTON: "\uBC84\uADF8 \uC2E0\uACE0",
-  EXPORT_FALLBACK_YAML: "\uBA54\uD0C0\uB370\uC774\uD130 \uC5C6\uC774 \uB0B4\uBCF4\uB0C8\uC2B5\uB2C8\uB2E4 (YAML \uC624\uB958 \uC6B0\uD68C)."
+  SETTING_HELP_BUG_BUTTON: "\uBC84\uADF8 \uC2E0\uACE0"
 };
 
 // src/lang/locale/pt.ts
 var pt_default = {
-  LOAD_PLUGIN: "Carregando o plugin natural move/export",
-  UNLOAD_PLUGIN: "Descarregando o plugin natural move/export",
-  COPY_TO_CLIPBOARD: "Natural move: copiar para a \xE1rea de transfer\xEAncia",
-  COPY_TO_TARGET_FOLDER: "Natural move: copiar para a pasta de destino",
-  EXPORT_AS_PANDOC: "Exportar como %1 (.%2) para a pasta de destino",
+  LOAD_PLUGIN: "Carregando o plugin Vault File Clipboard",
+  UNLOAD_PLUGIN: "Descarregando o plugin Vault File Clipboard",
+  COPY_TO_CLIPBOARD: "Vault File Clipboard: copiar para a \xE1rea de transfer\xEAncia",
+  COPY_TO_TARGET_FOLDER: "Vault File Clipboard: copiar para a pasta de destino",
   LINKED_FILE: "Arquivo vinculado ",
   NO_FILES_SELECTED: "Nenhum arquivo selecionado no explorador de arquivos.",
   COPY_SUCCESS: "%1 arquivo(s) copiado(s) para a \xE1rea de transfer\xEAncia.",
@@ -503,57 +288,27 @@ var pt_default = {
   TARGET_FOLDER_SUCCESS: "%1 item(ns) copiado(s) para a pasta de destino.",
   TARGET_FOLDER_ERROR: "%1 erro(s) durante a c\xF3pia.",
   TARGET_FOLDER_NOT_SET: "Por favor, defina uma pasta de destino nas configura\xE7\xF5es primeiro.",
-  TARGET_FOLDER_NOT_EXISTS: "A pasta de destino n\xE3o existe ou n\xE3o est\xE1 configurada.",
-  EXPORTING_FILES: "Exportando %1 arquivo(s) como %2...",
-  EXPORT_SUCCESS: "%1 arquivo(s) exportado(s) com sucesso como %2.",
-  EXPORT_ERROR: "Erro durante a exporta\xE7\xE3o (%1x). \xDAltimo erro: %2",
-  SETTINGS_TITLE: "Configura\xE7\xF5es do natural move/export",
-  SETTING_TARGET_FOLDER_NAME: "Pasta de Destino (Caminho Absoluto)",
-  SETTING_TARGET_FOLDER_DESC: "Insira o caminho absoluto para a pasta no seu computador para onde os arquivos devem ser copiados.",
-  SETTING_PANDOC_PATH_NAME: "Caminho do Pandoc",
-  SETTING_PANDOC_PATH_DESC: "O caminho para a instala\xE7\xE3o do pandoc (ex: 'pandoc' ou '/usr/local/bin/pandoc'). Necess\xE1rio para exporta\xE7\xE3o Word/PowerPoint.",
-  SETTING_CUSTOM_ARGS_NAME: "Argumentos personalizados do pandoc",
-  SETTING_CUSTOM_ARGS_DESC: "Argumentos de linha de comando adicionais para o pandoc (ex: '--toc'). Estes s\xE3o anexados a cada exporta\xE7\xE3o.",
-  SETTING_WORD_TEMPLATES_FOLDER_NAME: "Pasta de Modelos",
-  SETTING_WORD_TEMPLATES_FOLDER_DESC: "Caminho absoluto para uma pasta contendo arquivos de modelo (.docx para Word, .pptx para PowerPoint, .tex f\xFCr PDF/Beamer).",
-  WORD_TEMPLATES_MENU: "Exporta\xE7\xE3o Word",
-  PPT_TEMPLATES_MENU: "Exporta\xE7\xE3o PowerPoint",
-  PDF_TEMPLATES_MENU: "Exporta\xE7\xE3o PDF",
-  BEAMER_TEMPLATES_MENU: "Exporta\xE7\xE3o Beamer",
-  HTML_TEMPLATES_MENU: "Exporta\xE7\xE3o HTML",
-  MD_TEMPLATES_MENU: "Exporta\xE7\xE3o Markdown",
-  EXPORT_SUBMENU_TITLE: "Exporta\xE7\xE3o natural move",
-  EXPORT_WITHOUT_TEMPLATE: "Exporta\xE7\xE3o padr\xE3o (sem modelo)",
-  EXPORT_WITH_TEMPLATE: "Modelo: %1",
-  EXPERIMENTAL: "(Experimental)",
-  SETTING_AUDIO_FEEDBACK_NAME: "Feedback de \xC1udio",
-  SETTING_AUDIO_FEEDBACK_DESC: "Reproduce um som curto quando um arquivo \xE9 copiado com sucesso.",
-  SETTING_TEST_SOUND_NAME: "Testar Som",
+  SETTINGS_TITLE: "Configura\xE7\xF5es do Vault File Clipboard",
+  SETTING_TARGET_FOLDER_NAME: "Pasta de destino (caminho absoluto)",
+  SETTING_TARGET_FOLDER_DESC: "Insira o caminho absoluto da pasta para onde os arquivos devem ser copiados.",
+  SETTING_AUDIO_FEEDBACK_NAME: "Feedback de \xE1udio",
+  SETTING_AUDIO_FEEDBACK_DESC: "Reproduz um som curto quando um arquivo \xE9 copiado com sucesso.",
+  SETTING_TEST_SOUND_NAME: "Testar som",
   SETTING_TEST_SOUND_DESC: "Clique aqui para testar o feedback de \xE1udio.",
-  SETTING_TEST_SOUND_BUTTON: "Testar Som",
+  SETTING_TEST_SOUND_BUTTON: "Testar som",
   COPY_COMMAND_NAME: "Copiar arquivos selecionados (do explorador de arquivos)",
-  PLACEHOLDER_TARGET_FOLDER: "/caminho/para/pasta",
-  PLACEHOLDER_TEMPLATES_FOLDER: "/caminho/para/modelos",
-  SETTING_PANDOC_DOWNLOAD_LINK: "Baixar pandoc aqui",
-  SETTING_LATEX_NAME: "Requisitos de exporta\xE7\xE3o PDF (LaTeX)",
-  SETTING_LATEX_DESC: "Para exportar como PDF, o pandoc requer uma distribui\xE7\xE3o LaTeX.",
-  SETTING_LATEX_MAC_BUTTON: "Obter MacTeX (macOS)",
-  SETTING_LATEX_WIN_BUTTON: "Obter MiKTeX (Windows)",
-  PANDOC_NOT_FOUND: "Pandoc n\xE3o encontrado. Por favor, instale o pandoc ou verifique o caminho nas configura\xE7\xF5es.",
   SETTING_HELP_NAME: "Documenta\xE7\xE3o e ajuda",
-  SETTING_HELP_DESC: "Abra a documenta\xE7\xE3o oficial e o guia de configura\xE7\xE3o.",
-  SETTING_HELP_BUTTON: "Abrir Documenta\xE7\xE3o",
-  SETTING_HELP_BUG_BUTTON: "Relatar erro",
-  EXPORT_FALLBACK_YAML: "Exportado sem metadados (erro YAML ignorado)."
+  SETTING_HELP_DESC: "Abra a documenta\xE7\xE3o do projeto.",
+  SETTING_HELP_BUTTON: "Abrir documenta\xE7\xE3o",
+  SETTING_HELP_BUG_BUTTON: "Relatar erro"
 };
 
 // src/lang/locale/ru.ts
 var ru_default = {
-  LOAD_PLUGIN: "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u043F\u043B\u0430\u0433\u0438\u043D\u0430 natural move/export",
-  UNLOAD_PLUGIN: "\u0412\u044B\u0433\u0440\u0443\u0437\u043A\u0430 \u043F\u043B\u0430\u0433\u0438\u043D\u0430 natural move/export",
-  COPY_TO_CLIPBOARD: "Natural move: \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0432 \u0431\u0443\u0444\u0435\u0440 \u043E\u0431\u043C\u0435\u043D\u0430",
-  COPY_TO_TARGET_FOLDER: "Natural move: \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0432 \u0446\u0435\u043B\u0435\u0432\u0443\u044E \u043F\u0430\u043F\u043A\u0443",
-  EXPORT_AS_PANDOC: "\u042D\u043A\u0441\u043F\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043A\u0430\u043A %1 (.%2) \u0432 \u0446\u0435\u043B\u0435\u0432\u0443\u044E \u043F\u0430\u043F\u043A\u0443",
+  LOAD_PLUGIN: "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u043F\u043B\u0430\u0433\u0438\u043D\u0430 Vault File Clipboard",
+  UNLOAD_PLUGIN: "\u0412\u044B\u0433\u0440\u0443\u0437\u043A\u0430 \u043F\u043B\u0430\u0433\u0438\u043D\u0430 Vault File Clipboard",
+  COPY_TO_CLIPBOARD: "Vault File Clipboard: \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0432 \u0431\u0443\u0444\u0435\u0440 \u043E\u0431\u043C\u0435\u043D\u0430",
+  COPY_TO_TARGET_FOLDER: "Vault File Clipboard: \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0432 \u0446\u0435\u043B\u0435\u0432\u0443\u044E \u043F\u0430\u043F\u043A\u0443",
   LINKED_FILE: "\u0421\u0432\u044F\u0437\u0430\u043D\u043D\u044B\u0439 \u0444\u0430\u0439\u043B ",
   NO_FILES_SELECTED: "\u0424\u0430\u0439\u043B\u044B \u0432 \u043F\u0440\u043E\u0432\u043E\u0434\u043D\u0438\u043A\u0435 \u043D\u0435 \u0432\u044B\u0431\u0440\u0430\u043D\u044B.",
   COPY_SUCCESS: "\u0424\u0430\u0439\u043B\u043E\u0432 \u0441\u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u043E \u0432 \u0431\u0443\u0444\u0435\u0440 \u043E\u0431\u043C\u0435\u043D\u0430: %1.",
@@ -563,48 +318,19 @@ var ru_default = {
   TARGET_FOLDER_SUCCESS: "\u042D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u0441\u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u043E \u0432 \u0446\u0435\u043B\u0435\u0432\u0443\u044E \u043F\u0430\u043F\u043A\u0443: %1.",
   TARGET_FOLDER_ERROR: "\u041E\u0448\u0438\u0431\u043E\u043A \u043F\u0440\u0438 \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0438: %1.",
   TARGET_FOLDER_NOT_SET: "\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0443\u043A\u0430\u0436\u0438\u0442\u0435 \u0446\u0435\u043B\u0435\u0432\u0443\u044E \u043F\u0430\u043F\u043A\u0443 \u0432 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430\u0445.",
-  TARGET_FOLDER_NOT_EXISTS: "\u0426\u0435\u043B\u0435\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 \u043D\u0435 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u0435\u0442 \u0438\u043B\u0438 \u043D\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043D\u0430.",
-  EXPORTING_FILES: "\u042D\u043A\u0441\u043F\u043E\u0440\u0442 %1 \u0444\u0430\u0439\u043B\u0430(\u043E\u0432) \u0432 \u0444\u043E\u0440\u043C\u0430\u0442\u0435 %2...",
-  EXPORT_SUCCESS: "\u0423\u0441\u043F\u0435\u0448\u043D\u043E \u044D\u043A\u0441\u043F\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u043E %1 \u0444\u0430\u0439\u043B\u0430(\u043E\u0432) \u0432 \u0444\u043E\u0440\u043C\u0430\u0442\u0435 %2.",
-  EXPORT_ERROR: "\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u044D\u043A\u0441\u043F\u043E\u0440\u0442\u0435 (%1x). \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043E\u0448\u0438\u0431\u043A\u0430: %2",
-  SETTINGS_TITLE: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 natural move/export",
+  SETTINGS_TITLE: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 Vault File Clipboard",
   SETTING_TARGET_FOLDER_NAME: "\u0426\u0435\u043B\u0435\u0432\u0430\u044F \u043F\u0430\u043F\u043A\u0430 (\u0430\u0431\u0441\u043E\u043B\u044E\u0442\u043D\u044B\u0439 \u043F\u0443\u0442\u044C)",
-  SETTING_TARGET_FOLDER_DESC: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0430\u0431\u0441\u043E\u043B\u044E\u0442\u043D\u044B\u0439 \u043F\u0443\u0442\u044C \u043A \u043F\u0430\u043F\u043A\u0435 \u043D\u0430 \u0432\u0430\u0448\u0435\u043C \u043A\u043E\u043C\u043F\u044C\u044E\u0442\u0435\u0440\u0435, \u0432 \u043A\u043E\u0442\u043E\u0440\u0443\u044E \u0434\u043E\u043B\u0436\u043D\u044B \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C\u0441\u044F \u0444\u0430\u0439\u043B\u044B.",
-  SETTING_PANDOC_PATH_NAME: "\u041F\u0443\u0442\u044C \u043A Pandoc",
-  SETTING_PANDOC_PATH_DESC: "\u041F\u0443\u0442\u044C \u043A \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0435 pandoc (\u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, 'pandoc' \u0438\u043B\u0438 '/usr/local/bin/pandoc'). \u0422\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F \u0434\u043B\u044F \u044D\u043A\u0441\u043F\u043E\u0440\u0442\u0430 \u0432 Word/PowerPoint.",
-  SETTING_CUSTOM_ARGS_NAME: "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u0430\u0440\u0433\u0443\u043C\u0435\u043D\u0442\u044B pandoc",
-  SETTING_CUSTOM_ARGS_DESC: "\u0414\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0430\u0440\u0433\u0443\u043C\u0435\u043D\u0442\u044B \u043A\u043E\u043C\u0430\u043D\u0434\u043D\u043E\u0439 \u0441\u0442\u0440\u043E\u043A\u0438 \u0434\u043B\u044F pandoc (\u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, '--toc'). \u041E\u043D\u0438 \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u044E\u0442\u0441\u044F \u043A \u043A\u0430\u0436\u0434\u043E\u043C\u0443 \u044D\u043A\u0441\u043F\u043E\u0440\u0442\u0443.",
-  SETTING_WORD_TEMPLATES_FOLDER_NAME: "\u041F\u0430\u043F\u043A\u0430 \u0448\u0430\u0431\u043B\u043E\u043D\u043E\u0432",
-  SETTING_WORD_TEMPLATES_FOLDER_DESC: "\u0410\u0431\u0441\u043E\u043B\u044E\u0442\u043D\u044B\u0439 \u043F\u0443\u0442\u044C \u043A \u043F\u0430\u043F\u043A\u0435, \u0441\u043E\u0434\u0435\u0440\u0436\u0430\u0449\u0435\u0439 \u0444\u0430\u0439\u043B\u044B \u0448\u0430\u0431\u043B\u043E\u043D\u043E\u0432 (.docx \u0434\u043B\u044F Word, .pptx \u0434\u043B\u044F PowerPoint, .tex \u0434\u043B\u044F PDF/Beamer).",
-  WORD_TEMPLATES_MENU: "\u042D\u043A\u0441\u043F\u043E\u0440\u0442 \u0432 Word",
-  PPT_TEMPLATES_MENU: "\u042D\u043A\u0441\u043F\u043E\u0440\u0442 \u0432 PowerPoint",
-  PDF_TEMPLATES_MENU: "\u042D\u043A\u0441\u043F\u043E\u0440\u0442 \u0432 PDF",
-  BEAMER_TEMPLATES_MENU: "\u042D\u043A\u0441\u043F\u043E\u0440\u0442 \u0432 Beamer",
-  HTML_TEMPLATES_MENU: "\u042D\u043A\u0441\u043F\u043E\u0440\u0442 \u0432 HTML",
-  MD_TEMPLATES_MENU: "\u042D\u043A\u0441\u043F\u043E\u0440\u0442 \u0432 Markdown",
-  EXPORT_SUBMENU_TITLE: "\u042D\u043A\u0441\u043F\u043E\u0440\u0442 natural move",
-  EXPORT_WITHOUT_TEMPLATE: "\u0421\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u044B\u0439 \u044D\u043A\u0441\u043F\u043E\u0440\u0442 (\u0431\u0435\u0437 \u0448\u0430\u0431\u043B\u043E\u043D\u0430)",
-  EXPORT_WITH_TEMPLATE: "\u0428\u0430\u0431\u043B\u043E\u043D: %1",
-  EXPERIMENTAL: "(\u042D\u043A\u0441\u043F\u0435\u0440\u0438\u043C\u0435\u043D\u0442\u0430\u043B\u044C\u043D\u043E)",
+  SETTING_TARGET_FOLDER_DESC: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0430\u0431\u0441\u043E\u043B\u044E\u0442\u043D\u044B\u0439 \u043F\u0443\u0442\u044C \u043A \u043F\u0430\u043F\u043A\u0435, \u0432 \u043A\u043E\u0442\u043E\u0440\u0443\u044E \u0434\u043E\u043B\u0436\u043D\u044B \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C\u0441\u044F \u0444\u0430\u0439\u043B\u044B.",
   SETTING_AUDIO_FEEDBACK_NAME: "\u0417\u0432\u0443\u043A\u043E\u0432\u043E\u0439 \u043E\u0442\u043A\u043B\u0438\u043A",
   SETTING_AUDIO_FEEDBACK_DESC: "\u0412\u043E\u0441\u043F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0438\u0442\u044C \u043A\u043E\u0440\u043E\u0442\u043A\u0438\u0439 \u0437\u0432\u0443\u043A \u043F\u0440\u0438 \u0443\u0441\u043F\u0435\u0448\u043D\u043E\u043C \u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0438 \u0444\u0430\u0439\u043B\u0430.",
   SETTING_TEST_SOUND_NAME: "\u041F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u0437\u0432\u0443\u043A",
   SETTING_TEST_SOUND_DESC: "\u041D\u0430\u0436\u043C\u0438\u0442\u0435 \u0437\u0434\u0435\u0441\u044C, \u0447\u0442\u043E\u0431\u044B \u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u0437\u0432\u0443\u043A\u043E\u0432\u043E\u0439 \u043E\u0442\u043A\u043B\u0438\u043A.",
   SETTING_TEST_SOUND_BUTTON: "\u041F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u0437\u0432\u0443\u043A",
   COPY_COMMAND_NAME: "\u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u044B\u0435 \u0444\u0430\u0439\u043B\u044B (\u0438\u0437 \u043F\u0440\u043E\u0432\u043E\u0434\u043D\u0438\u043A\u0430)",
-  PLACEHOLDER_TARGET_FOLDER: "/\u043F\u0443\u0442\u044C/\u043A/\u043F\u0430\u043F\u043A\u0435",
-  PLACEHOLDER_TEMPLATES_FOLDER: "/\u043F\u0443\u0442\u044C/\u043A/\u0448\u0430\u0431\u043B\u043E\u043D\u0430\u043C",
-  SETTING_PANDOC_DOWNLOAD_LINK: "\u0421\u043A\u0430\u0447\u0430\u0442\u044C pandoc \u0437\u0434\u0435\u0441\u044C",
-  SETTING_LATEX_NAME: "\u0422\u0440\u0435\u0431\u043E\u0432\u0430\u043D\u0438\u044F \u0434\u043B\u044F \u044D\u043A\u0441\u043F\u043E\u0440\u0442\u0430 \u0432 PDF (LaTeX)",
-  SETTING_LATEX_DESC: "\u0414\u043B\u044F \u044D\u043A\u0441\u043F\u043E\u0440\u0442\u0430 \u0432 PDF pandoc \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u0434\u0438\u0441\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u0432 LaTeX.",
-  SETTING_LATEX_MAC_BUTTON: "\u0421\u043A\u0430\u0447\u0430\u0442\u044C MacTeX (macOS)",
-  SETTING_LATEX_WIN_BUTTON: "\u0421\u043A\u0430\u0447\u0430\u0442\u044C MiKTeX (Windows)",
-  PANDOC_NOT_FOUND: "Pandoc \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D. \u041F\u043E\u0436\u0430\u043B\u0443\u0439\u0441\u0442\u0430, \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0435 pandoc \u0438\u043B\u0438 \u043F\u0440\u043E\u0432\u0435\u0440\u044C\u0442\u0435 \u043F\u0443\u0442\u044C \u0432 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430\u0445.",
   SETTING_HELP_NAME: "\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430\u0446\u0438\u044F \u0438 \u043F\u043E\u043C\u043E\u0449\u044C",
-  SETTING_HELP_DESC: "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043E\u0444\u0438\u0446\u0438\u0430\u043B\u044C\u043D\u0443\u044E \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430\u0446\u0438\u044E \u0438 \u0440\u0443\u043A\u043E\u0432\u043E\u0434\u0441\u0442\u0432\u043E \u043F\u043E \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0435.",
+  SETTING_HELP_DESC: "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430\u0446\u0438\u044E \u043F\u0440\u043E\u0435\u043A\u0442\u0430.",
   SETTING_HELP_BUTTON: "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430\u0446\u0438\u044E",
-  SETTING_HELP_BUG_BUTTON: "\u0421\u043E\u043E\u0431\u0449\u0438\u0442\u044C \u043E\u0431 \u043E\u0448\u0438\u0431\u043A\u0435",
-  EXPORT_FALLBACK_YAML: "\u042D\u043A\u0441\u043F\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u043E \u0431\u0435\u0437 \u043C\u0435\u0442\u0430\u0434\u0430\u043D\u043D\u044B\u0445 (\u043E\u0448\u0438\u0431\u043A\u0430 YAML \u043E\u0431\u043E\u0439\u0434\u0435\u043D\u0430)."
+  SETTING_HELP_BUG_BUTTON: "\u0421\u043E\u043E\u0431\u0449\u0438\u0442\u044C \u043E\u0431 \u043E\u0448\u0438\u0431\u043A\u0435"
 };
 
 // src/lang/helpers.ts
@@ -639,22 +365,10 @@ var { clipboard } = electron;
 var DEFAULT_SETTINGS = {
   targetFolderPath: "",
   enableAudioFeedback: true,
-  pandocPath: "pandoc",
-  customPandocArgs: "",
-  wordTemplatesFolderPath: "",
   showPasteFromClipboardMenu: true,
-  showCopyToTargetFolderMenu: true,
-  showPandocExportMenu: true
+  showCopyToTargetFolderMenu: true
 };
-var PANDOC_FORMATS = {
-  "docx": { name: "Word", ext: "docx", args: "", icon: "file-text", menuKey: "WORD_TEMPLATES_MENU" },
-  "pptx": { name: "PowerPoint", ext: "pptx", args: "", icon: "presentation", menuKey: "PPT_TEMPLATES_MENU" },
-  "pdf": { name: "PDF", ext: "pdf", args: "", icon: "file-text", menuKey: "PDF_TEMPLATES_MENU" },
-  "beamer": { name: "Beamer-Slides", ext: "pdf", args: "-t beamer", icon: "presentation", menuKey: "BEAMER_TEMPLATES_MENU" },
-  "markdown": { name: "Markdown", ext: "md", args: "-t markdown", icon: "file-text", menuKey: "MD_TEMPLATES_MENU" },
-  "html": { name: "HTML", ext: "html", args: "--embed-resources --standalone", icon: "globe", menuKey: "HTML_TEMPLATES_MENU" }
-};
-var NaturalMove = class extends import_obsidian.Plugin {
+var VaultFileClipboard = class extends import_obsidian.Plugin {
   settings;
   audioCtx = null;
   boundDragStartHandler;
@@ -718,12 +432,12 @@ var NaturalMove = class extends import_obsidian.Plugin {
         }
       })
     );
-    this.addSettingTab(new NaturalMoveSettingTab(this.app, this));
+    this.addSettingTab(new VaultFileClipboardSettingTab(this.app, this));
   }
   onunload() {
     console.debug(t("UNLOAD_PLUGIN"));
     if (this.audioCtx) void this.audioCtx.close();
-    document.getElementById("natural-move-style")?.remove();
+    document.getElementById("vault-file-clipboard-style")?.remove();
     document.removeEventListener("dragstart", this.boundDragStartHandler, true);
     document.removeEventListener("keydown", this.boundKeyDownHandler, true);
   }
@@ -853,52 +567,6 @@ var NaturalMove = class extends import_obsidian.Plugin {
       menu.addItem((item) => {
         const title = `${prefix}${t("COPY_TO_TARGET_FOLDER")}${labelSuffix}`;
         item.setTitle(title).setIcon("folder-check").setSection("action").onClick(() => this.copyToTargetFolder(files));
-      });
-    }
-    const mdFiles = files.filter((f) => f instanceof import_obsidian.TFile && f.extension === "md");
-    if (mdFiles.length > 0 && this.settings.showPandocExportMenu) {
-      menu.addItem((mainItem) => {
-        const mainTitle = t("EXPORT_SUBMENU_TITLE") + labelSuffix;
-        mainItem.setTitle(mainTitle).setIcon("export").setSection("action");
-        const exportSubmenu = mainItem.setSubmenu();
-        Object.entries(PANDOC_FORMATS).forEach(([key, format]) => {
-          exportSubmenu.addItem((formatItem) => {
-            formatItem.setTitle(t(format.menuKey)).setIcon(format.icon);
-            const formatSubmenu = formatItem.setSubmenu();
-            formatSubmenu.addItem((item) => {
-              item.setTitle(t("EXPORT_WITHOUT_TEMPLATE")).setIcon(format.icon).onClick(async () => {
-                await this.exportWithPandoc(mdFiles, format);
-              });
-            });
-            if (this.settings.wordTemplatesFolderPath) {
-              try {
-                if (fs.existsSync(this.settings.wordTemplatesFolderPath)) {
-                  const templateExts = {
-                    "docx": [".docx"],
-                    "pptx": [".pptx"],
-                    "pdf": [".tex", ".latex"],
-                    "beamer": [".tex", ".latex"]
-                  };
-                  const allowedExts = templateExts[key] || [];
-                  if (allowedExts.length === 0) return;
-                  const templateFiles = fs.readdirSync(this.settings.wordTemplatesFolderPath).filter((f) => allowedExts.some((ext) => f.endsWith(ext)));
-                  templateFiles.forEach((templateFile) => {
-                    formatSubmenu.addItem((item) => {
-                      const templateName = path.basename(templateFile, path.extname(templateFile));
-                      const isExperimental = ["pdf", "beamer", "pptx"].includes(key);
-                      item.setTitle(t("EXPORT_WITH_TEMPLATE", templateName) + (isExperimental ? " " + t("EXPERIMENTAL") : "")).setIcon("file-text").onClick(async () => {
-                        const templatePath = path.join(this.settings.wordTemplatesFolderPath, templateFile);
-                        await this.exportWithPandoc(mdFiles, format, templatePath);
-                      });
-                    });
-                  });
-                }
-              } catch (e) {
-                console.error("Error reading templates folder:", e);
-              }
-            }
-          });
-        });
       });
     }
   }
@@ -1150,224 +818,6 @@ JSON.stringify(paths);
       new import_obsidian.Notice(t("TARGET_FOLDER_ERROR", errorCount.toString()));
     }
   }
-  async createVideoThumbnail(videoFile, tempDir) {
-    return new Promise((resolve2, reject) => {
-      const video = document.createElement("video");
-      video.classList.add("natural-move-hidden-video");
-      video.muted = true;
-      video.src = this.app.vault.getResourcePath(videoFile);
-      video.crossOrigin = "anonymous";
-      video.onloadedmetadata = () => {
-        video.currentTime = Math.min(1, video.duration / 2);
-      };
-      video.onseeked = () => {
-        try {
-          const canvas = document.createElement("canvas");
-          canvas.width = video.videoWidth || 640;
-          canvas.height = video.videoHeight || 360;
-          const ctx = canvas.getContext("2d");
-          if (ctx) {
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "rgba(0,0,0,0.5)";
-            ctx.beginPath();
-            ctx.arc(canvas.width / 2, canvas.height / 2, 40, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.fillStyle = "white";
-            ctx.beginPath();
-            ctx.moveTo(canvas.width / 2 - 12, canvas.height / 2 - 20);
-            ctx.lineTo(canvas.width / 2 + 20, canvas.height / 2);
-            ctx.lineTo(canvas.width / 2 - 12, canvas.height / 2 + 20);
-            ctx.fill();
-            const dataUrl = canvas.toDataURL("image/png");
-            const base64Data = dataUrl.replace(/^data:image\/png;base64,/, "");
-            const thumbPath = path.join(tempDir, `thumb_${videoFile.name}.png`);
-            fs.writeFileSync(thumbPath, base64Data, "base64");
-            resolve2(thumbPath);
-          } else {
-            reject(new Error("Canvas context is null"));
-          }
-        } catch (e) {
-          reject(e instanceof Error ? e : new Error(String(e)));
-        } finally {
-          video.remove();
-        }
-      };
-      video.onerror = (e) => {
-        video.remove();
-        const errorMessage = e instanceof Event ? "Video playback error" : String(e);
-        reject(new Error(`Error loading video: ${errorMessage}`));
-      };
-    });
-  }
-  async processMarkdownForExport(file, tempDir) {
-    let content = await this.app.vault.read(file);
-    const embedRegex = /!\[\[(.*?)\]\]/g;
-    const matches = [...content.matchAll(embedRegex)];
-    for (const match of matches) {
-      const fullMatch = match[0];
-      const linkContent = match[1];
-      const altParts = linkContent.split("|");
-      const linkPath = altParts.shift() || "";
-      let caption = "";
-      let width = "";
-      let height = "";
-      if (altParts.length > 0) {
-        const lastPart = altParts[altParts.length - 1];
-        if (/^\d+$/.test(lastPart)) {
-          width = lastPart;
-          altParts.pop();
-        } else if (/^\d+x\d+$/.test(lastPart)) {
-          const [w, h] = lastPart.split("x");
-          width = w;
-          height = h;
-          altParts.pop();
-        }
-        caption = altParts.join("|");
-      }
-      let attributes = "";
-      if (width && height) {
-        attributes = `{width=${width}px height=${height}px}`;
-      } else if (width) {
-        attributes = `{width=${width}px}`;
-      }
-      const linkedFile = this.app.metadataCache.getFirstLinkpathDest(linkPath, file.path);
-      if (linkedFile instanceof import_obsidian.TFile) {
-        const absolutePath = this.getAbsolutePath(linkedFile);
-        if (!absolutePath) continue;
-        const extension = linkedFile.extension.toLowerCase();
-        const safePath = absolutePath.replace(/\\/g, "/");
-        if (["png", "jpg", "jpeg", "gif", "bmp", "svg", "webp"].includes(extension)) {
-          content = content.replace(fullMatch, `![${caption}](${safePath})${attributes}`);
-        } else if (["mp4", "webm", "ogg", "mov"].includes(extension)) {
-          try {
-            const thumbPath = await this.createVideoThumbnail(linkedFile, tempDir);
-            const safeThumbPath = thumbPath.replace(/\\/g, "/");
-            content = content.replace(fullMatch, `[![${caption}](${safeThumbPath})${attributes}](file:///${safePath})`);
-          } catch (e) {
-            console.error("Failed to generate thumbnail for", linkedFile.name, e);
-            content = content.replace(fullMatch, `[\u{1F3A5} ${linkedFile.name}](file:///${safePath})`);
-          }
-        }
-      }
-    }
-    const tempMdPath = path.join(tempDir, `temp_${file.name}`);
-    fs.writeFileSync(tempMdPath, content, "utf8");
-    return tempMdPath;
-  }
-  async exportWithPandoc(files, format, templatePath) {
-    if (!this.settings.targetFolderPath || !fs.existsSync(this.settings.targetFolderPath)) {
-      new import_obsidian.Notice(t("TARGET_FOLDER_NOT_EXISTS"));
-      return;
-    }
-    let successCount = 0;
-    let errorCount = 0;
-    let lastError = "";
-    const pandocCmd = this.settings.pandocPath || "pandoc";
-    const exportName = templatePath ? path.basename(templatePath, ".docx") : format.name;
-    new import_obsidian.Notice(t("EXPORTING_FILES", files.length.toString(), exportName));
-    const env = {
-      ...process.env,
-      PATH: `${process.env.PATH || ""}:/usr/local/bin:/opt/homebrew/bin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin`
-    };
-    let pandocMissing = false;
-    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "natural-move-"));
-    try {
-      for (const file of files) {
-        const originalSourcePath = this.getAbsolutePath(file);
-        if (!originalSourcePath) {
-          errorCount++;
-          continue;
-        }
-        let sourcePath = originalSourcePath;
-        if (file.extension === "md") {
-          try {
-            sourcePath = await this.processMarkdownForExport(file, tempDir);
-          } catch (e) {
-            console.error("Pre-processing failed for", file.name, e);
-          }
-        }
-        let destName = file.basename + "." + format.ext;
-        if (format.ext === "md" && originalSourcePath === path.join(this.settings.targetFolderPath, destName)) {
-          destName = file.basename + "_export." + format.ext;
-        }
-        const destPath = path.join(this.settings.targetFolderPath, destName);
-        let customArgs = this.settings.customPandocArgs ? ` ${this.settings.customPandocArgs}` : "";
-        if (templatePath && fs.existsSync(templatePath)) {
-          const ext = path.extname(templatePath).toLowerCase();
-          if (ext === ".docx" || ext === ".pptx") {
-            customArgs += ` --reference-doc="${templatePath}"`;
-          } else {
-            customArgs += ` --template="${templatePath}"`;
-          }
-        }
-        const originalDir = path.dirname(originalSourcePath);
-        customArgs += ` --resource-path="${originalDir}"`;
-        const cmd = `"${pandocCmd}" "${sourcePath}" ${format.args}${customArgs} -o "${destPath}"`;
-        try {
-          await new Promise((resolve2, reject) => {
-            (0, import_child_process.exec)(cmd, { env }, (error, stdout, stderr) => {
-              if (error) {
-                console.error("Pandoc Error:", error, stderr);
-                lastError = stderr || error.message;
-                reject(error);
-              } else {
-                resolve2();
-              }
-            });
-          });
-          successCount++;
-        } catch (err) {
-          console.error(`Fehler beim Export von ${file.name}:`, err);
-          const errorMessage = err instanceof Error ? err.message : String(err);
-          const errorCode = err && typeof err === "object" && "code" in err ? String(err.code) : "";
-          const errorStr = errorMessage + " " + (lastError || "");
-          if (errorStr.toLowerCase().includes("yaml") || errorStr.toLowerCase().includes("metadata")) {
-            console.debug("YAML error detected, trying fallback without metadata...");
-            const fallbackCmd = `"${pandocCmd}" "${sourcePath}" ${format.args}${customArgs} -f markdown-yaml_metadata_block -o "${destPath}"`;
-            try {
-              await new Promise((resolve2, reject) => {
-                (0, import_child_process.exec)(fallbackCmd, { env }, (error, stdout, stderr) => {
-                  if (error) {
-                    lastError = stderr || error.message;
-                    reject(error);
-                  } else {
-                    resolve2();
-                  }
-                });
-              });
-              successCount++;
-              new import_obsidian.Notice(t("EXPORT_FALLBACK_YAML") + ` (${file.name})`);
-            } catch (fallbackErr) {
-              console.error(`Fallback-Fehler beim Export von ${file.name}:`, fallbackErr);
-              errorCount++;
-            }
-          } else if (errorCode === "ENOENT" || errorMessage.includes("command not found") || errorMessage.includes("nicht gefunden")) {
-            pandocMissing = true;
-            break;
-          } else {
-            errorCount++;
-          }
-        }
-      }
-    } finally {
-      try {
-        fs.rmSync(tempDir, { recursive: true, force: true });
-      } catch (e) {
-        console.error("Failed to clean up temporary directory", e);
-      }
-    }
-    if (pandocMissing) {
-      new import_obsidian.Notice(t("PANDOC_NOT_FOUND"));
-      return;
-    }
-    if (successCount > 0) {
-      this.playSuccessSound();
-      new import_obsidian.Notice(t("EXPORT_SUCCESS", successCount.toString(), format.name));
-    }
-    if (errorCount > 0) {
-      new import_obsidian.Notice(t("EXPORT_ERROR", errorCount.toString(), lastError.substring(0, 100)));
-    }
-  }
   getAbsolutePath(file) {
     const adapter = this.app.vault.adapter;
     if (adapter instanceof import_obsidian.FileSystemAdapter) {
@@ -1405,22 +855,13 @@ JSON.stringify(paths);
     }
   }
   async loadSettings() {
-    const savedData = await this.loadData() || {};
-    const hadLegacyLicenseData = ["licenseKey", "instanceId", "isPro"].some((key) => key in savedData);
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, savedData);
-    const migratedSettings = this.settings;
-    delete migratedSettings.licenseKey;
-    delete migratedSettings.instanceId;
-    delete migratedSettings.isPro;
-    if (hadLegacyLicenseData) {
-      await this.saveSettings();
-    }
+    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
   }
   async saveSettings() {
     await this.saveData(this.settings);
   }
 };
-var NaturalMoveSettingTab = class extends import_obsidian.PluginSettingTab {
+var VaultFileClipboardSettingTab = class extends import_obsidian.PluginSettingTab {
   plugin;
   constructor(app, plugin) {
     super(app, plugin);
@@ -1439,59 +880,12 @@ var NaturalMoveSettingTab = class extends import_obsidian.PluginSettingTab {
       this.plugin.settings.showCopyToTargetFolderMenu = value;
       await this.plugin.saveSettings();
     }));
-    new import_obsidian.Setting(containerEl).setName(t("SETTING_PANDOC_MENU_NAME")).setDesc(t("SETTING_PANDOC_MENU_DESC")).addToggle((toggle) => toggle.setValue(this.plugin.settings.showPandocExportMenu).onChange(async (value) => {
-      this.plugin.settings.showPandocExportMenu = value;
-      await this.plugin.saveSettings();
-    }));
     containerEl.createEl("hr");
     const isWin = os.platform() === "win32";
     const targetFolderPlaceholder = isWin ? "C:\\path\\to\\folder" : "/path/to/folder";
-    const pandocPlaceholder = isWin ? "C:\\Program Files\\Pandoc\\pandoc.exe" : "/usr/local/bin/pandoc";
-    const templatesFolderPlaceholder = isWin ? "C:\\path\\to\\templates" : "/path/to/templates";
     new import_obsidian.Setting(containerEl).setName(t("SETTING_TARGET_FOLDER_NAME")).setDesc(t("SETTING_TARGET_FOLDER_DESC")).addText((text) => {
       text.setPlaceholder(targetFolderPlaceholder).setValue(this.plugin.settings.targetFolderPath).onChange(async (value) => {
         this.plugin.settings.targetFolderPath = value.trim();
-        await this.plugin.saveSettings();
-      });
-      return text;
-    });
-    const pandocDesc = document.createDocumentFragment();
-    pandocDesc.appendText(t("SETTING_PANDOC_PATH_DESC") + " ");
-    pandocDesc.createEl("a", {
-      text: t("SETTING_PANDOC_DOWNLOAD_LINK"),
-      href: "https://pandoc.org/installing.html"
-    });
-    new import_obsidian.Setting(containerEl).setName(t("SETTING_PANDOC_PATH_NAME")).setDesc(pandocDesc).addText((text) => {
-      text.setPlaceholder(pandocPlaceholder).setValue(this.plugin.settings.pandocPath).onChange(async (value) => {
-        this.plugin.settings.pandocPath = value.trim();
-        await this.plugin.saveSettings();
-      });
-      return text;
-    });
-    const latexDesc = document.createDocumentFragment();
-    latexDesc.appendText(t("SETTING_LATEX_DESC") + " ");
-    if (isWin) {
-      latexDesc.createEl("a", {
-        text: t("SETTING_LATEX_WIN_BUTTON"),
-        href: "https://miktex.org/download"
-      });
-    } else {
-      latexDesc.createEl("a", {
-        text: t("SETTING_LATEX_MAC_BUTTON"),
-        href: "https://tug.org/mactex/mactex-download.html"
-      });
-    }
-    new import_obsidian.Setting(containerEl).setName(t("SETTING_LATEX_NAME")).setDesc(latexDesc);
-    new import_obsidian.Setting(containerEl).setName(t("SETTING_CUSTOM_ARGS_NAME")).setDesc(t("SETTING_CUSTOM_ARGS_DESC")).addTextArea((text) => {
-      text.setPlaceholder("--toc --citeproc ...").setValue(this.plugin.settings.customPandocArgs).onChange(async (value) => {
-        this.plugin.settings.customPandocArgs = value.trim();
-        await this.plugin.saveSettings();
-      });
-      return text;
-    });
-    new import_obsidian.Setting(containerEl).setName(t("SETTING_WORD_TEMPLATES_FOLDER_NAME")).setDesc(t("SETTING_WORD_TEMPLATES_FOLDER_DESC")).addText((text) => {
-      text.setPlaceholder(templatesFolderPlaceholder).setValue(this.plugin.settings.wordTemplatesFolderPath).onChange(async (value) => {
-        this.plugin.settings.wordTemplatesFolderPath = value.trim();
         await this.plugin.saveSettings();
       });
       return text;
@@ -1505,9 +899,9 @@ var NaturalMoveSettingTab = class extends import_obsidian.PluginSettingTab {
     }));
     containerEl.createEl("hr");
     new import_obsidian.Setting(containerEl).setName(t("SETTING_HELP_NAME")).setDesc(t("SETTING_HELP_DESC")).addButton((btn) => btn.setButtonText(t("SETTING_HELP_BUTTON")).onClick(() => {
-      window.open("https://naturalis3.github.io/Obsidian-Natural-Move-Export/");
+      window.open("https://github.com/EdgerHao/Obsidian-Natural-Move-Export/tree/codex/vault-file-clipboard");
     })).addButton((btn) => btn.setButtonText(t("SETTING_HELP_BUG_BUTTON")).onClick(() => {
-      window.open("https://github.com/Naturalis3/Obsidian-Natural-Move-Export/issues");
+      window.open("https://github.com/EdgerHao/Obsidian-Natural-Move-Export/issues");
     }));
   }
 };

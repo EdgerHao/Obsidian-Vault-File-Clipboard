@@ -1,9 +1,9 @@
 {
-	"id": "natural-move",
-	"name": "Natural Move/Export",
-	"version": "1.0.11",
+	"id": "vault-file-clipboard",
+	"name": "Vault File Clipboard",
+	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Native system copy-paste, drag & drop, and professional Pandoc exports.",
+	"description": "Copy, paste, and drag files and folders between your Obsidian vault and the operating system.",
 	"author": "Naturalis",
 	"authorUrl": "https://github.com/Naturalis3",
 	"isDesktopOnly": true

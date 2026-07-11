@@ -1,103 +1,44 @@
-# Natural Move/Export
+# Vault File Clipboard
 
-[English](README.md) | [Deutsch](README_de.md) | [Français](README_fr.md) | [Español](README_es.md) | [简体中文](README_zh.md) | [日本語](README_ja.md) | [한국어](README_ko.md) | [Português](README_pt.md) | [Русский](README_ru.md)
+**Vault File Clipboard** gives Obsidian's file explorer native file and folder clipboard behavior. Copy files out of your vault, paste external files into vault folders, or drag items to other desktop apps without opening Finder or File Explorer first.
 
----
+## Features
 
-https://github.com/user-attachments/assets/331368f7-fb1a-44b2-999c-d52296116d0e
+- **Copy out:** Select vault files or folders and press `Cmd + C` (macOS) or `Ctrl + C` (Windows/Linux), then paste them into another desktop app.
+- **Paste in:** Copy files or folders in Finder/File Explorer, select a vault folder, and press `Cmd + V` or `Ctrl + V`.
+- **Context menus:** Copy selected vault items, paste external items into a folder, or copy items to a configured target folder.
+- **External drag:** Hold `Alt` while dragging vault files or folders to another desktop app.
+- **Safe conflicts:** Existing files are never overwritten when pasting into the vault; numbered names are created automatically.
+- **Multi-file and folder support:** All clipboard operations work with files, folders, and multi-selections.
+- **Cross-platform:** Native handling for macOS, Windows, and Linux desktop environments.
 
----
-**Natural Move/Export** is an Obsidian plugin that seamlessly bridges the gap between Obsidian and your operating system. It makes Obsidian's File Explorer feel like a native folder on your computer.
+## Settings
 
-## Why Natural Move/Export?
+- Show or hide the external-paste context menu action.
+- Show or hide the copy-to-target-folder context menu action.
+- Configure an optional absolute target-folder path.
+- Enable or disable audio feedback.
 
-Obsidian's File Explorer is powerful, but isolated. Copying files out of Obsidian usually requires opening the folder in Finder/Explorer first. **Natural Move/Export** fixes this by enabling native system-wide copy-paste, drag & drop, and professional exports directly from within Obsidian.
+## Installation
 
-## ✨ Key Features
+### BRAT
 
-### 📋 Native System Copy
-Select files in Obsidian and press `Cmd + C` (macOS) or `Ctrl + C` (Win). You can then paste them directly onto your desktop or into any other application with `Cmd + V`.
-Files and entire folders are both supported.
+Add this repository and select the `codex/vault-file-clipboard` branch:
 
-### 📥 Paste External Files into Obsidian
-Copy files or folders in Finder, File Explorer, or a Linux file manager. Then select an Obsidian folder and press `Cmd + V` (macOS) or `Ctrl + V` (Windows/Linux), or right-click the folder and choose **Natural move: paste external files here**. Name conflicts are resolved automatically without overwriting existing files.
+`https://github.com/EdgerHao/Obsidian-Natural-Move-Export`
 
-### 🖱️ Direct Drag & Drop
-Hold the `Alt` key and drag files or folders from Obsidian directly into other apps (e.g., Mail, Slack, or a folder).
+### Manual
 
-### 🚀 Professional Pandoc Export
-Convert your Markdown notes into polished documents with a single click.
-*   **Word (.docx):** Use your own custom `.docx` templates for professional branding.
-*   **PowerPoint (.pptx):** Turn notes into presentations instantly.
-*   **PDF & Beamer:** High-quality academic and slide exports.
-*   **HTML & Markdown:** Clean, standalone exports.
+Copy `main.js`, `manifest.json`, and `styles.css` into:
 
-### 📁 Target Folder Sync
-Configure a fixed target folder in the settings. Copy files and folders there with one click via the context menu. Perfect for backups, sharing, or project exports.
+`.obsidian/plugins/vault-file-clipboard/`
 
-### 🌍 Smart Localization & OS Detection
-*   **Automatic Language:** The plugin automatically adapts to your Obsidian language settings.
-*   **Smart OS Detection:** Settings and placeholders automatically adjust depending on whether you are using Windows, macOS, or Linux.
+Then reload Obsidian and enable **Vault File Clipboard** under Community plugins.
 
-## 🆓 Free for Everyone
+## Privacy
 
-All plugin features are available to every user without a license. The settings page also lets you hide the external-paste action, target-folder copy action, and Pandoc export submenu from the file explorer context menu.
+The plugin works locally. It reads file paths from the system clipboard only when you invoke a paste action and does not send file data to a server.
 
-## 🛠️ Prerequisites for Pandoc Export
+## License
 
-To use the export functions (Word, PowerPoint, PDF, etc.), **Pandoc** must be installed on your system.
-
-- **Mac:** `brew install pandoc` (via Homebrew) or download the installer from the [Pandoc website](https://pandoc.org/installing.html).
-- **Windows:** Download the installer from the Pandoc website.
-
-### ⚠️ Important for PDF and Beamer Export (MacTeX & MiKTeX)
-
-Pandoc requires a LaTeX distribution in the background to generate PDFs and Beamer presentations. On macOS, **MacTeX** is the standard. On Windows, **MiKTeX** is recommended.
-
-**Installing MacTeX (macOS):**
-
-*Option 1: Via Homebrew (Recommended)*
-Open the terminal and enter the following command:
-```bash
-brew install --cask mactex-no-gui
-```
-*(Note: The download is very large (approx. 5 GB) as it contains all necessary LaTeX packages. The `mactex-no-gui` version only installs the command-line tools, which is sufficient for Pandoc).*
-
-*Option 2: Manual Download*
-1. Go to the official website: [tug.org/mactex](https://www.tug.org/mactex/)
-2. Download the `MacTeX.pkg` file and run the installer.
-
-
-**Installing MiKTeX (Windows):**
-1. Go to the official website: [miktex.org/download](https://miktex.org/download)
-2. Download the installer and run it.
-3. During installation, choose to install missing packages automatically.
-
-After installing Pandoc and MacTeX/MiKTeX, you may need to restart Obsidian completely for the new system paths to be recognized. The Natural Move/Export plugin automatically searches for the required programs in the standard paths (`/Library/TeX/texbin`, `/opt/homebrew/bin`, `/usr/local/bin`).
-
-## Installation in Obsidian
-
-### Via BRAT (Beta Testing)
-1. Install the "Obsidian 42 - BRAT" plugin from the Community Plugins.
-2. Go to the BRAT settings and click on "Add Beta Plugin".
-3. Enter the URL of this GitHub repository.
-4. Click on "Add Plugin".
-
-### Manual Installation
-1. Download the project as a ZIP file and extract it.
-2. Create the folder in your Obsidian Vault: `.obsidian/plugins/natural-move`
-3. Copy all extracted project files into this new folder.
-4. Open a terminal in this folder and run the following commands:
-   ```bash
-   npm install
-   npm run build
-   ```
-5. Open Obsidian and go to **Settings > Community Plugins**.
-6. Disable "Safe Mode" if you haven't already.
-7. Click "Refresh" and enable the **Natural Move/Export** plugin.
-
-## Credits & License
-
-- **Author:** Naturalis
-- **License:** MIT
-- **Third-party tools:** This plugin uses [Pandoc](https://pandoc.org/) (GPL licensed) as an external command-line tool for file conversion. Pandoc is not bundled with this plugin and must be installed separately by the user.
+MIT
